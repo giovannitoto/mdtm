@@ -90,18 +90,14 @@ void rcpp_CGS_HashtagLDA(IntegerMatrix w, IntegerMatrix h,
       for (t = 0; t < TOPICS; t++) {
         num_count = 0;
         den_count = 0;
-        if (yH(d, 0) == 1) {
-          p_zstar(t) = p_zstar(t) * (betaV(w(d,0)-1) + WY1ZX(w(d,0)-1, t)) / (betaV_sum + sum(WY1ZX(_, t)));
-          num_count++;
-          den_count++;
-        }
+        p_zstar(t) = p_zstar(t) * (betaV(w(d,0)-1) + WY1ZX(w(d,0)-1, t)) / (betaV_sum + sum(WY1ZX(_, t)));
+        num_count++;
+        den_count++;
         for (n = 1; n < N(d); n++) {
           num_count *= (w(d, n-1) == w(d, n));
-          if (yH(d, n) == 1) {
-            p_zstar(t) = p_zstar(t) * (betaV(w(d,n)-1) + WY1ZX(w(d,n)-1, t) + num_count) / (betaV_sum + sum(WY1ZX(_, t)) + den_count);
-            num_count++;
-            den_count++;
-          }
+          p_zstar(t) = p_zstar(t) * (betaV(w(d,n)-1) + WY1ZX(w(d,n)-1, t) + num_count) / (betaV_sum + sum(WY1ZX(_, t)) + den_count);
+          num_count++;
+          den_count++;
         }
         num_count = 0;
         den_count = 0;
