@@ -234,7 +234,7 @@ void rcpp_CGS_MicroblogLDA(std::vector<NumericMatrix> w,
           }
         }
       }
-      Rcout << "zstar(" << d+1 << ") ";
+      // Rcout << "zstar(" << d+1 << ") ";
       // END UPDATE zstar(d)
       // -----------------------------------------------------------------------
       // START UPDATE lambda(d, _)
@@ -358,14 +358,12 @@ void rcpp_CGS_MicroblogLDA(std::vector<NumericMatrix> w,
             Z(d, z[k](d,n)-1) = Z(d, z[k](d,n)-1) + 1;
           } else {
             // update counts
-            WY1ZX[k](w[k](d,n)-1, z[k](d,n)-1) = WY1ZX[k](w[k](d,n)-1, z[k](d,n)-1) - 1;
             Z(d, z[k](d,n)-1) = Z(d, z[k](d,n)-1) - 1;
             // full conditional probability
             NumericVector p_z = alpha0 + lambda(d, _) * alpha + Z(d, _);
             // sample new value
             z[k](d, n) = sample(TOPICS, 1, true, p_z, true)(0);
             // update counts
-            WY1ZX[k](w[k](d,n)-1, z[k](d,n)-1) = WY1ZX[k](w[k](d,n)-1, z[k](d,n)-1) + 1;
             Z(d, z[k](d,n)-1) = Z(d, z[k](d,n)-1) + 1;
           }
           // END UPDATE z[k](d, n)
