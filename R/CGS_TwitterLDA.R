@@ -21,8 +21,8 @@ CGS_TwitterLDA <- function(w, doc_users, alphastar, betaV, bV,
   set.seed(seed)
   # Definisco alcune quantita' utili
   TOPICS <- length(alphastar)
-  U <- length(unique(doc_users))
-  D <- nrow(w)
+  U <- max(doc_users)
+  D <- length(doc_users)
   V <- length(betaV)
   N <- apply(w, 1, function(x) sum(x > 0))
   N_sum <- sum(N)

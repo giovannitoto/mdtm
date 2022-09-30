@@ -1,9 +1,8 @@
 // -----------------------------------------------------------------------------
 
-#include <RcppArmadillo.h>
+#include <Rcpp.h>
 #include <ctime>
 using namespace Rcpp;
-// [[Rcpp::depends(RcppArmadillo)]]
 
 // -----------------------------------------------------------------------------
 

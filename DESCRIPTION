@@ -10,8 +10,7 @@ License: What license is it under?
 Encoding: UTF-8
 LazyData: true
 Imports:
-    Rcpp (>= 1.0.9),
-    RcppArmadillo
+    Matrix,
+    Rcpp (>= 1.0.9)
 LinkingTo:
-    Rcpp,
-    RcppArmadillo
+    Rcpp

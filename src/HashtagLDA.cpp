@@ -1,9 +1,8 @@
 // -----------------------------------------------------------------------------
 
-#include <RcppArmadillo.h>
+#include <Rcpp.h>
 #include <ctime>
 using namespace Rcpp;
-// [[Rcpp::depends(RcppArmadillo)]]
 
 // -----------------------------------------------------------------------------
 
@@ -27,7 +26,7 @@ void rcpp_CGS_HashtagLDA(IntegerMatrix w, IntegerMatrix h,
   // START COUNTS AND FIRST STATE
   tt = std::time(nullptr);
   std::strftime(mbstr, sizeof(mbstr), "%Y-%m-%d %H:%M:%S", std::localtime(&tt));
-  Rcout << mbstr << " Creation of the matrices of counts and Generation of the first state\n";
+  Rcout << mbstr << " Creation of the matrices of counts\n";
   // matrices of counts
   NumericMatrix WY1ZX(V, TOPICS);
   NumericMatrix HY1ZX(H, TOPICS);
@@ -35,6 +34,9 @@ void rcpp_CGS_HashtagLDA(IntegerMatrix w, IntegerMatrix h,
   double Yh1 = 0.0;
   NumericVector HY0(H);
   // state of the chain
+  tt = std::time(nullptr);
+  std::strftime(mbstr, sizeof(mbstr), "%Y-%m-%d %H:%M:%S", std::localtime(&tt));
+  Rcout << mbstr << " Generation of the first state\n";
   IntegerVector zstar(D);
   IntegerMatrix yH(D, Lmax);
   // initialization of the first state

@@ -23,8 +23,8 @@ CGS_HashtagLDA <- function(w, h, doc_users, alphastar, betaV, betaH, bH,
   set.seed(seed)
   # Definisco alcune quantita' utili
   TOPICS <- length(alphastar)
-  U <- length(unique(doc_users))
-  D <- nrow(w)
+  U <- max(doc_users)
+  D <- length(doc_users)
   V <- length(betaV)
   H <- length(betaH)
   N <- apply(w, 1, function(x) sum(x > 0))
