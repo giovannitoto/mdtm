@@ -43,7 +43,7 @@ CGS_MicroblogLDA <- function(w, doc_users, alphastar, alpha, beta, b, bdelta, bT
   result_folder <- file.path(getwd(), result_folder)
   if(!dir.exists(result_folder)) {
     dir.create(result_folder)
-    for (m in 1:iterations) {
+    for (m in 0:iterations) {
       dir.create(file.path(result_folder, m))
     }
   } else {

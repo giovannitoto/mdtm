@@ -92,6 +92,14 @@ void rcpp_CGS_MicroblogLDA(std::vector<NumericMatrix> w,
     }
     // END - document d
   }
+  // save first state of the chain
+  saveRDS(x, Named("file", result_folder + "/" + std::to_string(0) + "/x.RDS"));
+  saveRDS(zstar, Named("file", result_folder + "/" + std::to_string(0) + "/zstar.RDS"));
+  saveRDS(lambda, Named("file", result_folder + "/" + std::to_string(0) + "/lambda.RDS"));
+  for (k = 0; k < K; k++) {
+    saveRDS(y[k], Named("file", result_folder + "/" + std::to_string(0) + "/y" + std::to_string(k + 1) + ".RDS"));
+    saveRDS(z[k], Named("file", result_folder + "/" + std::to_string(0) + "/z" + std::to_string(k + 1) + ".RDS"));
+  }
   // END COUNTS AND FIRST STATE
   // ---------------------------------------------------------------------------
   // START COLLAPSED GIBBS SAMPLER
@@ -144,7 +152,7 @@ void rcpp_CGS_MicroblogLDA(std::vector<NumericMatrix> w,
             }
           }
           for (n = 1; n < N(d, k); n++) {
-            if (w[k](d, n-1) == w[k](d, n)) {
+            if (w[k](d, n-1) != w[k](d, n)) {
               num0_count = 0;
               num1_count.fill(0);
             }
@@ -180,19 +188,28 @@ void rcpp_CGS_MicroblogLDA(std::vector<NumericMatrix> w,
           }
         }
       }
-      // Rcout << "x(" << d+1 << ") ";
       // END UPDATE x(d)
       // -----------------------------------------------------------------------
       // START UPDATE zstar(d)
       if (x(d) == 1) {
         // update counts
         Zstar(u, zstar(d)-1) = Zstar(u, zstar(d)-1) - 1;
+        for (k = 0; k < K; k++) {
+          for (n = 0; n < N(d, k); n++) {
+            WY1ZX[k](w[k](d,n)-1, z[k](d,n)-1) = WY1ZX[k](w[k](d,n)-1, z[k](d,n)-1) - y[k](d, n);
+          }
+        }
         // full conditional probability
         NumericVector p_zstar = alphastar + Zstar(u, _);
         // sample new value
         zstar(d) = sample(TOPICS, 1, true, p_zstar, true)(0);
         // update counts
         Zstar(u, zstar(d)-1) = Zstar(u, zstar(d)-1) + 1;
+        for (k = 0; k < K; k++) {
+          for (n = 0; n < N(d, k); n++) {
+            WY1ZX[k](w[k](d,n)-1, z[k](d,n)-1) = WY1ZX[k](w[k](d,n)-1, z[k](d,n)-1) + y[k](d, n);
+          }
+        }
       } else {
         // update counts
         Zstar(u, zstar(d)-1) = Zstar(u, zstar(d)-1) - 1;
@@ -213,9 +230,7 @@ void rcpp_CGS_MicroblogLDA(std::vector<NumericMatrix> w,
               den_count++;
             }
             for (n = 1; n < N(d, k); n++) {
-              if (w[k](d, n-1) == w[k](d, n)) {
-                num_count = 0;
-              }
+              num_count *= (w[k](d, n-1) == w[k](d, n));
               if (y[k](d, n) == 1) {
                 p_zstar(t) = p_zstar(t) * (beta[k](w[k](d,n)-1) + WY1ZX[k](w[k](d,n)-1, t) + num_count) / (beta_sum(k) + sum(WY1ZX[k](_, t)) + den_count);
                 num_count++;
@@ -234,7 +249,6 @@ void rcpp_CGS_MicroblogLDA(std::vector<NumericMatrix> w,
           }
         }
       }
-      // Rcout << "zstar(" << d+1 << ") ";
       // END UPDATE zstar(d)
       // -----------------------------------------------------------------------
       // START UPDATE lambda(d, _)
@@ -259,7 +273,6 @@ void rcpp_CGS_MicroblogLDA(std::vector<NumericMatrix> w,
         // update counts
         LAMBDA1 += lambda(d, t);
       }
-      // Rcout << "lambda(" << d+1 << ",_) ";
       // END UPDATE lambda(d, _)
       // -----------------------------------------------------------------------
       for (k = 0; k < K; k++) {
@@ -358,12 +371,14 @@ void rcpp_CGS_MicroblogLDA(std::vector<NumericMatrix> w,
             Z(d, z[k](d,n)-1) = Z(d, z[k](d,n)-1) + 1;
           } else {
             // update counts
+            WY1ZX[k](w[k](d,n)-1, zstar(d)-1) = WY1ZX[k](w[k](d,n)-1, zstar(d)-1) - 1;
             Z(d, z[k](d,n)-1) = Z(d, z[k](d,n)-1) - 1;
             // full conditional probability
             NumericVector p_z = alpha0 + lambda(d, _) * alpha + Z(d, _);
             // sample new value
             z[k](d, n) = sample(TOPICS, 1, true, p_z, true)(0);
             // update counts
+            WY1ZX[k](w[k](d,n)-1, zstar(d)-1) = WY1ZX[k](w[k](d,n)-1, zstar(d)-1) + 1;
             Z(d, z[k](d,n)-1) = Z(d, z[k](d,n)-1) + 1;
           }
           // END UPDATE z[k](d, n)
