@@ -23,7 +23,7 @@ void rcpp_CGS_MicroblogLDA(std::vector<NumericMatrix> w,
   Function saveRDS = base["saveRDS"];
   // init
   int d, k, n, t, u;
-  int num_count, den_count, num0_count, den0_count;
+  int num_count, den_count; //, num0_count, den0_count;
   std::time_t tt;
   char mbstr[100];
   // ---------------------------------------------------------------------------
@@ -137,39 +137,42 @@ void rcpp_CGS_MicroblogLDA(std::vector<NumericMatrix> w,
         NumericVector num1_count(TOPICS);
         NumericVector den1_count(TOPICS);
         for (t = 0; t < TOPICS; t++) {
-          num0_count = 0;
-          den0_count = 0;
           if (y[k](d, 0) == 1) {
-            if (z[k](d, 0) == t+1) {
+            if (z[k](d, 0)-1 == t) {
               p_x1 *= (beta[k](w[k](d,0)-1) + WY1ZX[k](w[k](d,0)-1,t)) / (beta_sum(k) + sum(WY1ZX[k](_, t)));
               num1_count(t) = num1_count(t) + 1;
               den1_count(t) = den1_count(t) + 1;
             }
-            if (zstar(d) == t+1) {
-              p_x0 *= (beta[k](w[k](d,0)-1) + WY1ZX[k](w[k](d,0)-1,t)) / (beta_sum(k) + sum(WY1ZX[k](_, t)));
-              num0_count++;
-              den0_count++;
-            }
           }
           for (n = 1; n < N(d, k); n++) {
             if (w[k](d, n-1) != w[k](d, n)) {
-              num0_count = 0;
               num1_count.fill(0);
             }
             if (y[k](d, n) == 1) {
-              if (z[k](d, n) == t+1) {
-                p_x1 *= (beta[k](w[k](d,n)-1) + WY1ZX[k](w[k](d,n)-1,t) + num1_count(t)) / (beta_sum(k) + sum(WY1ZX[k](_, t) + den1_count(t)));
+              if (z[k](d, n)-1 == t) {
+                p_x1 *= (beta[k](w[k](d,n)-1) + WY1ZX[k](w[k](d,n)-1,t) + num1_count(t)) / (beta_sum(k) + sum(WY1ZX[k](_, t)) + den1_count(t));
                 num1_count(t) = num1_count(t) + 1;
                 den1_count(t) = den1_count(t) + 1;
-              }
-              if (zstar(d) == t+1) {
-                p_x0 *= (beta[k](w[k](d,n)-1) + WY1ZX[k](w[k](d,n)-1,t) + num0_count) / (beta_sum(k) + sum(WY1ZX[k](_, t) + den0_count));
-                num0_count++;
-                den0_count++;
               }
             }
           }
         }
+        int num0_count = 0;
+        int den0_count = 0;
+        if (y[k](d, 0) == 1) {
+          p_x0 *= (beta[k](w[k](d,0)-1) + WY1ZX[k](w[k](d,0)-1,zstar(d)-1)) / (beta_sum(k) + sum(WY1ZX[k](_,zstar(d)-1)));
+          num0_count++;
+          den0_count++;
+        }
+        for (n = 1; n < N(d, k); n++) {
+          num0_count *= (w[k](d, n-1) == w[k](d, n));
+          if (y[k](d, n) == 1) {
+            p_x0 *= (beta[k](w[k](d,n)-1) + WY1ZX[k](w[k](d,n)-1,zstar(d)-1) + num0_count) / (beta_sum(k) + sum(WY1ZX[k](_,zstar(d)-1)) + den0_count);
+            num0_count++;
+            den0_count++;
+          }
+        }
+        // Rcout << p_x0 << "\t" << p_x1 << "  (" << k+1 << ")\n";
       }
       // sample new value
       x(d) = R::rbinom(1, p_x1 / (p_x0+p_x1));
