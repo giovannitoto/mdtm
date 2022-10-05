@@ -113,12 +113,120 @@ BEGIN_RCPP
     return R_NilValue;
 END_RCPP
 }
+// update_counts_LDA
+void update_counts_LDA(IntegerMatrix w, NumericVector alpha, int TOPICS, int D, IntegerVector N, IntegerMatrix& zV, NumericMatrix& WY1ZX, NumericMatrix& Z, bool update_state);
+RcppExport SEXP _mdtm_update_counts_LDA(SEXP wSEXP, SEXP alphaSEXP, SEXP TOPICSSEXP, SEXP DSEXP, SEXP NSEXP, SEXP zVSEXP, SEXP WY1ZXSEXP, SEXP ZSEXP, SEXP update_stateSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerMatrix >::type w(wSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type alpha(alphaSEXP);
+    Rcpp::traits::input_parameter< int >::type TOPICS(TOPICSSEXP);
+    Rcpp::traits::input_parameter< int >::type D(DSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type N(NSEXP);
+    Rcpp::traits::input_parameter< IntegerMatrix& >::type zV(zVSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix& >::type WY1ZX(WY1ZXSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix& >::type Z(ZSEXP);
+    Rcpp::traits::input_parameter< bool >::type update_state(update_stateSEXP);
+    update_counts_LDA(w, alpha, TOPICS, D, N, zV, WY1ZX, Z, update_state);
+    return R_NilValue;
+END_RCPP
+}
+// update_counts_TwitterLDA
+void update_counts_TwitterLDA(IntegerMatrix w, IntegerVector doc_users, NumericVector alphastar, NumericVector bV, int TOPICS, int D, IntegerVector N, IntegerVector& zstar, IntegerMatrix& yV, NumericMatrix& WY1ZX, NumericMatrix& Zstar, double& Yv1, NumericVector& WY0, bool update_state);
+RcppExport SEXP _mdtm_update_counts_TwitterLDA(SEXP wSEXP, SEXP doc_usersSEXP, SEXP alphastarSEXP, SEXP bVSEXP, SEXP TOPICSSEXP, SEXP DSEXP, SEXP NSEXP, SEXP zstarSEXP, SEXP yVSEXP, SEXP WY1ZXSEXP, SEXP ZstarSEXP, SEXP Yv1SEXP, SEXP WY0SEXP, SEXP update_stateSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerMatrix >::type w(wSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type doc_users(doc_usersSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type alphastar(alphastarSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type bV(bVSEXP);
+    Rcpp::traits::input_parameter< int >::type TOPICS(TOPICSSEXP);
+    Rcpp::traits::input_parameter< int >::type D(DSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type N(NSEXP);
+    Rcpp::traits::input_parameter< IntegerVector& >::type zstar(zstarSEXP);
+    Rcpp::traits::input_parameter< IntegerMatrix& >::type yV(yVSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix& >::type WY1ZX(WY1ZXSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix& >::type Zstar(ZstarSEXP);
+    Rcpp::traits::input_parameter< double& >::type Yv1(Yv1SEXP);
+    Rcpp::traits::input_parameter< NumericVector& >::type WY0(WY0SEXP);
+    Rcpp::traits::input_parameter< bool >::type update_state(update_stateSEXP);
+    update_counts_TwitterLDA(w, doc_users, alphastar, bV, TOPICS, D, N, zstar, yV, WY1ZX, Zstar, Yv1, WY0, update_state);
+    return R_NilValue;
+END_RCPP
+}
+// update_counts_HashtagLDA
+void update_counts_HashtagLDA(IntegerMatrix w, IntegerMatrix h, IntegerVector doc_users, NumericVector alphastar, NumericVector bH, int TOPICS, int D, IntegerVector N, IntegerVector L, IntegerVector& zstar, IntegerMatrix& yH, NumericMatrix& WY1ZX, NumericMatrix& HY1ZX, NumericMatrix& Zstar, double& Yh1, NumericVector& HY0, bool update_state);
+RcppExport SEXP _mdtm_update_counts_HashtagLDA(SEXP wSEXP, SEXP hSEXP, SEXP doc_usersSEXP, SEXP alphastarSEXP, SEXP bHSEXP, SEXP TOPICSSEXP, SEXP DSEXP, SEXP NSEXP, SEXP LSEXP, SEXP zstarSEXP, SEXP yHSEXP, SEXP WY1ZXSEXP, SEXP HY1ZXSEXP, SEXP ZstarSEXP, SEXP Yh1SEXP, SEXP HY0SEXP, SEXP update_stateSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerMatrix >::type w(wSEXP);
+    Rcpp::traits::input_parameter< IntegerMatrix >::type h(hSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type doc_users(doc_usersSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type alphastar(alphastarSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type bH(bHSEXP);
+    Rcpp::traits::input_parameter< int >::type TOPICS(TOPICSSEXP);
+    Rcpp::traits::input_parameter< int >::type D(DSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type N(NSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type L(LSEXP);
+    Rcpp::traits::input_parameter< IntegerVector& >::type zstar(zstarSEXP);
+    Rcpp::traits::input_parameter< IntegerMatrix& >::type yH(yHSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix& >::type WY1ZX(WY1ZXSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix& >::type HY1ZX(HY1ZXSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix& >::type Zstar(ZstarSEXP);
+    Rcpp::traits::input_parameter< double& >::type Yh1(Yh1SEXP);
+    Rcpp::traits::input_parameter< NumericVector& >::type HY0(HY0SEXP);
+    Rcpp::traits::input_parameter< bool >::type update_state(update_stateSEXP);
+    update_counts_HashtagLDA(w, h, doc_users, alphastar, bH, TOPICS, D, N, L, zstar, yH, WY1ZX, HY1ZX, Zstar, Yh1, HY0, update_state);
+    return R_NilValue;
+END_RCPP
+}
+// update_counts_MicroblogLDA
+void update_counts_MicroblogLDA(std::vector<NumericMatrix> w, IntegerVector doc_users, IntegerVector Dusers, NumericVector alphastar, NumericVector alpha, std::vector<NumericVector> beta, NumericMatrix b, NumericVector bdelta, NumericVector bT, double alpha0, int TOPICS, int K, int U, int D, IntegerMatrix N, IntegerVector& x, IntegerVector& zstar, NumericMatrix& lambda, std::vector<IntegerMatrix>& y, std::vector<IntegerMatrix>& z, NumericVector& X1, NumericMatrix& Zstar, double& LAMBDA1, NumericMatrix& Z, NumericVector& Yv1, std::vector<NumericMatrix>& WY1ZX, std::vector<NumericVector>& WY0, bool update_state);
+RcppExport SEXP _mdtm_update_counts_MicroblogLDA(SEXP wSEXP, SEXP doc_usersSEXP, SEXP DusersSEXP, SEXP alphastarSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP bSEXP, SEXP bdeltaSEXP, SEXP bTSEXP, SEXP alpha0SEXP, SEXP TOPICSSEXP, SEXP KSEXP, SEXP USEXP, SEXP DSEXP, SEXP NSEXP, SEXP xSEXP, SEXP zstarSEXP, SEXP lambdaSEXP, SEXP ySEXP, SEXP zSEXP, SEXP X1SEXP, SEXP ZstarSEXP, SEXP LAMBDA1SEXP, SEXP ZSEXP, SEXP Yv1SEXP, SEXP WY1ZXSEXP, SEXP WY0SEXP, SEXP update_stateSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< std::vector<NumericMatrix> >::type w(wSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type doc_users(doc_usersSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type Dusers(DusersSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type alphastar(alphastarSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type alpha(alphaSEXP);
+    Rcpp::traits::input_parameter< std::vector<NumericVector> >::type beta(betaSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type b(bSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type bdelta(bdeltaSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type bT(bTSEXP);
+    Rcpp::traits::input_parameter< double >::type alpha0(alpha0SEXP);
+    Rcpp::traits::input_parameter< int >::type TOPICS(TOPICSSEXP);
+    Rcpp::traits::input_parameter< int >::type K(KSEXP);
+    Rcpp::traits::input_parameter< int >::type U(USEXP);
+    Rcpp::traits::input_parameter< int >::type D(DSEXP);
+    Rcpp::traits::input_parameter< IntegerMatrix >::type N(NSEXP);
+    Rcpp::traits::input_parameter< IntegerVector& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< IntegerVector& >::type zstar(zstarSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix& >::type lambda(lambdaSEXP);
+    Rcpp::traits::input_parameter< std::vector<IntegerMatrix>& >::type y(ySEXP);
+    Rcpp::traits::input_parameter< std::vector<IntegerMatrix>& >::type z(zSEXP);
+    Rcpp::traits::input_parameter< NumericVector& >::type X1(X1SEXP);
+    Rcpp::traits::input_parameter< NumericMatrix& >::type Zstar(ZstarSEXP);
+    Rcpp::traits::input_parameter< double& >::type LAMBDA1(LAMBDA1SEXP);
+    Rcpp::traits::input_parameter< NumericMatrix& >::type Z(ZSEXP);
+    Rcpp::traits::input_parameter< NumericVector& >::type Yv1(Yv1SEXP);
+    Rcpp::traits::input_parameter< std::vector<NumericMatrix>& >::type WY1ZX(WY1ZXSEXP);
+    Rcpp::traits::input_parameter< std::vector<NumericVector>& >::type WY0(WY0SEXP);
+    Rcpp::traits::input_parameter< bool >::type update_state(update_stateSEXP);
+    update_counts_MicroblogLDA(w, doc_users, Dusers, alphastar, alpha, beta, b, bdelta, bT, alpha0, TOPICS, K, U, D, N, x, zstar, lambda, y, z, X1, Zstar, LAMBDA1, Z, Yv1, WY1ZX, WY0, update_state);
+    return R_NilValue;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_mdtm_rcpp_CGS_HashtagLDA", (DL_FUNC) &_mdtm_rcpp_CGS_HashtagLDA, 20},
     {"_mdtm_rcpp_CGS_LDA", (DL_FUNC) &_mdtm_rcpp_CGS_LDA, 11},
     {"_mdtm_rcpp_CGS_MicroblogLDA", (DL_FUNC) &_mdtm_rcpp_CGS_MicroblogLDA, 21},
     {"_mdtm_rcpp_CGS_TwitterLDA", (DL_FUNC) &_mdtm_rcpp_CGS_TwitterLDA, 15},
+    {"_mdtm_update_counts_LDA", (DL_FUNC) &_mdtm_update_counts_LDA, 9},
+    {"_mdtm_update_counts_TwitterLDA", (DL_FUNC) &_mdtm_update_counts_TwitterLDA, 14},
+    {"_mdtm_update_counts_HashtagLDA", (DL_FUNC) &_mdtm_update_counts_HashtagLDA, 17},
+    {"_mdtm_update_counts_MicroblogLDA", (DL_FUNC) &_mdtm_update_counts_MicroblogLDA, 28},
     {NULL, NULL, 0}
 };
 

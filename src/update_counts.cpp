@@ -7,6 +7,7 @@ using namespace Rcpp;
 
 // -----------------------------------------------------------------------------
 
+// [[Rcpp::export]]
 void update_counts_LDA(IntegerMatrix w,
                        NumericVector alpha,
                        int TOPICS, int D, IntegerVector N,
@@ -26,6 +27,7 @@ void update_counts_LDA(IntegerMatrix w,
 
 // -----------------------------------------------------------------------------
 
+// [[Rcpp::export]]
 void update_counts_TwitterLDA(IntegerMatrix w, IntegerVector doc_users,
                               NumericVector alphastar, NumericVector bV,
                               int TOPICS, int D, IntegerVector N,
@@ -59,6 +61,7 @@ void update_counts_TwitterLDA(IntegerMatrix w, IntegerVector doc_users,
 
 // -----------------------------------------------------------------------------
 
+// [[Rcpp::export]]
 void update_counts_HashtagLDA(IntegerMatrix w, IntegerMatrix h, IntegerVector doc_users,
                               NumericVector alphastar, NumericVector bH,
                               int TOPICS, int D, IntegerVector N, IntegerVector L,
@@ -97,6 +100,7 @@ void update_counts_HashtagLDA(IntegerMatrix w, IntegerMatrix h, IntegerVector do
 
 // -----------------------------------------------------------------------------
 
+// [[Rcpp::export]]
 void update_counts_MicroblogLDA(std::vector<NumericMatrix> w,
                                 IntegerVector doc_users, IntegerVector Dusers,
                                 NumericVector alphastar, NumericVector alpha,

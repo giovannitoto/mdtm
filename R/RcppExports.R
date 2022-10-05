@@ -17,3 +17,19 @@ rcpp_CGS_TwitterLDA <- function(w, doc_users, alphastar, betaV, bV, iterations, 
     invisible(.Call(`_mdtm_rcpp_CGS_TwitterLDA`, w, doc_users, alphastar, betaV, bV, iterations, TOPICS, U, D, V, N, N_sum, Nmax, betaV_sum, result_folder))
 }
 
+update_counts_LDA <- function(w, alpha, TOPICS, D, N, zV, WY1ZX, Z, update_state) {
+    invisible(.Call(`_mdtm_update_counts_LDA`, w, alpha, TOPICS, D, N, zV, WY1ZX, Z, update_state))
+}
+
+update_counts_TwitterLDA <- function(w, doc_users, alphastar, bV, TOPICS, D, N, zstar, yV, WY1ZX, Zstar, Yv1, WY0, update_state) {
+    invisible(.Call(`_mdtm_update_counts_TwitterLDA`, w, doc_users, alphastar, bV, TOPICS, D, N, zstar, yV, WY1ZX, Zstar, Yv1, WY0, update_state))
+}
+
+update_counts_HashtagLDA <- function(w, h, doc_users, alphastar, bH, TOPICS, D, N, L, zstar, yH, WY1ZX, HY1ZX, Zstar, Yh1, HY0, update_state) {
+    invisible(.Call(`_mdtm_update_counts_HashtagLDA`, w, h, doc_users, alphastar, bH, TOPICS, D, N, L, zstar, yH, WY1ZX, HY1ZX, Zstar, Yh1, HY0, update_state))
+}
+
+update_counts_MicroblogLDA <- function(w, doc_users, Dusers, alphastar, alpha, beta, b, bdelta, bT, alpha0, TOPICS, K, U, D, N, x, zstar, lambda, y, z, X1, Zstar, LAMBDA1, Z, Yv1, WY1ZX, WY0, update_state) {
+    invisible(.Call(`_mdtm_update_counts_MicroblogLDA`, w, doc_users, Dusers, alphastar, alpha, beta, b, bdelta, bT, alpha0, TOPICS, K, U, D, N, x, zstar, lambda, y, z, X1, Zstar, LAMBDA1, Z, Yv1, WY1ZX, WY0, update_state))
+}
+
