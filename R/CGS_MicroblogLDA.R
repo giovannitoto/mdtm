@@ -33,11 +33,6 @@ CGS_MicroblogLDA <- function(w, doc_users, alphastar, alpha, beta, b, bdelta, bT
   for (k in 1:K) {
     N[, k] <- apply(w[[k]], 1, function(x) sum(x > 0))
   }
-  N_sum <- apply(N, 2, sum)
-  Nmax <- apply(N, 2, max)
-  beta_sum <- sapply(beta, sum)
-  Dusers <- sapply(1:U, function(uu) sum(doc_users==uu))
-  b <- simplify2array(b)
   # -------------------------------------------------------------------------- #
   # Creo cartella in cui salvare gli stati della catena
   result_folder <- file.path(getwd(), result_folder)
@@ -47,10 +42,20 @@ CGS_MicroblogLDA <- function(w, doc_users, alphastar, alpha, beta, b, bdelta, bT
       dir.create(file.path(result_folder, m))
     }
   } else {
-    cat("\n'",result_folder,"' already exists: select another value for the 'result_folder' argument.\n", sep="")
-    return(NULL)
+    stop("\n'",result_folder,"' already exists: select another value for the 'result_folder' argument.\n", sep="")
   }
   # -------------------------------------------------------------------------- #
+  hyper <- list("w" = w, "doc_users" = doc_users,
+                "alphastar" = alphastar, "alpha" = alpha, "beta" = beta, "b" = b, "bdelta" = bdelta,
+                "bT" = bT, "alpha0" = alpha0, "iterations" = iterations, "seed" = seed,
+                "T" = TOPICS, "K" = K, "U" = U, "D" = D, "V" = V, "N" = N)
+  saveRDS(hyper, file.path(result_folder, "hyperparameters.RDS"))
+  # -------------------------------------------------------------------------- #
+  N_sum <- apply(N, 2, sum)
+  Nmax <- apply(N, 2, max)
+  beta_sum <- sapply(beta, sum)
+  Dusers <- sapply(1:U, function(uu) sum(doc_users==uu))
+  b <- simplify2array(b)
   rcpp_CGS_MicroblogLDA(w, doc_users-1, alphastar, alpha, beta, b,
                         bdelta, bT, alpha0, iterations, TOPICS, K, U, D, V,
                         N, N_sum, Nmax, beta_sum, Dusers, result_folder)

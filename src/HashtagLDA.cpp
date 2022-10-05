@@ -1,6 +1,7 @@
 // -----------------------------------------------------------------------------
 
 #include <Rcpp.h>
+#include "update_counts.h"
 #include <ctime>
 using namespace Rcpp;
 
@@ -34,34 +35,17 @@ void rcpp_CGS_HashtagLDA(IntegerMatrix w, IntegerMatrix h,
   double Yh1 = 0.0;
   NumericVector HY0(H);
   // state of the chain
-  tt = std::time(nullptr);
-  std::strftime(mbstr, sizeof(mbstr), "%Y-%m-%d %H:%M:%S", std::localtime(&tt));
-  Rcout << mbstr << " Generation of the first state\n";
   IntegerVector zstar(D);
   IntegerMatrix yH(D, Lmax);
   // initialization of the first state
-  for (d = 0; d < D; d++) {
-    u = doc_users(d);
-    // sample
-    zstar(d) = sample(TOPICS, 1, true, alphastar, true)(0);
-    // update counts
-    Zstar(u, zstar(d)-1) = Zstar(u, zstar(d)-1) + 1;
-    for (n = 0; n < N(d); n++) {
-      // update counts
-      WY1ZX(w(d,n)-1, zstar(d)-1) = WY1ZX(w(d,n)-1, zstar(d)-1) + 1;
-    }
-    for (l = 0; l < L(d); l++) {
-      // sample
-      yH(d, l) = R::rbinom(1, bH(0) / sum(bH));
-      // update counts
-      if(yH(d, l) == 1) {
-        HY1ZX(h(d,l)-1, zstar(d)-1) = HY1ZX(h(d,l)-1, zstar(d)-1) + 1;
-        Yh1 = Yh1 + 1;
-      } else {
-        HY0(h(d,l)-1) = HY0(h(d,l)-1) + 1;
-      }
-    }
-  }
+  tt = std::time(nullptr);
+  std::strftime(mbstr, sizeof(mbstr), "%Y-%m-%d %H:%M:%S", std::localtime(&tt));
+  Rcout << mbstr << " Generation of the first state\n";
+  update_counts_HashtagLDA(w, h, doc_users, alphastar, bH, TOPICS, D, N, L,
+                           zstar, yH, WY1ZX, HY1ZX, Zstar, Yh1, HY0, true);
+  // save first state of the chain
+  saveRDS(zstar, Named("file", result_folder + "/" + std::to_string(0) + "/zstar.RDS"));
+  saveRDS(yH, Named("file", result_folder + "/" + std::to_string(0) + "/yH.RDS"));
   // END COUNTS AND FIRST STATE
   // ---------------------------------------------------------------------------
   // START COLLAPSED GIBBS SAMPLER

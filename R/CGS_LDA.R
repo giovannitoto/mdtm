@@ -21,21 +21,25 @@ CGS_LDA <- function(w, alpha, betaV, iterations = 300, seed = 28, result_folder)
   D <- nrow(w)
   V <- length(betaV)
   N <- apply(w, 1, function(x) sum(x > 0))
-  Nmax <- max(N)
-  betaV_sum <- sum(betaV)
   # -------------------------------------------------------------------------- #
   # Creo cartella in cui salvare gli stati della catena
   result_folder <- file.path(getwd(), result_folder)
   if(!dir.exists(result_folder)) {
     dir.create(result_folder)
-    for (m in 1:iterations) {
+    for (m in 0:iterations) {
       dir.create(file.path(result_folder, m))
     }
   } else {
-    cat("\n'",result_folder,"' already exists: select another value for the 'result_folder' argument.\n", sep="")
-    return(NULL)
+    stop("\n'",result_folder,"' already exists: select another value for the 'result_folder' argument.\n", sep="")
   }
   # -------------------------------------------------------------------------- #
+  hyper <- list("w" = w, "alpha" = alpha, "betaV" = betaV,
+                "iterations" = iterations, "seed" = seed,
+                "T" = TOPICS, "D" = D, "V" = V, "N" = N)
+  saveRDS(hyper, file.path(result_folder, "hyperparameters.RDS"))
+  # -------------------------------------------------------------------------- #
+  Nmax <- max(N)
+  betaV_sum <- sum(betaV)
   rcpp_CGS_LDA(w, alpha, betaV, iterations, TOPICS, D, V, N, Nmax, betaV_sum, result_folder)
   # -------------------------------------------------------------------------- #
   cat("\n", as.character(Sys.time()), " END", sep="")

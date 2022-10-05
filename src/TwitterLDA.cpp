@@ -1,6 +1,7 @@
 // -----------------------------------------------------------------------------
 
 #include <Rcpp.h>
+#include "update_counts.h"
 #include <ctime>
 using namespace Rcpp;
 
@@ -24,7 +25,7 @@ void rcpp_CGS_TwitterLDA(IntegerMatrix w, IntegerVector doc_users,
   // START COUNTS AND FIRST STATE
   tt = std::time(nullptr);
   std::strftime(mbstr, sizeof(mbstr), "%Y-%m-%d %H:%M:%S", std::localtime(&tt));
-  Rcout << mbstr << " Creation of the matrices of counts and Generation of the first state\n";
+  Rcout << mbstr << " Creation of the matrices of counts\n";
   // matrices of counts
   NumericMatrix WY1ZX(V, TOPICS);
   NumericMatrix Zstar(U, TOPICS);
@@ -34,24 +35,14 @@ void rcpp_CGS_TwitterLDA(IntegerMatrix w, IntegerVector doc_users,
   IntegerVector zstar(D);
   IntegerMatrix yV(D, Nmax);
   // initialization of the first state
-  for (d = 0; d < D; d++) {
-    u = doc_users(d);
-    // sample
-    zstar(d) = sample(TOPICS, 1, true, alphastar, true)(0);
-    // update counts
-    Zstar(u, zstar(d)-1) = Zstar(u, zstar(d)-1) + 1;
-    for (n = 0; n < N(d); n++) {
-      // sample
-      yV(d, n) = R::rbinom(1, bV(0) / sum(bV));
-      // update counts
-      if(yV(d, n) == 1) {
-        WY1ZX(w(d,n)-1, zstar(d)-1) = WY1ZX(w(d,n)-1, zstar(d)-1) + 1;
-        Yv1 = Yv1 + 1;
-      } else {
-        WY0(w(d,n)-1) = WY0(w(d,n)-1) + 1;
-      }
-    }
-  }
+  tt = std::time(nullptr);
+  std::strftime(mbstr, sizeof(mbstr), "%Y-%m-%d %H:%M:%S", std::localtime(&tt));
+  Rcout << mbstr << " Generation of the first state\n";
+  update_counts_TwitterLDA(w, doc_users, alphastar, bV, TOPICS, D, N,
+                           zstar, yV, WY1ZX, Zstar, Yv1, WY0, true);
+  // save first state of the chain
+  saveRDS(zstar, Named("file", result_folder + "/" + std::to_string(0) + "/zstar.RDS"));
+  saveRDS(yV, Named("file", result_folder + "/" + std::to_string(0) + "/yV.RDS"));
   // END COUNTS AND FIRST STATE
   // ---------------------------------------------------------------------------
   // START COLLAPSED GIBBS SAMPLER

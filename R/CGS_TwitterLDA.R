@@ -25,22 +25,27 @@ CGS_TwitterLDA <- function(w, doc_users, alphastar, betaV, bV,
   D <- length(doc_users)
   V <- length(betaV)
   N <- apply(w, 1, function(x) sum(x > 0))
-  N_sum <- sum(N)
-  Nmax <- max(N)
-  betaV_sum <- sum(betaV)
   # -------------------------------------------------------------------------- #
   # Creo cartella in cui salvare gli stati della catena
   result_folder <- file.path(getwd(), result_folder)
   if(!dir.exists(result_folder)) {
     dir.create(result_folder)
-    for (m in 1:iterations) {
+    for (m in 0:iterations) {
       dir.create(file.path(result_folder, m))
     }
   } else {
-    cat("\n'",result_folder,"' already exists: select another value for the 'result_folder' argument.\n", sep="")
-    return(NULL)
+    stop("\n'",result_folder,"' already exists: select another value for the 'result_folder' argument.\n", sep="")
   }
   # -------------------------------------------------------------------------- #
+  hyper <- list("w" = w, "doc_users" = doc_users,
+                "alphastar" = alpha, "betaV" = betaV, "bV" = bV,
+                "iterations" = iterations, "seed" = seed,
+                "T" = TOPICS, "U" = U, "D" = D, "V" = V, "N" = N)
+  saveRDS(hyper, file.path(result_folder, "hyperparameters.RDS"))
+  # -------------------------------------------------------------------------- #
+  N_sum <- sum(N)
+  Nmax <- max(N)
+  betaV_sum <- sum(betaV)
   rcpp_CGS_TwitterLDA(w, doc_users-1, alphastar, betaV, bV, iterations, TOPICS,
                       U, D, V, N, N_sum, Nmax, betaV_sum, result_folder)
   # -------------------------------------------------------------------------- #

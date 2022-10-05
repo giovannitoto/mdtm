@@ -1,6 +1,7 @@
 // -----------------------------------------------------------------------------
 
 #include <Rcpp.h>
+#include "update_counts.h"
 #include <ctime>
 using namespace Rcpp;
 
@@ -53,45 +54,15 @@ void rcpp_CGS_MicroblogLDA(std::vector<NumericMatrix> w,
     y[k] = IntegerMatrix(D, Nmax(k));
     z[k] = IntegerMatrix(D, Nmax(k));
   }
+  // sample first state of the chain
   tt = std::time(nullptr);
   std::strftime(mbstr, sizeof(mbstr), "%Y-%m-%d %H:%M:%S", std::localtime(&tt));
   Rcout << mbstr << " Generation of the first state\n";
-  // sample first state of the chain
-  for (d = 0; d < D; d++) {
-    u = doc_users(d);
-    // sample values
-    x(d) = R::rbinom(1, bT(0) / sum(bT));
-    zstar(d) = sample(TOPICS, 1, true, alphastar, true)(0);
-    // update counts
-    X1(u) = X1(u) + x(d);
-    Zstar(u, zstar(d)-1) = Zstar(u, zstar(d)-1) + 1;
-    // sample and update
-    for (t = 0; t < TOPICS; t++) {
-      lambda(d, t) = R::rbinom(1, bdelta(0) / sum(bdelta));
-      LAMBDA1 += lambda(d, t);
-    }
-    for (k = 0; k < K; k++) {
-      for (n = 0; n < N(d, k); n++) {
-        // sample values
-        y[k](d, n) = R::rbinom(1, b(0,k) / sum(b(_,k)));
-        z[k](d, n) = sample(TOPICS, 1, true, alpha, true)(0);
-        // update counts
-        Z(d, z[k](d,n)-1) = Z(d, z[k](d,n)-1) + 1;
-        if (y[k](d, n) == 1) {
-          if (x(d) == 1) {
-            WY1ZX[k](w[k](d,n)-1, z[k](d,n)-1) = WY1ZX[k](w[k](d,n)-1, z[k](d,n)-1) + 1;
-          } else {
-            WY1ZX[k](w[k](d,n)-1, zstar(d)-1) = WY1ZX[k](w[k](d,n)-1, zstar(d)-1) + 1;
-          }
-          Yv1(k) = Yv1(k) + 1;
-        } else{
-          WY0[k](w[k](d,n)-1) = WY0[k](w[k](d,n)-1) + 1;
-        }
-      }
-      // END - descriptor k
-    }
-    // END - document d
-  }
+  update_counts_MicroblogLDA(w, doc_users, Dusers, alphastar,
+                             alpha, beta, b, bdelta, bT, alpha0,
+                             TOPICS, K, U, D, N,
+                             x, zstar, lambda, y, z,
+                             X1, Zstar, LAMBDA1, Z, Yv1, WY1ZX, WY0, true);
   // save first state of the chain
   saveRDS(x, Named("file", result_folder + "/" + std::to_string(0) + "/x.RDS"));
   saveRDS(zstar, Named("file", result_folder + "/" + std::to_string(0) + "/zstar.RDS"));

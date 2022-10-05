@@ -29,23 +29,28 @@ CGS_HashtagLDA <- function(w, h, doc_users, alphastar, betaV, betaH, bH,
   H <- length(betaH)
   N <- apply(w, 1, function(x) sum(x > 0))
   L <- apply(h, 1, function(x) sum(x > 0))
-  L_sum <- sum(L)
-  Lmax <- max(L)
-  betaV_sum <- sum(betaV)
-  betaH_sum <- sum(betaH)
   # -------------------------------------------------------------------------- #
   # Creo cartella in cui salvare gli stati della catena
   result_folder <- file.path(getwd(), result_folder)
   if(!dir.exists(result_folder)) {
     dir.create(result_folder)
-    for (m in 1:iterations) {
+    for (m in 0:iterations) {
       dir.create(file.path(result_folder, m))
     }
   } else {
-    cat("\n'",result_folder,"' already exists: select another value for the 'result_folder' argument.\n", sep="")
-    return(NULL)
+    stop("\n'",result_folder,"' already exists: select another value for the 'result_folder' argument.\n", sep="")
   }
   # -------------------------------------------------------------------------- #
+  hyper <- list("w" = w, "h" = h, "doc_users" = doc_users,
+                "alphastar" = alphastar, "betaV" = betaV, "betaH" = betaH, "bH" = bH,
+                "iterations" = iterations, "seed" = seed,
+                "T" = TOPICS, "U" = U, "D" = D, "V" = V, "H" = H, "N" = N, "L" = L)
+  saveRDS(hyper, file.path(result_folder, "hyperparameters.RDS"))
+  # -------------------------------------------------------------------------- #
+  L_sum <- sum(L)
+  Lmax <- max(L)
+  betaV_sum <- sum(betaV)
+  betaH_sum <- sum(betaH)
   rcpp_CGS_HashtagLDA(w, h, doc_users-1, alphastar, betaV, betaH, bH,
                       iterations, TOPICS, U, D, V, H, N, L, L_sum, Lmax,
                       betaV_sum, betaH_sum, result_folder)
