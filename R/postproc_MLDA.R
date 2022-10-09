@@ -20,6 +20,10 @@ postproc_MicroblogLDA <- function(result_folder, postproc_file, iterations = NUL
   x_est <- rep(0, hyper$D)
   zstar_est <- matrix(0, nrow = hyper$D, ncol = length(iterations))
   lambda_est <- matrix(0, nrow = hyper$D, ncol = hyper$T)
+  y_est <- list()
+  for (k in 1:hyper$K) {
+    y_est[[k]] <- matrix(0, nrow = hyper$D, ncol = max(hyper$N[, k]))
+  }
   thetastar_est <- matrix(0, nrow = hyper$U, ncol = hyper$T)
   theta_est <- matrix(0, nrow = hyper$D, ncol = hyper$T)
   piT_est <- 0
@@ -41,6 +45,7 @@ postproc_MicroblogLDA <- function(result_folder, postproc_file, iterations = NUL
     for (k in 1:hyper$K) {
       y[[k]] <- readRDS(file.path(result_folder, m, paste("y", k, ".RDS", sep="")))
       z[[k]] <- readRDS(file.path(result_folder, m, paste("z", k, ".RDS", sep="")))
+      if(m %in% iterations) y_est[[k]] <- y_est[[k]] + y[[k]]
     }
     if(m %in% iterations) x_est <- x_est + x
     if(m %in% iterations) zstar_est[, m] <- zstar
@@ -103,6 +108,9 @@ postproc_MicroblogLDA <- function(result_folder, postproc_file, iterations = NUL
   x_est <- x_est / length(iterations)
   zstar_est <- apply(zstar_est, 1, Mode)
   lambda_est <-lambda_est / length(iterations)
+  for (k in 1:hyper$K) {
+    y_est[[k]] <- y_est[[k]] / length(iterations)
+  }
   thetastar_est <- thetastar_est / length(iterations)
   theta_est <- theta_est / length(iterations)
   lambda_est <- lambda_est / length(iterations)
@@ -114,10 +122,20 @@ postproc_MicroblogLDA <- function(result_folder, postproc_file, iterations = NUL
     pi_est[[k]] <- pi_est[[k]] / length(iterations)
   }
   # -------------------------------------------------------------------------- #
-  output <- list("loglik" = loglik_list, "iterations" = iterations,
-                 "x" = x_est, "zstar" = zstar_est, "lambda" = lambda_est,
-                 "piT" = piT_est, "thetastar" = thetastar_est, "theta" = theta_est,
-                 "delta" = delta_est, "phi" = phi_est, "phiB" = phiB_est, "pi" = pi_est)
-  saveRDS(output, file.path(result_folder, paste(postproc_file, ".RDS", sep="")))
+  hyper[["loglik"]] <- loglik_list
+  hyper[["iterations"]] <- iterations
+  hyper[["x"]] <- x_est
+  hyper[["zstar"]] <- zstar_est
+  hyper[["lambda"]] <- lambda_est
+  hyper[["y"]] <- y_est
+  hyper[["piT"]] <- piT_est
+  hyper[["thetastar"]] <- thetastar_est
+  hyper[["theta"]] <- theta_est
+  hyper[["delta"]] <- delta_est
+  hyper[["phi"]] <- phi_est
+  hyper[["phiB"]] <- phiB_est
+  hyper[["pi"]] <- pi_est
+  # -------------------------------------------------------------------------- #
+  saveRDS(hyper, file.path(result_folder, paste(postproc_file, ".RDS", sep="")))
   # -------------------------------------------------------------------------- #
 }

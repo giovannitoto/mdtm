@@ -16,6 +16,7 @@ postproc_HashtagLDA <- function(result_folder, postproc_file, iterations = NULL,
   L_sum <- sum(hyper$L)
   loglik_list <- rep(0, hyper$iterations)
   zstar_est <- matrix(0, nrow = hyper$D, ncol = length(iterations))
+  yH_est <- matrix(0, nrow = hyper$D, ncol = max(hyper$L))
   thetastar_est <- matrix(0, nrow = hyper$U, ncol = hyper$T)
   phi_est <- matrix(0, nrow = hyper$T, ncol = hyper$V)
   psi_est <- matrix(0, nrow = hyper$T, ncol = hyper$H)
@@ -28,6 +29,7 @@ postproc_HashtagLDA <- function(result_folder, postproc_file, iterations = NULL,
     zstar <- readRDS(file.path(result_folder, m, "zstar.RDS"))
     yH <- readRDS(file.path(result_folder, m, "yH.RDS"))
     if(m %in% iterations) zstar_est[, m] <- zstar
+    if(m %in% iterations) yH_est <- yH_est + yH
     # create matrices of counts
     WY1ZX <- matrix(0, nrow = hyper$V, ncol = hyper$T)
     HY1ZX <- matrix(0, nrow = hyper$H, ncol = hyper$T)
@@ -64,15 +66,23 @@ postproc_HashtagLDA <- function(result_folder, postproc_file, iterations = NULL,
   }
   # MCMC estimates
   zstar_est <- apply(zstar_est, 1, Mode)
+  yH_est <- yH_est / length(iterations)
   thetastar_est <- thetastar_est / length(iterations)
   phi_est <- phi_est / length(iterations)
   psi_est <- psi_est / length(iterations)
   psiB_est <- psiB_est / length(iterations)
   piH_est <- piH_est / length(iterations)
   # -------------------------------------------------------------------------- #
-  output <- list("loglik" = loglik_list, "iterations" = iterations,
-                 "thetastar" = thetastar_est, "phi" = phi_est, "psi" = psi_est,
-                 "psiB" = psiB_est, "piH" = piH_est)
-  saveRDS(output, file.path(result_folder, paste(postproc_file, ".RDS", sep="")))
+  hyper[["loglik"]] <- loglik_list
+  hyper[["iterations"]] <- iterations
+  hyper[["zstar"]] <- zstar_est
+  hyper[["yH"]] <- yH_est
+  hyper[["thetastar"]] <- thetastar_est
+  hyper[["phi"]] <- phi_est
+  hyper[["psi"]] <- psi_est
+  hyper[["psiB"]] <- psiB_est
+  hyper[["piH"]] <- piH_est
+  # -------------------------------------------------------------------------- #
+  saveRDS(hyper, file.path(result_folder, paste(postproc_file, ".RDS", sep="")))
   # -------------------------------------------------------------------------- #
 }

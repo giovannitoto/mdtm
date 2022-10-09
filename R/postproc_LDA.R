@@ -1,3 +1,4 @@
+# ---------------------------------------------------------------------------- #
 
 postproc_LDA <- function(result_folder, postproc_file, iterations = NULL, verbose = TRUE) {
   # -------------------------------------------------------------------------- #
@@ -43,8 +44,13 @@ postproc_LDA <- function(result_folder, postproc_file, iterations = NULL, verbos
   theta_est <- theta_est / length(iterations)
   phi_est <- phi_est / length(iterations)
   # -------------------------------------------------------------------------- #
-  output <- list("loglik" = loglik_list, "iterations" = iterations,
-                 "theta" = theta_est, "phi" = phi_est)
-  saveRDS(output, file.path(result_folder, paste(postproc_file, ".RDS", sep="")))
+  hyper[["loglik"]] <- loglik_list
+  hyper[["iterations"]] <- iterations
+  hyper[["theta"]] <- theta_est
+  hyper[["phi"]] <- phi_est
+  # -------------------------------------------------------------------------- #
+  saveRDS(hyper, file.path(result_folder, paste(postproc_file, ".RDS", sep="")))
   # -------------------------------------------------------------------------- #
 }
+
+# ---------------------------------------------------------------------------- #

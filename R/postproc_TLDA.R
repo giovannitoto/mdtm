@@ -16,6 +16,7 @@ postproc_TwitterLDA <- function(result_folder, postproc_file, iterations = NULL,
   N_sum <- sum(hyper$N)
   loglik_list <- rep(0, hyper$iterations)
   zstar_est <- matrix(0, nrow = hyper$D, ncol = length(iterations))
+  yV_est <- matrix(0, nrow = hyper$D, ncol = max(hyper$N))
   thetastar_est <- matrix(0, nrow = hyper$U, ncol = hyper$T)
   phi_est <- matrix(0, nrow = hyper$T, ncol = hyper$V)
   phiB_est <- rep(0, hyper$V)
@@ -27,6 +28,7 @@ postproc_TwitterLDA <- function(result_folder, postproc_file, iterations = NULL,
     zstar <- readRDS(file.path(result_folder, m, "zstar.RDS"))
     yV <- readRDS(file.path(result_folder, m, "yV.RDS"))
     if(m %in% iterations) zstar_est[, m] <- zstar
+    if(m %in% iterations) yV_est <- yV_est + yV
     # create matrices of counts
     WY1ZX <- matrix(0, nrow = hyper$V, ncol = hyper$T)
     Zstar <- matrix(0, nrow = hyper$U, ncol = hyper$T)
@@ -58,14 +60,21 @@ postproc_TwitterLDA <- function(result_folder, postproc_file, iterations = NULL,
   }
   # MCMC estimates
   zstar_est <- apply(zstar_est, 1, Mode)
+  yV_est <- yV_est / length(iterations)
   thetastar_est <- thetastar_est / length(iterations)
   phi_est <- phi_est / length(iterations)
   phiB_est <- phiB_est / length(iterations)
   piV_est <- piV_est / length(iterations)
   # -------------------------------------------------------------------------- #
-  output <- list("loglik" = loglik_list, "iterations" = iterations,
-                 "thetastar" = thetastar_est, "phi" = phi_est, "phiB" = phiB_est,
-                 "piV" = piV)
-  saveRDS(output, file.path(result_folder, paste(postproc_file, ".RDS", sep="")))
+  hyper[["loglik"]] <- loglik_list
+  hyper[["iterations"]] <- iterations
+  hyper[["zstar"]] <- zstar_est
+  hyper[["yV"]] <- yV_est
+  hyper[["thetastar"]] <- thetastar_est
+  hyper[["phi"]] <- phi_est
+  hyper[["phiB"]] <- phiB_est
+  hyper[["piV"]] <- piV_est
+  # -------------------------------------------------------------------------- #
+  saveRDS(hyper, file.path(result_folder, paste(postproc_file, ".RDS", sep="")))
   # -------------------------------------------------------------------------- #
 }
