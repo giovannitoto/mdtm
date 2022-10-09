@@ -16,7 +16,7 @@ CGS_TwitterLDA <- function(w, doc_users, alphastar, betaV, bV,
   # CHECK INPUTS HERE
 
   # -------------------------------------------------------------------------- #
-  cat("\n", as.character(Sys.time()), " START\n\n", sep="")
+  cat(as.character(Sys.time()), " START\n\n", sep="")
   # Fisso il seme
   set.seed(seed)
   # Definisco alcune quantita' utili
@@ -43,11 +43,11 @@ CGS_TwitterLDA <- function(w, doc_users, alphastar, betaV, bV,
                 "T" = TOPICS, "U" = U, "D" = D, "V" = V, "N" = N)
   saveRDS(hyper, file.path(result_folder, "hyperparameters.RDS"))
   # -------------------------------------------------------------------------- #
-  N_sum <- sum(N)
-  Nmax <- max(N)
-  betaV_sum <- sum(betaV)
-  rcpp_CGS_TwitterLDA(w, doc_users-1, alphastar, betaV, bV, iterations, TOPICS,
-                      U, D, V, N, N_sum, Nmax, betaV_sum, result_folder)
+  rm(list = setdiff(ls(), c("hyper", "result_folder")))
+  # -------------------------------------------------------------------------- #
+  rcpp_CGS_TwitterLDA(hyper$w, hyper$doc_users-1, hyper$alphastar, hyper$betaV,
+                      hyper$bV, hyper$iterations, hyper$T, hyper$U, hyper$D,
+                      hyper$V, hyper$N, result_folder)
   # -------------------------------------------------------------------------- #
   cat("\n", as.character(Sys.time()), " END", sep="")
   # END FUNCTION

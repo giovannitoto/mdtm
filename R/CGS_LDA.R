@@ -30,7 +30,7 @@ CGS_LDA <- function(w, alpha, betaV, iterations = 300, seed = 28, result_folder)
       dir.create(file.path(result_folder, m))
     }
   } else {
-    stop("\n'",result_folder,"' already exists: select another value for the 'result_folder' argument.\n", sep="")
+    stop("'", result_folder, "' already exists: select another value for the 'result_folder' argument.\n", sep="")
   }
   # -------------------------------------------------------------------------- #
   hyper <- list("w" = w, "alpha" = alpha, "betaV" = betaV,
@@ -38,9 +38,10 @@ CGS_LDA <- function(w, alpha, betaV, iterations = 300, seed = 28, result_folder)
                 "T" = TOPICS, "D" = D, "V" = V, "N" = N)
   saveRDS(hyper, file.path(result_folder, "hyperparameters.RDS"))
   # -------------------------------------------------------------------------- #
-  Nmax <- max(N)
-  betaV_sum <- sum(betaV)
-  rcpp_CGS_LDA(w, alpha, betaV, iterations, TOPICS, D, V, N, Nmax, betaV_sum, result_folder)
+  rm(list = setdiff(ls(), c("hyper", "result_folder")))
+  # -------------------------------------------------------------------------- #
+  rcpp_CGS_LDA(hyper$w, hyper$alpha, hyper$betaV, hyper$iterations, hyper$T,
+               hyper$D, hyper$V, hyper$N, result_folder)
   # -------------------------------------------------------------------------- #
   cat("\n", as.character(Sys.time()), " END", sep="")
   # END FUNCTION

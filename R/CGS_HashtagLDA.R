@@ -18,7 +18,7 @@ CGS_HashtagLDA <- function(w, h, doc_users, alphastar, betaV, betaH, bH,
   # CHECK INPUTS HERE
 
   # -------------------------------------------------------------------------- #
-  cat("\n", as.character(Sys.time()), " START\n\n", sep="")
+  cat(as.character(Sys.time()), " START\n\n", sep="")
   # Fisso il seme
   set.seed(seed)
   # Definisco alcune quantita' utili
@@ -47,13 +47,12 @@ CGS_HashtagLDA <- function(w, h, doc_users, alphastar, betaV, betaH, bH,
                 "T" = TOPICS, "U" = U, "D" = D, "V" = V, "H" = H, "N" = N, "L" = L)
   saveRDS(hyper, file.path(result_folder, "hyperparameters.RDS"))
   # -------------------------------------------------------------------------- #
-  L_sum <- sum(L)
-  Lmax <- max(L)
-  betaV_sum <- sum(betaV)
-  betaH_sum <- sum(betaH)
-  rcpp_CGS_HashtagLDA(w, h, doc_users-1, alphastar, betaV, betaH, bH,
-                      iterations, TOPICS, U, D, V, H, N, L, L_sum, Lmax,
-                      betaV_sum, betaH_sum, result_folder)
+  rm(list = setdiff(ls(), c("hyper", "result_folder")))
+  # -------------------------------------------------------------------------- #
+  rcpp_CGS_HashtagLDA(hyper$w, hyper$h, hyper$doc_users-1, hyper$alphastar,
+                      hyper$betaV, hyper$betaH, hyper$bH, hyper$iterations,
+                      hyper$T, hyper$U, hyper$D, hyper$V, hyper$H, hyper$N,
+                      hyper$L, result_folder)
   # -------------------------------------------------------------------------- #
   cat("\n", as.character(Sys.time()), " END", sep="")
   # END FUNCTION
