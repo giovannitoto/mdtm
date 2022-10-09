@@ -11,8 +11,8 @@ Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
 // rcpp_CGS_HashtagLDA
-void rcpp_CGS_HashtagLDA(IntegerMatrix w, IntegerMatrix h, IntegerVector doc_users, NumericVector alphastar, NumericVector betaV, NumericVector betaH, NumericVector bH, int iterations, int TOPICS, int U, int D, int V, int H, IntegerVector N, IntegerVector L, int L_sum, int Lmax, double betaV_sum, double betaH_sum, std::string result_folder);
-RcppExport SEXP _mdtm_rcpp_CGS_HashtagLDA(SEXP wSEXP, SEXP hSEXP, SEXP doc_usersSEXP, SEXP alphastarSEXP, SEXP betaVSEXP, SEXP betaHSEXP, SEXP bHSEXP, SEXP iterationsSEXP, SEXP TOPICSSEXP, SEXP USEXP, SEXP DSEXP, SEXP VSEXP, SEXP HSEXP, SEXP NSEXP, SEXP LSEXP, SEXP L_sumSEXP, SEXP LmaxSEXP, SEXP betaV_sumSEXP, SEXP betaH_sumSEXP, SEXP result_folderSEXP) {
+void rcpp_CGS_HashtagLDA(IntegerMatrix w, IntegerMatrix h, IntegerVector doc_users, NumericVector alphastar, NumericVector betaV, NumericVector betaH, NumericVector bH, int iterations, int TOPICS, int U, int D, int V, int H, IntegerVector N, IntegerVector L, std::string result_folder);
+RcppExport SEXP _mdtm_rcpp_CGS_HashtagLDA(SEXP wSEXP, SEXP hSEXP, SEXP doc_usersSEXP, SEXP alphastarSEXP, SEXP betaVSEXP, SEXP betaHSEXP, SEXP bHSEXP, SEXP iterationsSEXP, SEXP TOPICSSEXP, SEXP USEXP, SEXP DSEXP, SEXP VSEXP, SEXP HSEXP, SEXP NSEXP, SEXP LSEXP, SEXP result_folderSEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< IntegerMatrix >::type w(wSEXP);
@@ -30,18 +30,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int >::type H(HSEXP);
     Rcpp::traits::input_parameter< IntegerVector >::type N(NSEXP);
     Rcpp::traits::input_parameter< IntegerVector >::type L(LSEXP);
-    Rcpp::traits::input_parameter< int >::type L_sum(L_sumSEXP);
-    Rcpp::traits::input_parameter< int >::type Lmax(LmaxSEXP);
-    Rcpp::traits::input_parameter< double >::type betaV_sum(betaV_sumSEXP);
-    Rcpp::traits::input_parameter< double >::type betaH_sum(betaH_sumSEXP);
     Rcpp::traits::input_parameter< std::string >::type result_folder(result_folderSEXP);
-    rcpp_CGS_HashtagLDA(w, h, doc_users, alphastar, betaV, betaH, bH, iterations, TOPICS, U, D, V, H, N, L, L_sum, Lmax, betaV_sum, betaH_sum, result_folder);
+    rcpp_CGS_HashtagLDA(w, h, doc_users, alphastar, betaV, betaH, bH, iterations, TOPICS, U, D, V, H, N, L, result_folder);
     return R_NilValue;
 END_RCPP
 }
 // rcpp_CGS_LDA
-void rcpp_CGS_LDA(IntegerMatrix w, NumericVector alpha, NumericVector betaV, int iterations, int TOPICS, int D, int V, IntegerVector N, int Nmax, double betaV_sum, std::string result_folder);
-RcppExport SEXP _mdtm_rcpp_CGS_LDA(SEXP wSEXP, SEXP alphaSEXP, SEXP betaVSEXP, SEXP iterationsSEXP, SEXP TOPICSSEXP, SEXP DSEXP, SEXP VSEXP, SEXP NSEXP, SEXP NmaxSEXP, SEXP betaV_sumSEXP, SEXP result_folderSEXP) {
+void rcpp_CGS_LDA(IntegerMatrix w, NumericVector alpha, NumericVector betaV, int iterations, int TOPICS, int D, int V, IntegerVector N, std::string result_folder);
+RcppExport SEXP _mdtm_rcpp_CGS_LDA(SEXP wSEXP, SEXP alphaSEXP, SEXP betaVSEXP, SEXP iterationsSEXP, SEXP TOPICSSEXP, SEXP DSEXP, SEXP VSEXP, SEXP NSEXP, SEXP result_folderSEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< IntegerMatrix >::type w(wSEXP);
@@ -52,10 +48,46 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int >::type D(DSEXP);
     Rcpp::traits::input_parameter< int >::type V(VSEXP);
     Rcpp::traits::input_parameter< IntegerVector >::type N(NSEXP);
-    Rcpp::traits::input_parameter< int >::type Nmax(NmaxSEXP);
-    Rcpp::traits::input_parameter< double >::type betaV_sum(betaV_sumSEXP);
     Rcpp::traits::input_parameter< std::string >::type result_folder(result_folderSEXP);
-    rcpp_CGS_LDA(w, alpha, betaV, iterations, TOPICS, D, V, N, Nmax, betaV_sum, result_folder);
+    rcpp_CGS_LDA(w, alpha, betaV, iterations, TOPICS, D, V, N, result_folder);
+    return R_NilValue;
+END_RCPP
+}
+// pred_single_LDA
+void pred_single_LDA(IntegerMatrix w, NumericVector alpha, NumericVector betaV, int iterations, int TOPICS, int D, int V, IntegerVector N, NumericMatrix WY1ZX, std::string result_folder);
+RcppExport SEXP _mdtm_pred_single_LDA(SEXP wSEXP, SEXP alphaSEXP, SEXP betaVSEXP, SEXP iterationsSEXP, SEXP TOPICSSEXP, SEXP DSEXP, SEXP VSEXP, SEXP NSEXP, SEXP WY1ZXSEXP, SEXP result_folderSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerMatrix >::type w(wSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type alpha(alphaSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type betaV(betaVSEXP);
+    Rcpp::traits::input_parameter< int >::type iterations(iterationsSEXP);
+    Rcpp::traits::input_parameter< int >::type TOPICS(TOPICSSEXP);
+    Rcpp::traits::input_parameter< int >::type D(DSEXP);
+    Rcpp::traits::input_parameter< int >::type V(VSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type N(NSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type WY1ZX(WY1ZXSEXP);
+    Rcpp::traits::input_parameter< std::string >::type result_folder(result_folderSEXP);
+    pred_single_LDA(w, alpha, betaV, iterations, TOPICS, D, V, N, WY1ZX, result_folder);
+    return R_NilValue;
+END_RCPP
+}
+// pred_all_LDA
+void pred_all_LDA(IntegerMatrix w, NumericVector alpha, NumericVector betaV, int iterations, int TOPICS, int D, int V, IntegerVector N, NumericMatrix WY1ZX, std::string result_folder);
+RcppExport SEXP _mdtm_pred_all_LDA(SEXP wSEXP, SEXP alphaSEXP, SEXP betaVSEXP, SEXP iterationsSEXP, SEXP TOPICSSEXP, SEXP DSEXP, SEXP VSEXP, SEXP NSEXP, SEXP WY1ZXSEXP, SEXP result_folderSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerMatrix >::type w(wSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type alpha(alphaSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type betaV(betaVSEXP);
+    Rcpp::traits::input_parameter< int >::type iterations(iterationsSEXP);
+    Rcpp::traits::input_parameter< int >::type TOPICS(TOPICSSEXP);
+    Rcpp::traits::input_parameter< int >::type D(DSEXP);
+    Rcpp::traits::input_parameter< int >::type V(VSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type N(NSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type WY1ZX(WY1ZXSEXP);
+    Rcpp::traits::input_parameter< std::string >::type result_folder(result_folderSEXP);
+    pred_all_LDA(w, alpha, betaV, iterations, TOPICS, D, V, N, WY1ZX, result_folder);
     return R_NilValue;
 END_RCPP
 }
@@ -90,8 +122,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_CGS_TwitterLDA
-void rcpp_CGS_TwitterLDA(IntegerMatrix w, IntegerVector doc_users, NumericVector alphastar, NumericVector betaV, NumericVector bV, int iterations, int TOPICS, int U, int D, int V, IntegerVector N, int N_sum, int Nmax, double betaV_sum, std::string result_folder);
-RcppExport SEXP _mdtm_rcpp_CGS_TwitterLDA(SEXP wSEXP, SEXP doc_usersSEXP, SEXP alphastarSEXP, SEXP betaVSEXP, SEXP bVSEXP, SEXP iterationsSEXP, SEXP TOPICSSEXP, SEXP USEXP, SEXP DSEXP, SEXP VSEXP, SEXP NSEXP, SEXP N_sumSEXP, SEXP NmaxSEXP, SEXP betaV_sumSEXP, SEXP result_folderSEXP) {
+void rcpp_CGS_TwitterLDA(IntegerMatrix w, IntegerVector doc_users, NumericVector alphastar, NumericVector betaV, NumericVector bV, int iterations, int TOPICS, int U, int D, int V, IntegerVector N, std::string result_folder);
+RcppExport SEXP _mdtm_rcpp_CGS_TwitterLDA(SEXP wSEXP, SEXP doc_usersSEXP, SEXP alphastarSEXP, SEXP betaVSEXP, SEXP bVSEXP, SEXP iterationsSEXP, SEXP TOPICSSEXP, SEXP USEXP, SEXP DSEXP, SEXP VSEXP, SEXP NSEXP, SEXP result_folderSEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< IntegerMatrix >::type w(wSEXP);
@@ -105,11 +137,58 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int >::type D(DSEXP);
     Rcpp::traits::input_parameter< int >::type V(VSEXP);
     Rcpp::traits::input_parameter< IntegerVector >::type N(NSEXP);
-    Rcpp::traits::input_parameter< int >::type N_sum(N_sumSEXP);
-    Rcpp::traits::input_parameter< int >::type Nmax(NmaxSEXP);
-    Rcpp::traits::input_parameter< double >::type betaV_sum(betaV_sumSEXP);
     Rcpp::traits::input_parameter< std::string >::type result_folder(result_folderSEXP);
-    rcpp_CGS_TwitterLDA(w, doc_users, alphastar, betaV, bV, iterations, TOPICS, U, D, V, N, N_sum, Nmax, betaV_sum, result_folder);
+    rcpp_CGS_TwitterLDA(w, doc_users, alphastar, betaV, bV, iterations, TOPICS, U, D, V, N, result_folder);
+    return R_NilValue;
+END_RCPP
+}
+// pred_single_TwitterLDA
+void pred_single_TwitterLDA(IntegerMatrix w, IntegerVector doc_users, NumericVector alphastar, NumericVector betaV, NumericVector bV, int iterations, int TOPICS, int U, int D, int V, IntegerVector N, NumericMatrix WY1ZX, NumericMatrix Zstar, double Yv1, NumericVector WY0, std::string result_folder);
+RcppExport SEXP _mdtm_pred_single_TwitterLDA(SEXP wSEXP, SEXP doc_usersSEXP, SEXP alphastarSEXP, SEXP betaVSEXP, SEXP bVSEXP, SEXP iterationsSEXP, SEXP TOPICSSEXP, SEXP USEXP, SEXP DSEXP, SEXP VSEXP, SEXP NSEXP, SEXP WY1ZXSEXP, SEXP ZstarSEXP, SEXP Yv1SEXP, SEXP WY0SEXP, SEXP result_folderSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerMatrix >::type w(wSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type doc_users(doc_usersSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type alphastar(alphastarSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type betaV(betaVSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type bV(bVSEXP);
+    Rcpp::traits::input_parameter< int >::type iterations(iterationsSEXP);
+    Rcpp::traits::input_parameter< int >::type TOPICS(TOPICSSEXP);
+    Rcpp::traits::input_parameter< int >::type U(USEXP);
+    Rcpp::traits::input_parameter< int >::type D(DSEXP);
+    Rcpp::traits::input_parameter< int >::type V(VSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type N(NSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type WY1ZX(WY1ZXSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type Zstar(ZstarSEXP);
+    Rcpp::traits::input_parameter< double >::type Yv1(Yv1SEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type WY0(WY0SEXP);
+    Rcpp::traits::input_parameter< std::string >::type result_folder(result_folderSEXP);
+    pred_single_TwitterLDA(w, doc_users, alphastar, betaV, bV, iterations, TOPICS, U, D, V, N, WY1ZX, Zstar, Yv1, WY0, result_folder);
+    return R_NilValue;
+END_RCPP
+}
+// pred_all_TwitterLDA
+void pred_all_TwitterLDA(IntegerMatrix w, IntegerVector doc_users, NumericVector alphastar, NumericVector betaV, NumericVector bV, int iterations, int TOPICS, int U, int D, int V, IntegerVector N, NumericMatrix WY1ZX, NumericMatrix Zstar, double Yv1, NumericVector WY0, std::string result_folder);
+RcppExport SEXP _mdtm_pred_all_TwitterLDA(SEXP wSEXP, SEXP doc_usersSEXP, SEXP alphastarSEXP, SEXP betaVSEXP, SEXP bVSEXP, SEXP iterationsSEXP, SEXP TOPICSSEXP, SEXP USEXP, SEXP DSEXP, SEXP VSEXP, SEXP NSEXP, SEXP WY1ZXSEXP, SEXP ZstarSEXP, SEXP Yv1SEXP, SEXP WY0SEXP, SEXP result_folderSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerMatrix >::type w(wSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type doc_users(doc_usersSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type alphastar(alphastarSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type betaV(betaVSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type bV(bVSEXP);
+    Rcpp::traits::input_parameter< int >::type iterations(iterationsSEXP);
+    Rcpp::traits::input_parameter< int >::type TOPICS(TOPICSSEXP);
+    Rcpp::traits::input_parameter< int >::type U(USEXP);
+    Rcpp::traits::input_parameter< int >::type D(DSEXP);
+    Rcpp::traits::input_parameter< int >::type V(VSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type N(NSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type WY1ZX(WY1ZXSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type Zstar(ZstarSEXP);
+    Rcpp::traits::input_parameter< double >::type Yv1(Yv1SEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type WY0(WY0SEXP);
+    Rcpp::traits::input_parameter< std::string >::type result_folder(result_folderSEXP);
+    pred_all_TwitterLDA(w, doc_users, alphastar, betaV, bV, iterations, TOPICS, U, D, V, N, WY1ZX, Zstar, Yv1, WY0, result_folder);
     return R_NilValue;
 END_RCPP
 }
@@ -219,10 +298,14 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_mdtm_rcpp_CGS_HashtagLDA", (DL_FUNC) &_mdtm_rcpp_CGS_HashtagLDA, 20},
-    {"_mdtm_rcpp_CGS_LDA", (DL_FUNC) &_mdtm_rcpp_CGS_LDA, 11},
+    {"_mdtm_rcpp_CGS_HashtagLDA", (DL_FUNC) &_mdtm_rcpp_CGS_HashtagLDA, 16},
+    {"_mdtm_rcpp_CGS_LDA", (DL_FUNC) &_mdtm_rcpp_CGS_LDA, 9},
+    {"_mdtm_pred_single_LDA", (DL_FUNC) &_mdtm_pred_single_LDA, 10},
+    {"_mdtm_pred_all_LDA", (DL_FUNC) &_mdtm_pred_all_LDA, 10},
     {"_mdtm_rcpp_CGS_MicroblogLDA", (DL_FUNC) &_mdtm_rcpp_CGS_MicroblogLDA, 21},
-    {"_mdtm_rcpp_CGS_TwitterLDA", (DL_FUNC) &_mdtm_rcpp_CGS_TwitterLDA, 15},
+    {"_mdtm_rcpp_CGS_TwitterLDA", (DL_FUNC) &_mdtm_rcpp_CGS_TwitterLDA, 12},
+    {"_mdtm_pred_single_TwitterLDA", (DL_FUNC) &_mdtm_pred_single_TwitterLDA, 16},
+    {"_mdtm_pred_all_TwitterLDA", (DL_FUNC) &_mdtm_pred_all_TwitterLDA, 16},
     {"_mdtm_update_counts_LDA", (DL_FUNC) &_mdtm_update_counts_LDA, 9},
     {"_mdtm_update_counts_TwitterLDA", (DL_FUNC) &_mdtm_update_counts_TwitterLDA, 14},
     {"_mdtm_update_counts_HashtagLDA", (DL_FUNC) &_mdtm_update_counts_HashtagLDA, 17},

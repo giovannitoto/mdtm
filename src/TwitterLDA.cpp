@@ -11,7 +11,7 @@ using namespace Rcpp;
 void rcpp_CGS_TwitterLDA(IntegerMatrix w, IntegerVector doc_users,
                 NumericVector alphastar, NumericVector betaV, NumericVector bV,
                 int iterations, int TOPICS, int U, int D, int V, IntegerVector N,
-                int N_sum, int Nmax, double betaV_sum, std::string result_folder) {
+                std::string result_folder) {
   // ---------------------------------------------------------------------------
   // import saveRDS
   Environment base("package:base");
@@ -21,6 +21,10 @@ void rcpp_CGS_TwitterLDA(IntegerMatrix w, IntegerVector doc_users,
   int num_count, den_count;
   std::time_t tt;
   char mbstr[100];
+  // ---------------------------------------------------------------------------
+  int N_sum = sum(N);
+  int Nmax = max(N);
+  double betaV_sum = sum(betaV);
   // ---------------------------------------------------------------------------
   // START COUNTS AND FIRST STATE
   tt = std::time(nullptr);

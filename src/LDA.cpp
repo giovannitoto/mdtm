@@ -10,7 +10,7 @@ using namespace Rcpp;
 // [[Rcpp::export]]
 void rcpp_CGS_LDA(IntegerMatrix w, NumericVector alpha, NumericVector betaV,
                   int iterations, int TOPICS, int D, int V, IntegerVector N,
-                  int Nmax, double betaV_sum, std::string result_folder) {
+                  std::string result_folder) {
   // ---------------------------------------------------------------------------
   // import saveRDS
   Environment base("package:base");
@@ -19,6 +19,9 @@ void rcpp_CGS_LDA(IntegerMatrix w, NumericVector alpha, NumericVector betaV,
   int d, m, n;
   std::time_t tt;
   char mbstr[100];
+  // ---------------------------------------------------------------------------
+  int Nmax = max(N);
+  double betaV_sum = sum(betaV);
   // ---------------------------------------------------------------------------
   // START COUNTS AND FIRST STATE
   tt = std::time(nullptr);

@@ -12,8 +12,7 @@ void rcpp_CGS_HashtagLDA(IntegerMatrix w, IntegerMatrix h,
                 IntegerVector doc_users, NumericVector alphastar,
                 NumericVector betaV, NumericVector betaH, NumericVector bH,
                 int iterations, int TOPICS, int U, int D, int V, int H,
-                IntegerVector N, IntegerVector L, int L_sum, int Lmax,
-                double betaV_sum, double betaH_sum, std::string result_folder) {
+                IntegerVector N, IntegerVector L, std::string result_folder) {
   // ---------------------------------------------------------------------------
   // import saveRDS
   Environment base("package:base");
@@ -23,6 +22,11 @@ void rcpp_CGS_HashtagLDA(IntegerMatrix w, IntegerMatrix h,
   int num_count, den_count;
   std::time_t tt;
   char mbstr[100];
+  // ---------------------------------------------------------------------------
+  int L_sum = sum(L);
+  int Lmax = max(L);
+  double betaV_sum = sum(betaV);
+  double betaH_sum = sum(betaH);
   // ---------------------------------------------------------------------------
   // START COUNTS AND FIRST STATE
   tt = std::time(nullptr);
