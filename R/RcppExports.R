@@ -5,6 +5,14 @@ rcpp_CGS_HashtagLDA <- function(w, h, doc_users, alphastar, betaV, betaH, bH, it
     invisible(.Call(`_mdtm_rcpp_CGS_HashtagLDA`, w, h, doc_users, alphastar, betaV, betaH, bH, iterations, TOPICS, U, D, V, H, N, L, result_folder))
 }
 
+pred_single_HashtagLDA <- function(w, h, doc_users, alphastar, betaV, betaH, bH, iterations, TOPICS, U, D, V, H, N, L, WY1ZX, HY1ZX, Zstar, Yh1, HY0, result_folder) {
+    invisible(.Call(`_mdtm_pred_single_HashtagLDA`, w, h, doc_users, alphastar, betaV, betaH, bH, iterations, TOPICS, U, D, V, H, N, L, WY1ZX, HY1ZX, Zstar, Yh1, HY0, result_folder))
+}
+
+pred_all_HashtagLDA <- function(w, h, doc_users, alphastar, betaV, betaH, bH, iterations, TOPICS, U, D, V, H, N, L, WY1ZX, HY1ZX, Zstar, Yh1, HY0, result_folder) {
+    invisible(.Call(`_mdtm_pred_all_HashtagLDA`, w, h, doc_users, alphastar, betaV, betaH, bH, iterations, TOPICS, U, D, V, H, N, L, WY1ZX, HY1ZX, Zstar, Yh1, HY0, result_folder))
+}
+
 rcpp_CGS_LDA <- function(w, alpha, betaV, iterations, TOPICS, D, V, N, result_folder) {
     invisible(.Call(`_mdtm_rcpp_CGS_LDA`, w, alpha, betaV, iterations, TOPICS, D, V, N, result_folder))
 }

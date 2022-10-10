@@ -35,6 +35,66 @@ BEGIN_RCPP
     return R_NilValue;
 END_RCPP
 }
+// pred_single_HashtagLDA
+void pred_single_HashtagLDA(IntegerMatrix w, IntegerMatrix h, IntegerVector doc_users, NumericVector alphastar, NumericVector betaV, NumericVector betaH, NumericVector bH, int iterations, int TOPICS, int U, int D, int V, int H, IntegerVector N, IntegerVector L, NumericMatrix WY1ZX, NumericMatrix HY1ZX, NumericMatrix Zstar, double Yh1, NumericVector HY0, std::string result_folder);
+RcppExport SEXP _mdtm_pred_single_HashtagLDA(SEXP wSEXP, SEXP hSEXP, SEXP doc_usersSEXP, SEXP alphastarSEXP, SEXP betaVSEXP, SEXP betaHSEXP, SEXP bHSEXP, SEXP iterationsSEXP, SEXP TOPICSSEXP, SEXP USEXP, SEXP DSEXP, SEXP VSEXP, SEXP HSEXP, SEXP NSEXP, SEXP LSEXP, SEXP WY1ZXSEXP, SEXP HY1ZXSEXP, SEXP ZstarSEXP, SEXP Yh1SEXP, SEXP HY0SEXP, SEXP result_folderSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerMatrix >::type w(wSEXP);
+    Rcpp::traits::input_parameter< IntegerMatrix >::type h(hSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type doc_users(doc_usersSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type alphastar(alphastarSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type betaV(betaVSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type betaH(betaHSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type bH(bHSEXP);
+    Rcpp::traits::input_parameter< int >::type iterations(iterationsSEXP);
+    Rcpp::traits::input_parameter< int >::type TOPICS(TOPICSSEXP);
+    Rcpp::traits::input_parameter< int >::type U(USEXP);
+    Rcpp::traits::input_parameter< int >::type D(DSEXP);
+    Rcpp::traits::input_parameter< int >::type V(VSEXP);
+    Rcpp::traits::input_parameter< int >::type H(HSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type N(NSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type L(LSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type WY1ZX(WY1ZXSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type HY1ZX(HY1ZXSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type Zstar(ZstarSEXP);
+    Rcpp::traits::input_parameter< double >::type Yh1(Yh1SEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type HY0(HY0SEXP);
+    Rcpp::traits::input_parameter< std::string >::type result_folder(result_folderSEXP);
+    pred_single_HashtagLDA(w, h, doc_users, alphastar, betaV, betaH, bH, iterations, TOPICS, U, D, V, H, N, L, WY1ZX, HY1ZX, Zstar, Yh1, HY0, result_folder);
+    return R_NilValue;
+END_RCPP
+}
+// pred_all_HashtagLDA
+void pred_all_HashtagLDA(IntegerMatrix w, IntegerMatrix h, IntegerVector doc_users, NumericVector alphastar, NumericVector betaV, NumericVector betaH, NumericVector bH, int iterations, int TOPICS, int U, int D, int V, int H, IntegerVector N, IntegerVector L, NumericMatrix WY1ZX, NumericMatrix HY1ZX, NumericMatrix Zstar, double Yh1, NumericVector HY0, std::string result_folder);
+RcppExport SEXP _mdtm_pred_all_HashtagLDA(SEXP wSEXP, SEXP hSEXP, SEXP doc_usersSEXP, SEXP alphastarSEXP, SEXP betaVSEXP, SEXP betaHSEXP, SEXP bHSEXP, SEXP iterationsSEXP, SEXP TOPICSSEXP, SEXP USEXP, SEXP DSEXP, SEXP VSEXP, SEXP HSEXP, SEXP NSEXP, SEXP LSEXP, SEXP WY1ZXSEXP, SEXP HY1ZXSEXP, SEXP ZstarSEXP, SEXP Yh1SEXP, SEXP HY0SEXP, SEXP result_folderSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerMatrix >::type w(wSEXP);
+    Rcpp::traits::input_parameter< IntegerMatrix >::type h(hSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type doc_users(doc_usersSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type alphastar(alphastarSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type betaV(betaVSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type betaH(betaHSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type bH(bHSEXP);
+    Rcpp::traits::input_parameter< int >::type iterations(iterationsSEXP);
+    Rcpp::traits::input_parameter< int >::type TOPICS(TOPICSSEXP);
+    Rcpp::traits::input_parameter< int >::type U(USEXP);
+    Rcpp::traits::input_parameter< int >::type D(DSEXP);
+    Rcpp::traits::input_parameter< int >::type V(VSEXP);
+    Rcpp::traits::input_parameter< int >::type H(HSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type N(NSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type L(LSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type WY1ZX(WY1ZXSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type HY1ZX(HY1ZXSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type Zstar(ZstarSEXP);
+    Rcpp::traits::input_parameter< double >::type Yh1(Yh1SEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type HY0(HY0SEXP);
+    Rcpp::traits::input_parameter< std::string >::type result_folder(result_folderSEXP);
+    pred_all_HashtagLDA(w, h, doc_users, alphastar, betaV, betaH, bH, iterations, TOPICS, U, D, V, H, N, L, WY1ZX, HY1ZX, Zstar, Yh1, HY0, result_folder);
+    return R_NilValue;
+END_RCPP
+}
 // rcpp_CGS_LDA
 void rcpp_CGS_LDA(IntegerMatrix w, NumericVector alpha, NumericVector betaV, int iterations, int TOPICS, int D, int V, IntegerVector N, std::string result_folder);
 RcppExport SEXP _mdtm_rcpp_CGS_LDA(SEXP wSEXP, SEXP alphaSEXP, SEXP betaVSEXP, SEXP iterationsSEXP, SEXP TOPICSSEXP, SEXP DSEXP, SEXP VSEXP, SEXP NSEXP, SEXP result_folderSEXP) {
@@ -299,6 +359,8 @@ END_RCPP
 
 static const R_CallMethodDef CallEntries[] = {
     {"_mdtm_rcpp_CGS_HashtagLDA", (DL_FUNC) &_mdtm_rcpp_CGS_HashtagLDA, 16},
+    {"_mdtm_pred_single_HashtagLDA", (DL_FUNC) &_mdtm_pred_single_HashtagLDA, 21},
+    {"_mdtm_pred_all_HashtagLDA", (DL_FUNC) &_mdtm_pred_all_HashtagLDA, 21},
     {"_mdtm_rcpp_CGS_LDA", (DL_FUNC) &_mdtm_rcpp_CGS_LDA, 9},
     {"_mdtm_pred_single_LDA", (DL_FUNC) &_mdtm_pred_single_LDA, 10},
     {"_mdtm_pred_all_LDA", (DL_FUNC) &_mdtm_pred_all_LDA, 10},
