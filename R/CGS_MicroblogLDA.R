@@ -1,5 +1,31 @@
 # ---------------------------------------------------------------------------- #
 
+#' Microblog-LDA (CGS)
+#'
+#' @description
+#' Implementation of the Collapsed Gibbs Sampler (CGS) for Microblog-LDA.
+#'
+#' @details
+#' Implementation in R and C++.
+#'
+#' @param w A list of \eqn{K} \eqn{D\times N_{\text{max}}^{(k)}} matrices \eqn{\mathbf{w}^{(k)}} of integers in \eqn{\{1,\ldots,V^{(k)}\}}.
+#' @param doc_users A \eqn{D}-dimensional vector of integers specifying the single author of each document. The number of authors is set to \code{U = max(doc_users)}.
+#' @param alphastar A \eqn{T}-dimensional vector \eqn{\bm{\alpha}^*} of positive numbers. The length of this vector specifies the number of topics \eqn{T}.
+#' @param alpha A \eqn{T}-dimensional vector \eqn{\bm{\alpha}} of positive numbers. The length of this vector specifies the number of topics \eqn{T}.
+#' @param beta A list of \eqn{K} \eqn{V^{(k)}}-dimensional vectors \eqn{\bm{\beta}^{(k)}} of positive numbers.
+#' @param b A list of \eqn{K} \eqn{2}-dimensional vectors \eqn{\bm{b}^{(k)}} of positive numbers.
+#' @param bdelta A \eqn{2}-dimensional vector \eqn{\bm{b}^\delta} of positive numbers.
+#' @param bT A \eqn{2}-dimensional vector \eqn{\bm{b}^T} of positive numbers.
+#' @param alpha0 A positive number \eqn{\alpha_0}. Default is \eqn{10^{-7}}.
+#' @param iterations An integer number of iterations. Default is 300.
+#' @param seed Seed. Default is 28.
+#' @param result_folder A string specifying the folder in which the results will be saved.
+#'
+#' @seealso \code{\link{postproc_MicroblogLDA}}, \code{\link{pred_MicroblogLDA}}.
+#'
+#' @note This function uses \code{Rcpp} for computational efficiency.
+#'
+#' @export
 CGS_MicroblogLDA <- function(w, doc_users, alphastar, alpha, beta, b, bdelta, bT,
                            alpha0 = 10^-7, iterations = 300, seed = 28, result_folder) {
   # -------------------------------------------------------------------------- #

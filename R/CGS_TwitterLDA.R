@@ -1,5 +1,27 @@
 # ---------------------------------------------------------------------------- #
 
+#' Twitter-LDA (CGS)
+#'
+#' @description
+#' Implementation of the Collapsed Gibbs Sampler (CGS) for Twitter-LDA.
+#'
+#' @details
+#' Implementation in R and C++.
+#'
+#' @param w A \eqn{D\times N_{\text{max}}} matrix \eqn{\mathbf{w}} of integers in \eqn{\{1,\ldots,V\}}.
+#' @param doc_users A \eqn{D}-dimensional vector of integers specifying the single author of each document. The number of authors is set to \code{U = max(doc_users)}.
+#' @param alphastar A \eqn{T}-dimensional vector \eqn{\bm{\alpha}^*} of positive numbers. The length of this vector specifies the number of topics \eqn{T}.
+#' @param betaV A \eqn{V}-dimensional vector \eqn{\bm{\beta}^V} of positive numbers.
+#' @param bV A \eqn{2}-dimensional vector \eqn{\bm{b}^V} of positive numbers.
+#' @param iterations An integer number of iterations. Default is 300.
+#' @param seed Seed. Default is 28.
+#' @param result_folder A string specifying the folder in which the results will be saved.
+#'
+#' @seealso \code{\link{postproc_TwitterLDA}}, \code{\link{pred_TwitterLDA}}.
+#'
+#' @note This function uses \code{Rcpp} for computational efficiency.
+#'
+#' @export
 CGS_TwitterLDA <- function(w, doc_users, alphastar, betaV, bV,
                            iterations = 300, seed = 28, result_folder) {
   # -------------------------------------------------------------------------- #

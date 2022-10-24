@@ -1,5 +1,26 @@
 # ---------------------------------------------------------------------------- #
 
+#' Prediction of new documents using Latent Dirichlet Allocation (CGS)
+#'
+#' @description
+#' Predict new documents using an already-estimated Latent Dirichlet Allocation.
+#'
+#' @details
+#' Implementation in R and C++.
+#'
+#' @param w A \eqn{D\times N_{\text{max}}} matrix \eqn{\mathbf{w}} of integers in \eqn{\{1,\ldots,V+V_{\text{new}}\}}.
+#' @param betaV_new A \eqn{V_{\text{new}}}-dimensional vector \eqn{\bm{\beta}_{\text{new}}^V} of positive numbers.
+#' @param postproc_file A string specifying the RDS file in which the results of post-processing obtained using the function \code{\link{postproc_LDA}} are saved.
+#' @param single_doc Logical: if \code{TRUE}, the algorithm predicts one document at a time, otherwise all at once. Default is \code{TRUE}.
+#' @param iterations An integer number of iterations. Default is 300.
+#' @param seed Seed. Default is 28.
+#' @param result_folder A string specifying the folder in which the results will be saved.
+#'
+#' @seealso \code{\link{CGS_LDA}}, \code{\link{pred_LDA}}.
+#'
+#' @note This function uses \code{Rcpp} for computational efficiency.
+#'
+#' @export
 pred_LDA <- function(w, betaV_new = NULL, postproc_file, single_doc = TRUE,
                      iterations = 300, seed = 28, result_folder) {
   # -------------------------------------------------------------------------- #

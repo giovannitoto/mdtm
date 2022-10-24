@@ -1,5 +1,23 @@
 # ---------------------------------------------------------------------------- #
 
+#' Post-processing for Latent Dirichlet Allocation (CGS)
+#'
+#' @description
+#' Compute the logarithm of the a posteriori distribution at each MCMC iteration and the posterior means of the parameters.
+#'
+#' @details
+#' Implementation in R and C++.
+#'
+#' @param result_folder A string specifying the folder in which the results of a CGS obtained using the function \code{\link{CGS_LDA}} are saved.
+#' @param postproc_file A string specifying the RDS file in which the results will be saved. Write the name of the file without \code{.RDS} at the end.
+#' @param iterations A vector of integers between 1 and the length of the chain which specifies the iterations to consider for the computation of the posterior means. Default is all the iterations.
+#' @param verbose Logical: if \code{TRUE}, print the value of the logarithm of the a posteriori distribution at each iteration. Default is \code{TRUE}.
+#'
+#' @seealso \code{\link{CGS_LDA}}, \code{\link{pred_LDA}}.
+#'
+#' @note This function uses \code{Rcpp} for computational efficiency.
+#'
+#' @export
 postproc_LDA <- function(result_folder, postproc_file, iterations = NULL, verbose = TRUE) {
   # -------------------------------------------------------------------------- #
   if(dir.exists(result_folder)) {

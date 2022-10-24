@@ -1,5 +1,29 @@
 # ---------------------------------------------------------------------------- #
 
+#' Prediction of new documents using Hashtag-LDA (CGS)
+#'
+#' @description
+#' Predict new documents using an already-estimated Hashtag-LDA.
+#'
+#' @details
+#' Implementation in R and C++.
+#'
+#' @param w A \eqn{D\times N_{\text{max}}} matrix \eqn{\mathbf{w}} of integers in \eqn{\{1,\ldots,V+V_{\text{new}}\}}.
+#' @param h A \eqn{D\times L_{\text{max}}} matrix \eqn{\mathbf{h}} of integers in \eqn{\{1,\ldots,H+H_{\text{new}}\}}.
+#' @param doc_users A \eqn{D}-dimensional vector of integers specifying the single author of each document. The number of authors is set to \code{U = max(doc_users)}.
+#' @param betaV_new A \eqn{V_{\text{new}}}-dimensional vector \eqn{\bm{\beta}_{\text{new}}^V} of positive numbers.
+#' @param betaH_new A \eqn{H_{\text{new}}}-dimensional vector \eqn{\bm{\beta}_{\text{new}}^H} of positive numbers.
+#' @param postproc_file A string specifying the RDS file in which the results of post-processing obtained using the function \code{\link{postproc_HashtagLDA}} are saved.
+#' @param single_doc Logical: if \code{TRUE}, the algorithm predicts one document at a time, otherwise all at once. Default is \code{TRUE}.
+#' @param iterations An integer number of iterations. Default is 300.
+#' @param seed Seed. Default is 28.
+#' @param result_folder A string specifying the folder in which the results will be saved.
+#'
+#' @seealso \code{\link{CGS_HashtagLDA}}, \code{\link{pred_HashtagLDA}}.
+#'
+#' @note This function uses \code{Rcpp} for computational efficiency.
+#'
+#' @export
 pred_HashtagLDA <- function(w, h, doc_users, betaV_new = NULL, betaH_new = NULL,
                             postproc_file, single_doc = TRUE, iterations = 300,
                             seed = 28, result_folder) {
