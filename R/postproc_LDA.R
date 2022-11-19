@@ -33,6 +33,7 @@ postproc_LDA <- function(result_folder, postproc_file, iterations = NULL, verbos
   if(is.null(iterations)) iterations <- 1:hyper$iterations
   # -------------------------------------------------------------------------- #
   loglik_list <- rep(0, hyper$iterations)
+  zV_est <- matrix(0, nrow = length(hyper$w), ncol = hyper$T)
   theta_est <- matrix(0, nrow = hyper$D, ncol = hyper$T)
   phi_est <- matrix(0, nrow = hyper$T, ncol = hyper$V)
   # -------------------------------------------------------------------------- #
@@ -40,6 +41,7 @@ postproc_LDA <- function(result_folder, postproc_file, iterations = NULL, verbos
   for (m in iterations) {
     # import m-th state of the chain
     zV <- readRDS(file.path(result_folder, m, "zV.RDS"))
+    if(m %in% iterations) zV_est[cbind(1:nrow(zV_est), c(zV))] <- zV_est[cbind(1:nrow(zV_est), c(zV))] + 1
     # create matrices of counts
     WY1ZX <- matrix(0, nrow = hyper$V, ncol = hyper$T)
     Z <- matrix(0, nrow = hyper$D, ncol = hyper$T)
@@ -59,11 +61,14 @@ postproc_LDA <- function(result_folder, postproc_file, iterations = NULL, verbos
     if(verbose) cat(as.character(Sys.time()), "  - iteration ", m, ": ", loglik_list[m], "\n", sep="")
   }
   # MCMC estimates
+  zV_est <- matrix(apply(zV_est, 1, which.max), nrow = hyper$D, ncol = ncol(hyper$w))
+  zV_est[hyper$w == 0] <- 0
   theta_est <- theta_est / length(iterations)
   phi_est <- phi_est / length(iterations)
   # -------------------------------------------------------------------------- #
   hyper[["loglik"]] <- loglik_list
   hyper[["iterations"]] <- iterations
+  hyper[["zV"]] <- zV_est
   hyper[["theta"]] <- theta_est
   hyper[["phi"]] <- phi_est
   # -------------------------------------------------------------------------- #

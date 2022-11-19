@@ -37,11 +37,13 @@ postproc_MicroblogLDA <- function(result_folder, postproc_file, iterations = NUL
   b <- simplify2array(hyper$b)
   loglik_list <- rep(0, hyper$iterations)
   x_est <- rep(0, hyper$D)
-  zstar_est <- matrix(0, nrow = hyper$D, ncol = length(iterations))
+  zstar_est <- matrix(0, nrow = hyper$D, ncol = hyper$T)
   lambda_est <- matrix(0, nrow = hyper$D, ncol = hyper$T)
   y_est <- list()
+  z_est <- list()
   for (k in 1:hyper$K) {
     y_est[[k]] <- matrix(0, nrow = hyper$D, ncol = max(hyper$N[, k]))
+    z_est[[k]] <- matrix(0, nrow = length(hyper$w[[k]]), ncol = hyper$T)
   }
   thetastar_est <- matrix(0, nrow = hyper$U, ncol = hyper$T)
   theta_est <- matrix(0, nrow = hyper$D, ncol = hyper$T)
@@ -65,9 +67,10 @@ postproc_MicroblogLDA <- function(result_folder, postproc_file, iterations = NUL
       y[[k]] <- readRDS(file.path(result_folder, m, paste("y", k, ".RDS", sep="")))
       z[[k]] <- readRDS(file.path(result_folder, m, paste("z", k, ".RDS", sep="")))
       if(m %in% iterations) y_est[[k]] <- y_est[[k]] + y[[k]]
+      if(m %in% iterations) z_est[[k]][cbind(1:nrow(z_est[[k]]), c(z[[k]]))] <- z_est[[k]][cbind(1:nrow(z_est[[k]]), c(z[[k]]))] + 1
     }
     if(m %in% iterations) x_est <- x_est + x
-    if(m %in% iterations) zstar_est[, m] <- zstar
+    if(m %in% iterations) zstar_est[cbind(1:hyper$D, zstar)] <- zstar_est[cbind(1:hyper$D, zstar)] + 1
     if(m %in% iterations) lambda_est <- lambda_est + lambda
     # create matrices of counts
     X1 <- rep(0, hyper$U)
@@ -125,10 +128,12 @@ postproc_MicroblogLDA <- function(result_folder, postproc_file, iterations = NUL
   }
   # MCMC estimates
   x_est <- x_est / length(iterations)
-  zstar_est <- apply(zstar_est, 1, Mode)
+  zstar_est <- apply(zstar_est, 1, which.max)
   lambda_est <-lambda_est / length(iterations)
   for (k in 1:hyper$K) {
     y_est[[k]] <- y_est[[k]] / length(iterations)
+    z_est[[k]] <- matrix(apply(z_est[[k]], 1, which.max), nrow = hyper$D, ncol = ncol(hyper$w[[k]]))
+    z_est[[k]][hyper$w[[k]] == 0] <- 0
   }
   thetastar_est <- thetastar_est / length(iterations)
   theta_est <- theta_est / length(iterations)
@@ -147,6 +152,7 @@ postproc_MicroblogLDA <- function(result_folder, postproc_file, iterations = NUL
   hyper[["zstar"]] <- zstar_est
   hyper[["lambda"]] <- lambda_est
   hyper[["y"]] <- y_est
+  hyper[["z"]] <- z_est
   hyper[["piT"]] <- piT_est
   hyper[["thetastar"]] <- thetastar_est
   hyper[["theta"]] <- theta_est

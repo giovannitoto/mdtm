@@ -34,7 +34,7 @@ postproc_TwitterLDA <- function(result_folder, postproc_file, iterations = NULL,
   # -------------------------------------------------------------------------- #
   N_sum <- sum(hyper$N)
   loglik_list <- rep(0, hyper$iterations)
-  zstar_est <- matrix(0, nrow = hyper$D, ncol = length(iterations))
+  zstar_est <- matrix(0, nrow = hyper$D, ncol = hyper$T)
   yV_est <- matrix(0, nrow = hyper$D, ncol = max(hyper$N))
   thetastar_est <- matrix(0, nrow = hyper$U, ncol = hyper$T)
   phi_est <- matrix(0, nrow = hyper$T, ncol = hyper$V)
@@ -46,7 +46,7 @@ postproc_TwitterLDA <- function(result_folder, postproc_file, iterations = NULL,
     # import m-th state of the chain
     zstar <- readRDS(file.path(result_folder, m, "zstar.RDS"))
     yV <- readRDS(file.path(result_folder, m, "yV.RDS"))
-    if(m %in% iterations) zstar_est[, m] <- zstar
+    if(m %in% iterations) zstar_est[cbind(1:hyper$D, zstar)] <- zstar_est[cbind(1:hyper$D, zstar)] + 1
     if(m %in% iterations) yV_est <- yV_est + yV
     # create matrices of counts
     WY1ZX <- matrix(0, nrow = hyper$V, ncol = hyper$T)
@@ -78,7 +78,7 @@ postproc_TwitterLDA <- function(result_folder, postproc_file, iterations = NULL,
     if(verbose) cat(as.character(Sys.time()), "  - iteration ", m, ": ", loglik_list[m], "\n", sep="")
   }
   # MCMC estimates
-  zstar_est <- apply(zstar_est, 1, Mode)
+  zstar_est <- apply(zstar_est, 1, which.max)
   yV_est <- yV_est / length(iterations)
   thetastar_est <- thetastar_est / length(iterations)
   phi_est <- phi_est / length(iterations)
