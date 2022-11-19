@@ -75,7 +75,7 @@ postproc_MicroblogLDA <- function(result_folder, postproc_file, iterations = NUL
     # create matrices of counts
     X1 <- rep(0, hyper$U)
     Zstar <- matrix(0, nrow = hyper$U, ncol = hyper$T);
-    LAMBDA1 = 0
+    LAMBDA1 <- 0
     Z <- matrix(0, nrow = hyper$D, ncol = hyper$T);
     Yv1 <- rep(0, hyper$K);
     WY1ZX <- list(); WY0 <- list()
@@ -86,7 +86,7 @@ postproc_MicroblogLDA <- function(result_folder, postproc_file, iterations = NUL
     # update counts
     update_counts_MicroblogLDA(hyper$w, hyper$doc_users-1, Dusers, hyper$alphastar,
                                hyper$alpha, hyper$beta, b, hyper$bdelta,
-                               hyper$bT, hyper$alpha0, hyper$T, hyper$K, hyper$U,
+                               hyper$bT, hyper$alpha0, hyper$T, hyper$K,
                                hyper$D, hyper$N, x, zstar, lambda, y, z,
                                X1, Zstar, LAMBDA1, Z, Yv1, WY1ZX, WY0, FALSE);
     # estimate thetastar

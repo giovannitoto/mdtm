@@ -60,7 +60,7 @@ void rcpp_CGS_MicroblogLDA(std::vector<NumericMatrix> w,
   Rcout << mbstr << " Generation of the first state\n";
   update_counts_MicroblogLDA(w, doc_users, Dusers, alphastar,
                              alpha, beta, b, bdelta, bT, alpha0,
-                             TOPICS, K, U, D, N,
+                             TOPICS, K, D, N,
                              x, zstar, lambda, y, z,
                              X1, Zstar, LAMBDA1, Z, Yv1, WY1ZX, WY0, true);
   // save first state of the chain
