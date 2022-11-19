@@ -52,7 +52,7 @@ pred_HashtagLDA <- function(w, h, doc_users, betaV_new = NULL, betaH_new = NULL,
   # Fisso il seme
   set.seed(seed)
   # Definisco alcune quantita' utili
-  D <- nrow(w)
+  D <- length(doc_users)
   N <- apply(w, 1, function(x) sum(x > 0))
   L <- apply(h, 1, function(x) sum(x > 0))
   # -------------------------------------------------------------------------- #
@@ -96,18 +96,16 @@ pred_HashtagLDA <- function(w, h, doc_users, betaV_new = NULL, betaH_new = NULL,
   }
   saveRDS(hyper, file.path(result_folder, "hyperparameters.RDS"))
   # -------------------------------------------------------------------------- #
-  # get matrices of counts from the parameters
-  ZY1 <- sapply(1:hyper$T, function(tt) sum(hyper$N[postproc$zstar == tt]))
-  WY1ZX <- postproc$phi * (sum(hyper$betaV) + ZY1)
-  WY1ZX <- t(WY1ZX) - hyper$betaV
-  ZY1 <- sapply(1:hyper$T, function(tt) sum(postproc$yH[postproc$zstar == tt, ]))
-  HY1ZX <- postproc$psi * (sum(hyper$betaH) + ZY1)
-  HY1ZX <- t(HY1ZX) - hyper$betaH
-  Dusers <- sapply(1:hyper$U, function(uu) sum(hyper$doc_users == uu))
-  Zstar <- postproc$theta * (sum(hyper$alphastar) + Dusers)
-  Zstar <- t(t(Zstar) - hyper$alphastar)
-  Yh1 <- postproc$piH * sum(hyper$bH, hyper$L) - hyper$bH[1]
-  HY0 <- postproc$psiB * (sum(hyper$betaH, hyper$L) - Yh1) - hyper$betaH
+  # get matrices of counts from the posterior estimates
+  WY1ZX <- matrix(0, nrow = hyper$V, ncol = hyper$T)
+  HY1ZX <- matrix(0, nrow = hyper$H, ncol = hyper$T)
+  Zstar <- matrix(0, nrow = hyper$U, ncol = hyper$T)
+  Yh1 <- 0
+  HY0 <- rep(0, hyper$H)
+  # update counts
+  update_counts_HashtagLDA(postproc$w, postproc$h, postproc$doc_users-1, postproc$alphastar,
+                           postproc$bH, postproc$T, postproc$D, postproc$N, postproc$L,
+                           postproc$zstar, postproc$yH, WY1ZX, HY1ZX, Zstar, Yh1, HY0, FALSE);
   # -------------------------------------------------------------------------- #
   rm(list = setdiff(ls(), c("hyper", "result_folder", "WY1ZX", "HY1ZX", "Zstar", "Yh1", "HY0")))
   # -------------------------------------------------------------------------- #

@@ -70,11 +70,12 @@ pred_LDA <- function(w, betaV_new = NULL, postproc_file, single_doc = TRUE,
   }
   saveRDS(hyper, file.path(result_folder, "hyperparameters.RDS"))
   # -------------------------------------------------------------------------- #
-  # get matrices of counts from the parameters
-  Z <- postproc$theta * (sum(hyper$alpha) + sum(hyper$N))
-  Z <- t(t(Z) - hyper$alpha)
-  WY1ZX <- postproc$phi * (sum(hyper$betaV) + apply(Z, 2, sum))
-  WY1ZX <- t(WY1ZX) - hyper$betaV
+  # get matrices of counts from the posterior estimates
+  WY1ZX <- matrix(0, nrow = hyper$V, ncol = hyper$T)
+  Z <- matrix(0, nrow = hyper$D, ncol = hyper$T)
+  # update counts
+  update_counts_LDA(postproc$w, postproc$alpha, postproc$T, postproc$D, postproc$N,
+                    postproc$zV, WY1ZX, Z, FALSE);
   # -------------------------------------------------------------------------- #
   rm(list = setdiff(ls(), c("hyper", "result_folder", "WY1ZX")))
   # -------------------------------------------------------------------------- #

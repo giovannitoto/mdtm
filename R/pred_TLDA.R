@@ -50,7 +50,7 @@ pred_TwitterLDA <- function(w, doc_users, betaV_new = NULL, postproc_file,
   # Fisso il seme
   set.seed(seed)
   # Definisco alcune quantita' utili
-  D <- nrow(w)
+  D <- length(doc_users)
   N <- apply(w, 1, function(x) sum(x > 0))
   # -------------------------------------------------------------------------- #
   hyper <- list("w" = w, "doc_users" = doc_users, "alphastar" = postproc$alphastar,
@@ -79,15 +79,15 @@ pred_TwitterLDA <- function(w, doc_users, betaV_new = NULL, postproc_file,
   }
   saveRDS(hyper, file.path(result_folder, "hyperparameters.RDS"))
   # -------------------------------------------------------------------------- #
-  # get matrices of counts from the parameters
-  ZY1 <- sapply(1:hyper$T, function(tt) sum(postproc$yV[postproc$zstar == tt, ]))
-  WY1ZX <- postproc$phi * (sum(hyper$betaV) + ZY1)
-  WY1ZX <- t(WY1ZX) - hyper$betaV
-  Dusers <- sapply(1:hyper$U, function(uu) sum(hyper$doc_users == uu))
-  Zstar <- postproc$theta * (sum(hyper$alphastar) + Dusers)
-  Zstar <- t(t(Zstar) - hyper$alphastar)
-  Yv1 <- postproc$piV * sum(hyper$bV, hyper$N) - hyper$bV[1]
-  WY0 <- postproc$phiB * (sum(hyper$betaV, hyper$N) - Yv1) - hyper$betaV
+  # get matrices of counts from the posterior estimates
+  WY1ZX <- matrix(0, nrow = hyper$V, ncol = hyper$T)
+  Zstar <- matrix(0, nrow = hyper$U, ncol = hyper$T)
+  Yv1 <- 0
+  WY0 <- rep(0, hyper$V)
+  # update counts
+  update_counts_TwitterLDA(postproc$w, postproc$doc_users-1, postproc$alphastar,
+                           postproc$bV, postproc$T, postproc$D, postproc$N,
+                           postproc$zstar, postproc$yV, WY1ZX, Zstar, Yv1, WY0, FALSE);
   # -------------------------------------------------------------------------- #
   rm(list = setdiff(ls(), c("hyper", "result_folder", "WY1ZX", "Zstar", "Yv1", "WY0")))
   # -------------------------------------------------------------------------- #
