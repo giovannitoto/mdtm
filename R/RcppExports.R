@@ -25,8 +25,16 @@ pred_all_LDA <- function(w, alpha, betaV, iterations, TOPICS, D, V, N, WY1ZX, re
     invisible(.Call('_mdtm_pred_all_LDA', PACKAGE = 'mdtm', w, alpha, betaV, iterations, TOPICS, D, V, N, WY1ZX, result_folder))
 }
 
-rcpp_CGS_MicroblogLDA <- function(w, doc_users, alphastar, alpha, beta, b, bdelta, bT, alpha0, iterations, TOPICS, K, U, D, V, N, N_sum, Nmax, beta_sum, Dusers, result_folder) {
-    invisible(.Call('_mdtm_rcpp_CGS_MicroblogLDA', PACKAGE = 'mdtm', w, doc_users, alphastar, alpha, beta, b, bdelta, bT, alpha0, iterations, TOPICS, K, U, D, V, N, N_sum, Nmax, beta_sum, Dusers, result_folder))
+rcpp_CGS_MicroblogLDA <- function(w, doc_users, alphastar, alpha, beta, b, bdelta, bT, alpha0, iterations, TOPICS, K, U, D, V, N, Dusers, result_folder) {
+    invisible(.Call('_mdtm_rcpp_CGS_MicroblogLDA', PACKAGE = 'mdtm', w, doc_users, alphastar, alpha, beta, b, bdelta, bT, alpha0, iterations, TOPICS, K, U, D, V, N, Dusers, result_folder))
+}
+
+pred_single_MicroblogLDA <- function(w, doc_users, alphastar, alpha, beta, b, bdelta, bT, alpha0, iterations, TOPICS, K, U, D, V, N, Dusers, X1, Zstar, LAMBDA1, Yv1, WY1ZX, WY0, result_folder) {
+    invisible(.Call('_mdtm_pred_single_MicroblogLDA', PACKAGE = 'mdtm', w, doc_users, alphastar, alpha, beta, b, bdelta, bT, alpha0, iterations, TOPICS, K, U, D, V, N, Dusers, X1, Zstar, LAMBDA1, Yv1, WY1ZX, WY0, result_folder))
+}
+
+pred_all_MicroblogLDA <- function(w, doc_users, alphastar, alpha, beta, b, bdelta, bT, alpha0, iterations, TOPICS, K, U, D, V, N, Dusers, X1, Zstar, LAMBDA1, Yv1, WY1ZX, WY0, result_folder) {
+    invisible(.Call('_mdtm_pred_all_MicroblogLDA', PACKAGE = 'mdtm', w, doc_users, alphastar, alpha, beta, b, bdelta, bT, alpha0, iterations, TOPICS, K, U, D, V, N, Dusers, X1, Zstar, LAMBDA1, Yv1, WY1ZX, WY0, result_folder))
 }
 
 rcpp_CGS_TwitterLDA <- function(w, doc_users, alphastar, betaV, bV, iterations, TOPICS, U, D, V, N, result_folder) {
@@ -53,7 +61,7 @@ update_counts_HashtagLDA <- function(w, h, doc_users, alphastar, bH, TOPICS, D, 
     invisible(.Call('_mdtm_update_counts_HashtagLDA', PACKAGE = 'mdtm', w, h, doc_users, alphastar, bH, TOPICS, D, N, L, zstar, yH, WY1ZX, HY1ZX, Zstar, Yh1, HY0, update_state))
 }
 
-update_counts_MicroblogLDA <- function(w, doc_users, Dusers, alphastar, alpha, beta, b, bdelta, bT, alpha0, TOPICS, K, D, N, x, zstar, lambda, y, z, X1, Zstar, LAMBDA1, Z, Yv1, WY1ZX, WY0, update_state) {
-    invisible(.Call('_mdtm_update_counts_MicroblogLDA', PACKAGE = 'mdtm', w, doc_users, Dusers, alphastar, alpha, beta, b, bdelta, bT, alpha0, TOPICS, K, D, N, x, zstar, lambda, y, z, X1, Zstar, LAMBDA1, Z, Yv1, WY1ZX, WY0, update_state))
+update_counts_MicroblogLDA <- function(w, doc_users, alphastar, alpha, beta, b, bdelta, bT, alpha0, TOPICS, K, D, N, x, zstar, lambda, y, z, X1, Zstar, LAMBDA1, Z, Yv1, WY1ZX, WY0, update_state) {
+    invisible(.Call('_mdtm_update_counts_MicroblogLDA', PACKAGE = 'mdtm', w, doc_users, alphastar, alpha, beta, b, bdelta, bT, alpha0, TOPICS, K, D, N, x, zstar, lambda, y, z, X1, Zstar, LAMBDA1, Z, Yv1, WY1ZX, WY0, update_state))
 }
 

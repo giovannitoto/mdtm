@@ -152,8 +152,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // rcpp_CGS_MicroblogLDA
-void rcpp_CGS_MicroblogLDA(std::vector<NumericMatrix> w, IntegerVector doc_users, NumericVector alphastar, NumericVector alpha, std::vector<NumericVector> beta, NumericMatrix b, NumericVector bdelta, NumericVector bT, double alpha0, int iterations, int TOPICS, int K, int U, int D, IntegerVector V, IntegerMatrix N, NumericVector N_sum, NumericVector Nmax, NumericVector beta_sum, IntegerVector Dusers, std::string result_folder);
-RcppExport SEXP _mdtm_rcpp_CGS_MicroblogLDA(SEXP wSEXP, SEXP doc_usersSEXP, SEXP alphastarSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP bSEXP, SEXP bdeltaSEXP, SEXP bTSEXP, SEXP alpha0SEXP, SEXP iterationsSEXP, SEXP TOPICSSEXP, SEXP KSEXP, SEXP USEXP, SEXP DSEXP, SEXP VSEXP, SEXP NSEXP, SEXP N_sumSEXP, SEXP NmaxSEXP, SEXP beta_sumSEXP, SEXP DusersSEXP, SEXP result_folderSEXP) {
+void rcpp_CGS_MicroblogLDA(std::vector<NumericMatrix> w, IntegerVector doc_users, NumericVector alphastar, NumericVector alpha, std::vector<NumericVector> beta, NumericMatrix b, NumericVector bdelta, NumericVector bT, double alpha0, int iterations, int TOPICS, int K, int U, int D, IntegerVector V, IntegerMatrix N, IntegerVector Dusers, std::string result_folder);
+RcppExport SEXP _mdtm_rcpp_CGS_MicroblogLDA(SEXP wSEXP, SEXP doc_usersSEXP, SEXP alphastarSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP bSEXP, SEXP bdeltaSEXP, SEXP bTSEXP, SEXP alpha0SEXP, SEXP iterationsSEXP, SEXP TOPICSSEXP, SEXP KSEXP, SEXP USEXP, SEXP DSEXP, SEXP VSEXP, SEXP NSEXP, SEXP DusersSEXP, SEXP result_folderSEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< std::vector<NumericMatrix> >::type w(wSEXP);
@@ -172,12 +172,75 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int >::type D(DSEXP);
     Rcpp::traits::input_parameter< IntegerVector >::type V(VSEXP);
     Rcpp::traits::input_parameter< IntegerMatrix >::type N(NSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type N_sum(N_sumSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type Nmax(NmaxSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type beta_sum(beta_sumSEXP);
     Rcpp::traits::input_parameter< IntegerVector >::type Dusers(DusersSEXP);
     Rcpp::traits::input_parameter< std::string >::type result_folder(result_folderSEXP);
-    rcpp_CGS_MicroblogLDA(w, doc_users, alphastar, alpha, beta, b, bdelta, bT, alpha0, iterations, TOPICS, K, U, D, V, N, N_sum, Nmax, beta_sum, Dusers, result_folder);
+    rcpp_CGS_MicroblogLDA(w, doc_users, alphastar, alpha, beta, b, bdelta, bT, alpha0, iterations, TOPICS, K, U, D, V, N, Dusers, result_folder);
+    return R_NilValue;
+END_RCPP
+}
+// pred_single_MicroblogLDA
+void pred_single_MicroblogLDA(std::vector<NumericMatrix>& w, IntegerVector doc_users, NumericVector alphastar, NumericVector alpha, std::vector<NumericVector>& beta, NumericMatrix b, NumericVector bdelta, NumericVector bT, double alpha0, int iterations, int TOPICS, int K, int U, int D, IntegerVector V, IntegerMatrix N, IntegerVector Dusers, NumericVector& X1, NumericMatrix& Zstar, double& LAMBDA1, NumericVector& Yv1, std::vector<NumericMatrix>& WY1ZX, std::vector<NumericVector>& WY0, std::string result_folder);
+RcppExport SEXP _mdtm_pred_single_MicroblogLDA(SEXP wSEXP, SEXP doc_usersSEXP, SEXP alphastarSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP bSEXP, SEXP bdeltaSEXP, SEXP bTSEXP, SEXP alpha0SEXP, SEXP iterationsSEXP, SEXP TOPICSSEXP, SEXP KSEXP, SEXP USEXP, SEXP DSEXP, SEXP VSEXP, SEXP NSEXP, SEXP DusersSEXP, SEXP X1SEXP, SEXP ZstarSEXP, SEXP LAMBDA1SEXP, SEXP Yv1SEXP, SEXP WY1ZXSEXP, SEXP WY0SEXP, SEXP result_folderSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< std::vector<NumericMatrix>& >::type w(wSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type doc_users(doc_usersSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type alphastar(alphastarSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type alpha(alphaSEXP);
+    Rcpp::traits::input_parameter< std::vector<NumericVector>& >::type beta(betaSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type b(bSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type bdelta(bdeltaSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type bT(bTSEXP);
+    Rcpp::traits::input_parameter< double >::type alpha0(alpha0SEXP);
+    Rcpp::traits::input_parameter< int >::type iterations(iterationsSEXP);
+    Rcpp::traits::input_parameter< int >::type TOPICS(TOPICSSEXP);
+    Rcpp::traits::input_parameter< int >::type K(KSEXP);
+    Rcpp::traits::input_parameter< int >::type U(USEXP);
+    Rcpp::traits::input_parameter< int >::type D(DSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type V(VSEXP);
+    Rcpp::traits::input_parameter< IntegerMatrix >::type N(NSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type Dusers(DusersSEXP);
+    Rcpp::traits::input_parameter< NumericVector& >::type X1(X1SEXP);
+    Rcpp::traits::input_parameter< NumericMatrix& >::type Zstar(ZstarSEXP);
+    Rcpp::traits::input_parameter< double& >::type LAMBDA1(LAMBDA1SEXP);
+    Rcpp::traits::input_parameter< NumericVector& >::type Yv1(Yv1SEXP);
+    Rcpp::traits::input_parameter< std::vector<NumericMatrix>& >::type WY1ZX(WY1ZXSEXP);
+    Rcpp::traits::input_parameter< std::vector<NumericVector>& >::type WY0(WY0SEXP);
+    Rcpp::traits::input_parameter< std::string >::type result_folder(result_folderSEXP);
+    pred_single_MicroblogLDA(w, doc_users, alphastar, alpha, beta, b, bdelta, bT, alpha0, iterations, TOPICS, K, U, D, V, N, Dusers, X1, Zstar, LAMBDA1, Yv1, WY1ZX, WY0, result_folder);
+    return R_NilValue;
+END_RCPP
+}
+// pred_all_MicroblogLDA
+void pred_all_MicroblogLDA(std::vector<NumericMatrix>& w, IntegerVector doc_users, NumericVector alphastar, NumericVector alpha, std::vector<NumericVector>& beta, NumericMatrix b, NumericVector bdelta, NumericVector bT, double alpha0, int iterations, int TOPICS, int K, int U, int D, IntegerVector V, IntegerMatrix N, IntegerVector Dusers, NumericVector& X1, NumericMatrix& Zstar, double& LAMBDA1, NumericVector& Yv1, std::vector<NumericMatrix>& WY1ZX, std::vector<NumericVector>& WY0, std::string result_folder);
+RcppExport SEXP _mdtm_pred_all_MicroblogLDA(SEXP wSEXP, SEXP doc_usersSEXP, SEXP alphastarSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP bSEXP, SEXP bdeltaSEXP, SEXP bTSEXP, SEXP alpha0SEXP, SEXP iterationsSEXP, SEXP TOPICSSEXP, SEXP KSEXP, SEXP USEXP, SEXP DSEXP, SEXP VSEXP, SEXP NSEXP, SEXP DusersSEXP, SEXP X1SEXP, SEXP ZstarSEXP, SEXP LAMBDA1SEXP, SEXP Yv1SEXP, SEXP WY1ZXSEXP, SEXP WY0SEXP, SEXP result_folderSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< std::vector<NumericMatrix>& >::type w(wSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type doc_users(doc_usersSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type alphastar(alphastarSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type alpha(alphaSEXP);
+    Rcpp::traits::input_parameter< std::vector<NumericVector>& >::type beta(betaSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type b(bSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type bdelta(bdeltaSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type bT(bTSEXP);
+    Rcpp::traits::input_parameter< double >::type alpha0(alpha0SEXP);
+    Rcpp::traits::input_parameter< int >::type iterations(iterationsSEXP);
+    Rcpp::traits::input_parameter< int >::type TOPICS(TOPICSSEXP);
+    Rcpp::traits::input_parameter< int >::type K(KSEXP);
+    Rcpp::traits::input_parameter< int >::type U(USEXP);
+    Rcpp::traits::input_parameter< int >::type D(DSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type V(VSEXP);
+    Rcpp::traits::input_parameter< IntegerMatrix >::type N(NSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type Dusers(DusersSEXP);
+    Rcpp::traits::input_parameter< NumericVector& >::type X1(X1SEXP);
+    Rcpp::traits::input_parameter< NumericMatrix& >::type Zstar(ZstarSEXP);
+    Rcpp::traits::input_parameter< double& >::type LAMBDA1(LAMBDA1SEXP);
+    Rcpp::traits::input_parameter< NumericVector& >::type Yv1(Yv1SEXP);
+    Rcpp::traits::input_parameter< std::vector<NumericMatrix>& >::type WY1ZX(WY1ZXSEXP);
+    Rcpp::traits::input_parameter< std::vector<NumericVector>& >::type WY0(WY0SEXP);
+    Rcpp::traits::input_parameter< std::string >::type result_folder(result_folderSEXP);
+    pred_all_MicroblogLDA(w, doc_users, alphastar, alpha, beta, b, bdelta, bT, alpha0, iterations, TOPICS, K, U, D, V, N, Dusers, X1, Zstar, LAMBDA1, Yv1, WY1ZX, WY0, result_folder);
     return R_NilValue;
 END_RCPP
 }
@@ -320,16 +383,15 @@ BEGIN_RCPP
 END_RCPP
 }
 // update_counts_MicroblogLDA
-void update_counts_MicroblogLDA(std::vector<NumericMatrix> w, IntegerVector doc_users, IntegerVector Dusers, NumericVector alphastar, NumericVector alpha, std::vector<NumericVector> beta, NumericMatrix b, NumericVector bdelta, NumericVector bT, double alpha0, int TOPICS, int K, int D, IntegerMatrix N, IntegerVector& x, IntegerVector& zstar, NumericMatrix& lambda, std::vector<IntegerMatrix>& y, std::vector<IntegerMatrix>& z, NumericVector& X1, NumericMatrix& Zstar, double& LAMBDA1, NumericMatrix& Z, NumericVector& Yv1, std::vector<NumericMatrix>& WY1ZX, std::vector<NumericVector>& WY0, bool update_state);
-RcppExport SEXP _mdtm_update_counts_MicroblogLDA(SEXP wSEXP, SEXP doc_usersSEXP, SEXP DusersSEXP, SEXP alphastarSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP bSEXP, SEXP bdeltaSEXP, SEXP bTSEXP, SEXP alpha0SEXP, SEXP TOPICSSEXP, SEXP KSEXP, SEXP DSEXP, SEXP NSEXP, SEXP xSEXP, SEXP zstarSEXP, SEXP lambdaSEXP, SEXP ySEXP, SEXP zSEXP, SEXP X1SEXP, SEXP ZstarSEXP, SEXP LAMBDA1SEXP, SEXP ZSEXP, SEXP Yv1SEXP, SEXP WY1ZXSEXP, SEXP WY0SEXP, SEXP update_stateSEXP) {
+void update_counts_MicroblogLDA(std::vector<NumericMatrix>& w, IntegerVector doc_users, NumericVector alphastar, NumericVector alpha, std::vector<NumericVector>& beta, NumericMatrix b, NumericVector bdelta, NumericVector bT, double alpha0, int TOPICS, int K, int D, IntegerMatrix N, IntegerVector& x, IntegerVector& zstar, NumericMatrix& lambda, std::vector<IntegerMatrix>& y, std::vector<IntegerMatrix>& z, NumericVector& X1, NumericMatrix& Zstar, double& LAMBDA1, NumericMatrix& Z, NumericVector& Yv1, std::vector<NumericMatrix>& WY1ZX, std::vector<NumericVector>& WY0, bool update_state);
+RcppExport SEXP _mdtm_update_counts_MicroblogLDA(SEXP wSEXP, SEXP doc_usersSEXP, SEXP alphastarSEXP, SEXP alphaSEXP, SEXP betaSEXP, SEXP bSEXP, SEXP bdeltaSEXP, SEXP bTSEXP, SEXP alpha0SEXP, SEXP TOPICSSEXP, SEXP KSEXP, SEXP DSEXP, SEXP NSEXP, SEXP xSEXP, SEXP zstarSEXP, SEXP lambdaSEXP, SEXP ySEXP, SEXP zSEXP, SEXP X1SEXP, SEXP ZstarSEXP, SEXP LAMBDA1SEXP, SEXP ZSEXP, SEXP Yv1SEXP, SEXP WY1ZXSEXP, SEXP WY0SEXP, SEXP update_stateSEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< std::vector<NumericMatrix> >::type w(wSEXP);
+    Rcpp::traits::input_parameter< std::vector<NumericMatrix>& >::type w(wSEXP);
     Rcpp::traits::input_parameter< IntegerVector >::type doc_users(doc_usersSEXP);
-    Rcpp::traits::input_parameter< IntegerVector >::type Dusers(DusersSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type alphastar(alphastarSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type alpha(alphaSEXP);
-    Rcpp::traits::input_parameter< std::vector<NumericVector> >::type beta(betaSEXP);
+    Rcpp::traits::input_parameter< std::vector<NumericVector>& >::type beta(betaSEXP);
     Rcpp::traits::input_parameter< NumericMatrix >::type b(bSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type bdelta(bdeltaSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type bT(bTSEXP);
@@ -351,7 +413,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< std::vector<NumericMatrix>& >::type WY1ZX(WY1ZXSEXP);
     Rcpp::traits::input_parameter< std::vector<NumericVector>& >::type WY0(WY0SEXP);
     Rcpp::traits::input_parameter< bool >::type update_state(update_stateSEXP);
-    update_counts_MicroblogLDA(w, doc_users, Dusers, alphastar, alpha, beta, b, bdelta, bT, alpha0, TOPICS, K, D, N, x, zstar, lambda, y, z, X1, Zstar, LAMBDA1, Z, Yv1, WY1ZX, WY0, update_state);
+    update_counts_MicroblogLDA(w, doc_users, alphastar, alpha, beta, b, bdelta, bT, alpha0, TOPICS, K, D, N, x, zstar, lambda, y, z, X1, Zstar, LAMBDA1, Z, Yv1, WY1ZX, WY0, update_state);
     return R_NilValue;
 END_RCPP
 }
@@ -363,14 +425,16 @@ static const R_CallMethodDef CallEntries[] = {
     {"_mdtm_rcpp_CGS_LDA", (DL_FUNC) &_mdtm_rcpp_CGS_LDA, 9},
     {"_mdtm_pred_single_LDA", (DL_FUNC) &_mdtm_pred_single_LDA, 10},
     {"_mdtm_pred_all_LDA", (DL_FUNC) &_mdtm_pred_all_LDA, 10},
-    {"_mdtm_rcpp_CGS_MicroblogLDA", (DL_FUNC) &_mdtm_rcpp_CGS_MicroblogLDA, 21},
+    {"_mdtm_rcpp_CGS_MicroblogLDA", (DL_FUNC) &_mdtm_rcpp_CGS_MicroblogLDA, 18},
+    {"_mdtm_pred_single_MicroblogLDA", (DL_FUNC) &_mdtm_pred_single_MicroblogLDA, 24},
+    {"_mdtm_pred_all_MicroblogLDA", (DL_FUNC) &_mdtm_pred_all_MicroblogLDA, 24},
     {"_mdtm_rcpp_CGS_TwitterLDA", (DL_FUNC) &_mdtm_rcpp_CGS_TwitterLDA, 12},
     {"_mdtm_pred_single_TwitterLDA", (DL_FUNC) &_mdtm_pred_single_TwitterLDA, 16},
     {"_mdtm_pred_all_TwitterLDA", (DL_FUNC) &_mdtm_pred_all_TwitterLDA, 16},
     {"_mdtm_update_counts_LDA", (DL_FUNC) &_mdtm_update_counts_LDA, 9},
     {"_mdtm_update_counts_TwitterLDA", (DL_FUNC) &_mdtm_update_counts_TwitterLDA, 14},
     {"_mdtm_update_counts_HashtagLDA", (DL_FUNC) &_mdtm_update_counts_HashtagLDA, 17},
-    {"_mdtm_update_counts_MicroblogLDA", (DL_FUNC) &_mdtm_update_counts_MicroblogLDA, 27},
+    {"_mdtm_update_counts_MicroblogLDA", (DL_FUNC) &_mdtm_update_counts_MicroblogLDA, 26},
     {NULL, NULL, 0}
 };
 

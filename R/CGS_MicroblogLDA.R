@@ -27,7 +27,7 @@
 #'
 #' @export
 CGS_MicroblogLDA <- function(w, doc_users, alphastar, alpha, beta, b, bdelta, bT,
-                           alpha0 = 10^-7, iterations = 300, seed = 28, result_folder) {
+                             alpha0 = 10^-7, iterations = 300, seed = 28, result_folder) {
   # -------------------------------------------------------------------------- #
   # Argomenti della funzione:
   #          w : lista di matrici D x Nmax_k  | n-ma descrittore del k-mo vocabolario nel d-mo documento (1,...,V_k)
@@ -79,15 +79,12 @@ CGS_MicroblogLDA <- function(w, doc_users, alphastar, alpha, beta, b, bdelta, bT
   # -------------------------------------------------------------------------- #
   rm(list = setdiff(ls(), c("hyper", "result_folder")))
   # -------------------------------------------------------------------------- #
-  N_sum <- apply(hyper$N, 2, sum)
-  Nmax <- apply(hyper$N, 2, max)
-  beta_sum <- sapply(hyper$beta, sum)
   Dusers <- sapply(1:hyper$U, function(uu) sum(hyper$doc_users == uu))
   b <- simplify2array(hyper$b)
   rcpp_CGS_MicroblogLDA(hyper$w, hyper$doc_users-1, hyper$alphastar, hyper$alpha,
                         hyper$beta, b, hyper$bdelta, hyper$bT, hyper$alpha0,
                         hyper$iterations,hyper$T, hyper$K, hyper$U, hyper$D, hyper$V,
-                        hyper$N, N_sum, Nmax, beta_sum, Dusers, result_folder)
+                        hyper$N, Dusers, result_folder)
   # -------------------------------------------------------------------------- #
   cat("\n", as.character(Sys.time()), " END", sep="")
   # END FUNCTION

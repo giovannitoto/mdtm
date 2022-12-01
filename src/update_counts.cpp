@@ -101,10 +101,10 @@ void update_counts_HashtagLDA(IntegerMatrix w, IntegerMatrix h, IntegerVector do
 // -----------------------------------------------------------------------------
 
 // [[Rcpp::export]]
-void update_counts_MicroblogLDA(std::vector<NumericMatrix> w,
-                                IntegerVector doc_users, IntegerVector Dusers,
+void update_counts_MicroblogLDA(std::vector<NumericMatrix>& w,
+                                IntegerVector doc_users,
                                 NumericVector alphastar, NumericVector alpha,
-                                std::vector<NumericVector> beta,
+                                std::vector<NumericVector>& beta,
                                 NumericMatrix b, NumericVector bdelta,
                                 NumericVector bT, double alpha0,
                                 int TOPICS, int K, int D, IntegerMatrix N,

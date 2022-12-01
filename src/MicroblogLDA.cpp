@@ -15,9 +15,8 @@ void rcpp_CGS_MicroblogLDA(std::vector<NumericMatrix> w,
                            NumericMatrix b, NumericVector bdelta,
                            NumericVector bT, double alpha0, int iterations,
                            int TOPICS, int K, int U, int D, IntegerVector V,
-                           IntegerMatrix N, NumericVector N_sum,
-                           NumericVector Nmax, NumericVector beta_sum,
-                           IntegerVector Dusers, std::string result_folder) {
+                           IntegerMatrix N, IntegerVector Dusers,
+                           std::string result_folder) {
   // ---------------------------------------------------------------------------
   // import saveRDS
   Environment base("package:base");
@@ -27,6 +26,15 @@ void rcpp_CGS_MicroblogLDA(std::vector<NumericMatrix> w,
   int num_count, den_count; //, num0_count, den0_count;
   std::time_t tt;
   char mbstr[100];
+  // ---------------------------------------------------------------------------
+  NumericVector N_sum(K);
+  NumericVector Nmax(K);
+  NumericVector beta_sum(K);
+  for (k = 0; k < K; k++) {
+    N_sum(k) = sum(N(_, k));
+    Nmax(k) = max(N(_, k));
+    beta_sum(k) = sum(beta[k]);
+  }
   // ---------------------------------------------------------------------------
   // START COUNTS AND FIRST STATE
   tt = std::time(nullptr);
@@ -58,7 +66,7 @@ void rcpp_CGS_MicroblogLDA(std::vector<NumericMatrix> w,
   tt = std::time(nullptr);
   std::strftime(mbstr, sizeof(mbstr), "%Y-%m-%d %H:%M:%S", std::localtime(&tt));
   Rcout << mbstr << " Generation of the first state\n";
-  update_counts_MicroblogLDA(w, doc_users, Dusers, alphastar,
+  update_counts_MicroblogLDA(w, doc_users, alphastar,
                              alpha, beta, b, bdelta, bT, alpha0,
                              TOPICS, K, D, N,
                              x, zstar, lambda, y, z,
@@ -345,14 +353,12 @@ void rcpp_CGS_MicroblogLDA(std::vector<NumericMatrix> w,
             Z(d, z[k](d,n)-1) = Z(d, z[k](d,n)-1) + 1;
           } else {
             // update counts
-            WY1ZX[k](w[k](d,n)-1, zstar(d)-1) = WY1ZX[k](w[k](d,n)-1, zstar(d)-1) - 1;
             Z(d, z[k](d,n)-1) = Z(d, z[k](d,n)-1) - 1;
             // full conditional probability
             NumericVector p_z = alpha0 + lambda(d, _) * alpha + Z(d, _);
             // sample new value
             z[k](d, n) = sample(TOPICS, 1, true, p_z, true)(0);
             // update counts
-            WY1ZX[k](w[k](d,n)-1, zstar(d)-1) = WY1ZX[k](w[k](d,n)-1, zstar(d)-1) + 1;
             Z(d, z[k](d,n)-1) = Z(d, z[k](d,n)-1) + 1;
           }
           // END UPDATE z[k](d, n)

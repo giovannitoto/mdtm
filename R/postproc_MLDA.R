@@ -84,7 +84,7 @@ postproc_MicroblogLDA <- function(result_folder, postproc_file, iterations = NUL
       WY0[[k]] = rep(0, hyper$V[k])
     }
     # update counts
-    update_counts_MicroblogLDA(hyper$w, hyper$doc_users-1, Dusers, hyper$alphastar,
+    update_counts_MicroblogLDA(hyper$w, hyper$doc_users-1, hyper$alphastar,
                                hyper$alpha, hyper$beta, b, hyper$bdelta,
                                hyper$bT, hyper$alpha0, hyper$T, hyper$K,
                                hyper$D, hyper$N, x, zstar, lambda, y, z,
