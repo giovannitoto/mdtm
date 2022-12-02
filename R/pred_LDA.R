@@ -72,7 +72,7 @@ pred_LDA <- function(w, betaV_new = NULL, postproc_file, single_doc = TRUE,
   # -------------------------------------------------------------------------- #
   # get matrices of counts from the posterior estimates
   WY1ZX <- matrix(0, nrow = hyper$V, ncol = hyper$T)
-  Z <- matrix(0, nrow = hyper$D, ncol = hyper$T)
+  Z <- matrix(0, nrow = postproc$D, ncol = hyper$T)
   # update counts
   update_counts_LDA(postproc$w, postproc$alpha, postproc$T, postproc$D, postproc$N,
                     postproc$zV, WY1ZX, Z, FALSE);

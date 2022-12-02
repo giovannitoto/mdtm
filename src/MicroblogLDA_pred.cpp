@@ -15,7 +15,8 @@ void pred_single_MicroblogLDA(std::vector<NumericMatrix>& w,
                               NumericMatrix b, NumericVector bdelta,
                               NumericVector bT, double alpha0, int iterations,
                               int TOPICS, int K, int U, int D, IntegerVector V,
-                              IntegerMatrix N, IntegerVector Dusers,
+                              IntegerMatrix N, NumericVector N_sum,
+                              IntegerVector Dusers,
                               NumericVector& X1, NumericMatrix& Zstar,
                               double& LAMBDA1, NumericVector& Yv1,
                               std::vector<NumericMatrix>& WY1ZX,
@@ -31,11 +32,9 @@ void pred_single_MicroblogLDA(std::vector<NumericMatrix>& w,
   std::time_t tt;
   char mbstr[100];
   // ---------------------------------------------------------------------------
-  NumericVector N_sum(K);
   NumericVector Nmax(K);
   NumericVector beta_sum(K);
   for (k = 0; k < K; k++) {
-    N_sum(k) = sum(N(_, k));
     Nmax(k) = max(N(_, k));
     beta_sum(k) = sum(beta[k]);
   }
@@ -431,7 +430,8 @@ void pred_all_MicroblogLDA(std::vector<NumericMatrix>& w,
                            NumericMatrix b, NumericVector bdelta,
                            NumericVector bT, double alpha0, int iterations,
                            int TOPICS, int K, int U, int D, IntegerVector V,
-                           IntegerMatrix N, IntegerVector Dusers,
+                           IntegerMatrix N, NumericVector N_sum
+                           IntegerVector Dusers,
                            NumericVector& X1, NumericMatrix& Zstar,
                            double& LAMBDA1, NumericVector& Yv1,
                            std::vector<NumericMatrix>& WY1ZX,
@@ -447,11 +447,9 @@ void pred_all_MicroblogLDA(std::vector<NumericMatrix>& w,
   std::time_t tt;
   char mbstr[100];
   // ---------------------------------------------------------------------------
-  NumericVector N_sum(K);
   NumericVector Nmax(K);
   NumericVector beta_sum(K);
   for (k = 0; k < K; k++) {
-    N_sum(k) = sum(N(_, k));
     Nmax(k) = max(N(_, k));
     beta_sum(k) = sum(beta[k]);
   }

@@ -12,9 +12,10 @@ void pred_single_HashtagLDA(IntegerMatrix w, IntegerMatrix h,
                             IntegerVector doc_users, NumericVector alphastar,
                             NumericVector betaV, NumericVector betaH, NumericVector bH,
                             int iterations, int TOPICS, int U, int D, int V, int H,
-                            IntegerVector N, IntegerVector L, NumericMatrix WY1ZX,
-                            NumericMatrix HY1ZX, NumericMatrix Zstar, double Yh1,
-                            NumericVector HY0, std::string result_folder) {
+                            IntegerVector N, IntegerVector L, int L_sum,
+                            NumericMatrix WY1ZX, NumericMatrix HY1ZX,
+                            NumericMatrix Zstar, double Yh1, NumericVector HY0,
+                            std::string result_folder) {
   // ---------------------------------------------------------------------------
   // import saveRDS
   Environment base("package:base");
@@ -25,7 +26,6 @@ void pred_single_HashtagLDA(IntegerMatrix w, IntegerMatrix h,
   std::time_t tt;
   char mbstr[100];
   // ---------------------------------------------------------------------------
-  int L_sum = sum(L);
   int Lmax = max(L);
   double betaV_sum = sum(betaV);
   double betaH_sum = sum(betaH);
@@ -184,9 +184,10 @@ void pred_all_HashtagLDA(IntegerMatrix w, IntegerMatrix h,
                          IntegerVector doc_users, NumericVector alphastar,
                          NumericVector betaV, NumericVector betaH, NumericVector bH,
                          int iterations, int TOPICS, int U, int D, int V, int H,
-                         IntegerVector N, IntegerVector L, NumericMatrix WY1ZX,
-                         NumericMatrix HY1ZX, NumericMatrix Zstar, double Yh1,
-                         NumericVector HY0, std::string result_folder) {
+                         IntegerVector N, IntegerVector L, int L_sum,
+                         NumericMatrix WY1ZX, NumericMatrix HY1ZX,
+                         NumericMatrix Zstar, double Yh1, NumericVector HY0,
+                         std::string result_folder) {
   // ---------------------------------------------------------------------------
   // import saveRDS
   Environment base("package:base");
@@ -197,7 +198,6 @@ void pred_all_HashtagLDA(IntegerMatrix w, IntegerMatrix h,
   std::time_t tt;
   char mbstr[100];
   // ---------------------------------------------------------------------------
-  int L_sum = sum(L);
   int Lmax = max(L);
   double betaV_sum = sum(betaV);
   double betaH_sum = sum(betaH);

@@ -91,16 +91,17 @@ pred_TwitterLDA <- function(w, doc_users, betaV_new = NULL, postproc_file,
   # -------------------------------------------------------------------------- #
   rm(list = setdiff(ls(), c("hyper", "result_folder", "WY1ZX", "Zstar", "Yv1", "WY0")))
   # -------------------------------------------------------------------------- #
+  N_sum <- sum(postproc$N) + sum(hyper$N)
   if(hyper$single_doc) {
     # update one new document at a time
     pred_single_TwitterLDA(hyper$w, hyper$doc_users-1, hyper$alphastar, hyper$betaV,
                            hyper$bV, hyper$iterations, hyper$T, hyper$U, hyper$D,
-                           hyper$V, hyper$N, WY1ZX, Zstar, Yv1, WY0, result_folder)
+                           hyper$V, hyper$N, N_sum, WY1ZX, Zstar, Yv1, WY0, result_folder)
   } else {
     # update all the new documents at the same time
     pred_all_TwitterLDA(hyper$w, hyper$doc_users-1, hyper$alphastar, hyper$betaV,
                         hyper$bV, hyper$iterations, hyper$T, hyper$U, hyper$D,
-                        hyper$V, hyper$N, WY1ZX, Zstar, Yv1, WY0, result_folder)
+                        hyper$V, hyper$N, N_sum, WY1ZX, Zstar, Yv1, WY0, result_folder)
   }
   # END FUNCTION
   # -------------------------------------------------------------------------- #

@@ -11,9 +11,9 @@ using namespace Rcpp;
 void pred_single_TwitterLDA(IntegerMatrix w, IntegerVector doc_users,
                             NumericVector alphastar, NumericVector betaV,
                             NumericVector bV, int iterations, int TOPICS, int U,
-                            int D, int V, IntegerVector N, NumericMatrix WY1ZX,
-                            NumericMatrix Zstar, double Yv1, NumericVector WY0,
-                            std::string result_folder) {
+                            int D, int V, IntegerVector N, int N_sum,
+                            NumericMatrix WY1ZX, NumericMatrix Zstar, double Yv1,
+                            NumericVector WY0, std::string result_folder) {
   // ---------------------------------------------------------------------------
   // import saveRDS
   Environment base("package:base");
@@ -24,7 +24,6 @@ void pred_single_TwitterLDA(IntegerMatrix w, IntegerVector doc_users,
   std::time_t tt;
   char mbstr[100];
   // ---------------------------------------------------------------------------
-  int N_sum = sum(N);
   int Nmax = max(N);
   double betaV_sum = sum(betaV);
   // ---------------------------------------------------------------------------
@@ -159,9 +158,9 @@ void pred_single_TwitterLDA(IntegerMatrix w, IntegerVector doc_users,
 void pred_all_TwitterLDA(IntegerMatrix w, IntegerVector doc_users,
                          NumericVector alphastar, NumericVector betaV,
                          NumericVector bV, int iterations, int TOPICS, int U,
-                         int D, int V, IntegerVector N, NumericMatrix WY1ZX,
-                         NumericMatrix Zstar, double Yv1, NumericVector WY0,
-                         std::string result_folder) {
+                         int D, int V, IntegerVector N, int N_sum,
+                         NumericMatrix WY1ZX, NumericMatrix Zstar, double Yv1,
+                         NumericVector WY0, std::string result_folder) {
   // ---------------------------------------------------------------------------
   // import saveRDS
   Environment base("package:base");
@@ -172,7 +171,6 @@ void pred_all_TwitterLDA(IntegerMatrix w, IntegerVector doc_users,
   std::time_t tt;
   char mbstr[100];
   // ---------------------------------------------------------------------------
-  int N_sum = sum(N);
   int Nmax = max(N);
   double betaV_sum = sum(betaV);
   // ---------------------------------------------------------------------------

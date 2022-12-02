@@ -92,7 +92,7 @@ pred_MicroblogLDA <- function(w, doc_users, beta_new = NULL, postproc_file,
   X1 <- rep(0, hyper$U)
   Zstar <- matrix(0, nrow = hyper$U, ncol = hyper$T);
   LAMBDA1 <- 0
-  Z <- matrix(0, nrow = hyper$D, ncol = hyper$T);
+  Z <- matrix(0, nrow = postproc$D, ncol = hyper$T);
   Yv1 <- rep(0, hyper$K);
   WY1ZX <- list(); WY0 <- list()
   for (k in 1:hyper$K) {
@@ -108,8 +108,9 @@ pred_MicroblogLDA <- function(w, doc_users, beta_new = NULL, postproc_file,
                              postproc$lambda, postproc$y, postproc$z,
                              X1, Zstar, LAMBDA1, Z, Yv1, WY1ZX, WY0, FALSE);
   # -------------------------------------------------------------------------- #
-  rm(list = setdiff(ls(), c("hyper", "result_folder", "WY1ZX", "HY1ZX", "Zstar", "Yh1", "HY0")))
+  rm(list = setdiff(ls(), c("hyper", "b", "result_folder", "WY1ZX", "HY1ZX", "Zstar", "Yh1", "HY0")))
   # -------------------------------------------------------------------------- #
+  N_sum <- apply(postproc$N, 2, sum) + apply(hyper$N, 2, sum)
   Dusers <- sapply(1:hyper$U, function(uu) sum(postproc$doc_users == uu))
   Dusers <- Dusers + sapply(1:hyper$U, function(uu) sum(hyper$doc_users == uu))
   if(hyper$single_doc) {
@@ -117,15 +118,15 @@ pred_MicroblogLDA <- function(w, doc_users, beta_new = NULL, postproc_file,
     pred_single_MicroblogLDA(hyper$w, hyper$doc_users-1, hyper$alphastar, hyper$alpha,
                              hyper$beta, b, hyper$bdelta, hyper$bT, hyper$alpha0,
                              hyper$iterations, hyper$T, hyper$K, hyper$U, hyper$D,
-                             hyper$V, hyper$N, Dusers, X1, Zstar, LAMBDA1, Yv1,
-                             WY1ZX, WY0, result_folder)
+                             hyper$V, hyper$N, N_sum, Dusers, X1, Zstar, LAMBDA1,
+                             Yv1, WY1ZX, WY0, result_folder)
   } else {
     # update all the new documents at the same time
     pred_all_MicroblogLDA(hyper$w, hyper$doc_users-1, hyper$alphastar, hyper$alpha,
                              hyper$beta, b, hyper$bdelta, hyper$bT, hyper$alpha0,
                              hyper$iterations, hyper$T, hyper$K, hyper$U, hyper$D,
-                             hyper$V, hyper$N, Dusers, X1, Zstar, LAMBDA1, Yv1,
-                             WY1ZX, WY0, result_folder)
+                             hyper$V, hyper$N, N_sum, Dusers, X1, Zstar, LAMBDA1,
+                             Yv1, WY1ZX, WY0, result_folder)
   }
   # END FUNCTION
   # -------------------------------------------------------------------------- #
