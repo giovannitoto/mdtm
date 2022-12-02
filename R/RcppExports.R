@@ -5,12 +5,12 @@ rcpp_CGS_HashtagLDA <- function(w, h, doc_users, alphastar, betaV, betaH, bH, it
     invisible(.Call('_mdtm_rcpp_CGS_HashtagLDA', PACKAGE = 'mdtm', w, h, doc_users, alphastar, betaV, betaH, bH, iterations, TOPICS, U, D, V, H, N, L, result_folder))
 }
 
-pred_single_HashtagLDA <- function(w, h, doc_users, alphastar, betaV, betaH, bH, iterations, TOPICS, U, D, V, H, N, L, WY1ZX, HY1ZX, Zstar, Yh1, HY0, result_folder) {
-    invisible(.Call('_mdtm_pred_single_HashtagLDA', PACKAGE = 'mdtm', w, h, doc_users, alphastar, betaV, betaH, bH, iterations, TOPICS, U, D, V, H, N, L, WY1ZX, HY1ZX, Zstar, Yh1, HY0, result_folder))
+pred_single_HashtagLDA <- function(w, h, doc_users, alphastar, betaV, betaH, bH, iterations, TOPICS, U, D, V, H, N, L, L_sum, WY1ZX, HY1ZX, Zstar, Yh1, HY0, result_folder) {
+    invisible(.Call('_mdtm_pred_single_HashtagLDA', PACKAGE = 'mdtm', w, h, doc_users, alphastar, betaV, betaH, bH, iterations, TOPICS, U, D, V, H, N, L, L_sum, WY1ZX, HY1ZX, Zstar, Yh1, HY0, result_folder))
 }
 
-pred_all_HashtagLDA <- function(w, h, doc_users, alphastar, betaV, betaH, bH, iterations, TOPICS, U, D, V, H, N, L, WY1ZX, HY1ZX, Zstar, Yh1, HY0, result_folder) {
-    invisible(.Call('_mdtm_pred_all_HashtagLDA', PACKAGE = 'mdtm', w, h, doc_users, alphastar, betaV, betaH, bH, iterations, TOPICS, U, D, V, H, N, L, WY1ZX, HY1ZX, Zstar, Yh1, HY0, result_folder))
+pred_all_HashtagLDA <- function(w, h, doc_users, alphastar, betaV, betaH, bH, iterations, TOPICS, U, D, V, H, N, L, L_sum, WY1ZX, HY1ZX, Zstar, Yh1, HY0, result_folder) {
+    invisible(.Call('_mdtm_pred_all_HashtagLDA', PACKAGE = 'mdtm', w, h, doc_users, alphastar, betaV, betaH, bH, iterations, TOPICS, U, D, V, H, N, L, L_sum, WY1ZX, HY1ZX, Zstar, Yh1, HY0, result_folder))
 }
 
 rcpp_CGS_LDA <- function(w, alpha, betaV, iterations, TOPICS, D, V, N, result_folder) {
@@ -29,24 +29,24 @@ rcpp_CGS_MicroblogLDA <- function(w, doc_users, alphastar, alpha, beta, b, bdelt
     invisible(.Call('_mdtm_rcpp_CGS_MicroblogLDA', PACKAGE = 'mdtm', w, doc_users, alphastar, alpha, beta, b, bdelta, bT, alpha0, iterations, TOPICS, K, U, D, V, N, Dusers, result_folder))
 }
 
-pred_single_MicroblogLDA <- function(w, doc_users, alphastar, alpha, beta, b, bdelta, bT, alpha0, iterations, TOPICS, K, U, D, V, N, Dusers, X1, Zstar, LAMBDA1, Yv1, WY1ZX, WY0, result_folder) {
-    invisible(.Call('_mdtm_pred_single_MicroblogLDA', PACKAGE = 'mdtm', w, doc_users, alphastar, alpha, beta, b, bdelta, bT, alpha0, iterations, TOPICS, K, U, D, V, N, Dusers, X1, Zstar, LAMBDA1, Yv1, WY1ZX, WY0, result_folder))
+pred_single_MicroblogLDA <- function(w, doc_users, alphastar, alpha, beta, b, bdelta, bT, alpha0, iterations, TOPICS, K, U, D, V, N, N_sum, Dusers, X1, Zstar, LAMBDA1, Yv1, WY1ZX, WY0, result_folder) {
+    invisible(.Call('_mdtm_pred_single_MicroblogLDA', PACKAGE = 'mdtm', w, doc_users, alphastar, alpha, beta, b, bdelta, bT, alpha0, iterations, TOPICS, K, U, D, V, N, N_sum, Dusers, X1, Zstar, LAMBDA1, Yv1, WY1ZX, WY0, result_folder))
 }
 
-pred_all_MicroblogLDA <- function(w, doc_users, alphastar, alpha, beta, b, bdelta, bT, alpha0, iterations, TOPICS, K, U, D, V, N, Dusers, X1, Zstar, LAMBDA1, Yv1, WY1ZX, WY0, result_folder) {
-    invisible(.Call('_mdtm_pred_all_MicroblogLDA', PACKAGE = 'mdtm', w, doc_users, alphastar, alpha, beta, b, bdelta, bT, alpha0, iterations, TOPICS, K, U, D, V, N, Dusers, X1, Zstar, LAMBDA1, Yv1, WY1ZX, WY0, result_folder))
+pred_all_MicroblogLDA <- function(w, doc_users, alphastar, alpha, beta, b, bdelta, bT, alpha0, iterations, TOPICS, K, U, D, V, N, N_sum, Dusers, X1, Zstar, LAMBDA1, Yv1, WY1ZX, WY0, result_folder) {
+    invisible(.Call('_mdtm_pred_all_MicroblogLDA', PACKAGE = 'mdtm', w, doc_users, alphastar, alpha, beta, b, bdelta, bT, alpha0, iterations, TOPICS, K, U, D, V, N, N_sum, Dusers, X1, Zstar, LAMBDA1, Yv1, WY1ZX, WY0, result_folder))
 }
 
 rcpp_CGS_TwitterLDA <- function(w, doc_users, alphastar, betaV, bV, iterations, TOPICS, U, D, V, N, result_folder) {
     invisible(.Call('_mdtm_rcpp_CGS_TwitterLDA', PACKAGE = 'mdtm', w, doc_users, alphastar, betaV, bV, iterations, TOPICS, U, D, V, N, result_folder))
 }
 
-pred_single_TwitterLDA <- function(w, doc_users, alphastar, betaV, bV, iterations, TOPICS, U, D, V, N, WY1ZX, Zstar, Yv1, WY0, result_folder) {
-    invisible(.Call('_mdtm_pred_single_TwitterLDA', PACKAGE = 'mdtm', w, doc_users, alphastar, betaV, bV, iterations, TOPICS, U, D, V, N, WY1ZX, Zstar, Yv1, WY0, result_folder))
+pred_single_TwitterLDA <- function(w, doc_users, alphastar, betaV, bV, iterations, TOPICS, U, D, V, N, N_sum, WY1ZX, Zstar, Yv1, WY0, result_folder) {
+    invisible(.Call('_mdtm_pred_single_TwitterLDA', PACKAGE = 'mdtm', w, doc_users, alphastar, betaV, bV, iterations, TOPICS, U, D, V, N, N_sum, WY1ZX, Zstar, Yv1, WY0, result_folder))
 }
 
-pred_all_TwitterLDA <- function(w, doc_users, alphastar, betaV, bV, iterations, TOPICS, U, D, V, N, WY1ZX, Zstar, Yv1, WY0, result_folder) {
-    invisible(.Call('_mdtm_pred_all_TwitterLDA', PACKAGE = 'mdtm', w, doc_users, alphastar, betaV, bV, iterations, TOPICS, U, D, V, N, WY1ZX, Zstar, Yv1, WY0, result_folder))
+pred_all_TwitterLDA <- function(w, doc_users, alphastar, betaV, bV, iterations, TOPICS, U, D, V, N, N_sum, WY1ZX, Zstar, Yv1, WY0, result_folder) {
+    invisible(.Call('_mdtm_pred_all_TwitterLDA', PACKAGE = 'mdtm', w, doc_users, alphastar, betaV, bV, iterations, TOPICS, U, D, V, N, N_sum, WY1ZX, Zstar, Yv1, WY0, result_folder))
 }
 
 update_counts_LDA <- function(w, alpha, TOPICS, D, N, zV, WY1ZX, Z, update_state) {

@@ -430,7 +430,7 @@ void pred_all_MicroblogLDA(std::vector<NumericMatrix>& w,
                            NumericMatrix b, NumericVector bdelta,
                            NumericVector bT, double alpha0, int iterations,
                            int TOPICS, int K, int U, int D, IntegerVector V,
-                           IntegerMatrix N, NumericVector N_sum
+                           IntegerMatrix N, NumericVector N_sum,
                            IntegerVector Dusers,
                            NumericVector& X1, NumericMatrix& Zstar,
                            double& LAMBDA1, NumericVector& Yv1,
