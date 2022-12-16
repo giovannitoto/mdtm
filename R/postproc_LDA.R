@@ -58,7 +58,7 @@ postproc_LDA <- function(result_folder, postproc_file, iterations = NULL, verbos
     if(m %in% iterations) phi_est <- phi_est + phi
     # compute log-likelihood
     loglik_list[m] <- loglik_LDA(hyper$alpha, hyper$betaV, theta, phi, zV, WY1ZX, Z)
-    if(verbose) cat(as.character(Sys.time()), "  - iteration ", m, ": ", loglik_list[m], "\n", sep="")
+    if(verbose) cat(as.character(Sys.time()), "  - iteration ", m, ":\t", loglik_list[m], "\n", sep="")
   }
   # MCMC estimates
   zV_est <- matrix(apply(zV_est, 1, which.max), nrow = hyper$D, ncol = ncol(hyper$w))

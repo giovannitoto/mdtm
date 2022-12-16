@@ -1,5 +1,18 @@
 # ---------------------------------------------------------------------------- #
 
+#' Latent Dirichlet Allocation (CGS)
+#'
+#' @description
+#' Let \eqn{V} be the dimension of the vocabulary of the collection, this
+#' function convert a  \eqn{D\times V} document-term matrix into a
+#' \eqn{D\times N_{\text{max}}} matrix of integers in \eqn{\{1,\ldots,V\}}.
+#'
+#' @param dt A \eqn{D\times V} document-term matrix.
+#' @param sparse Logical: if \code{TRUE}, the function returns a sparse matrix. Default is \code{FALSE}.
+#'
+#' @return A \eqn{D\times N_{\text{max}}} matrix of integers in \eqn{\{1,\ldots,V\}}.
+#'
+#' @export
 dt_to_t <- function(dt, sparse = FALSE) {
   i <- j <- x <- c()
   for (r in 1:nrow(dt)) {

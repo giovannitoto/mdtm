@@ -81,7 +81,7 @@ postproc_HashtagLDA <- function(result_folder, postproc_file, iterations = NULL,
     loglik_list[m] <- loglik_HashtagLDA(hyper$alphastar, hyper$betaV, hyper$betaH,
                                         hyper$bH, thetastar, phi, psi, psiB, piH,
                                         zstar, yH, WY1ZX, HY1ZX, Zstar, Yh1, HY0, L_sum)
-    if(verbose) cat(as.character(Sys.time()), "  - iteration ", m, ": ", loglik_list[m], "\n", sep="")
+    if(verbose) cat(as.character(Sys.time()), "  - iteration ", m, ":\t", loglik_list[m], "\n", sep="")
   }
   # MCMC estimates
   zstar_est <- apply(zstar_est, 1, which.max)

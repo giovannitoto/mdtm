@@ -124,7 +124,7 @@ postproc_MicroblogLDA <- function(result_folder, postproc_file, iterations = NUL
                               x, zstar, lambda, y, z,
                               X1, Zstar, LAMBDA1, Z, Yv1, WY1ZX, WY0,
                               hyper$D, hyper$T, Dusers, N_sum, hyper$K)
-    if(verbose) cat(as.character(Sys.time()), "  - iteration ", m, ": ", loglik_list[m], "\n", sep="")
+    if(verbose) cat(as.character(Sys.time()), "  - iteration ", m, ":\t", loglik_list[m], "\n", sep="")
   }
   # MCMC estimates
   x_est <- x_est / length(iterations)

@@ -75,7 +75,7 @@ postproc_TwitterLDA <- function(result_folder, postproc_file, iterations = NULL,
     loglik_list[m] <- loglik_TwitterLDA(hyper$alphastar, hyper$betaV, hyper$bV,
                                         thetastar, phi, phiB, piV,
                                         zstar, yV, Zstar, WY1ZX, Yv1, WY0, N_sum)
-    if(verbose) cat(as.character(Sys.time()), "  - iteration ", m, ": ", loglik_list[m], "\n", sep="")
+    if(verbose) cat(as.character(Sys.time()), "  - iteration ", m, ":\t", loglik_list[m], "\n", sep="")
   }
   # MCMC estimates
   zstar_est <- apply(zstar_est, 1, which.max)

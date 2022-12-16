@@ -53,7 +53,7 @@ pred_MicroblogLDA <- function(w, doc_users, beta_new = NULL, postproc_file,
   set.seed(seed)
   # Definisco alcune quantita' utili
   D <- length(doc_users)
-  N <- matrix(0, nrow = D, ncol= K)
+  N <- matrix(0, nrow = D, ncol = postproc$K)
   for (k in 1:K) {
     N[, k] <- apply(w[[k]], 1, function(x) sum(x > 0))
   }
