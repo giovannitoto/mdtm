@@ -17,7 +17,7 @@ The package allows to run a Collapsed Gibbs Sampler (CGS) to perform the posteri
 ## Example
 We want to estimate *LDA*, *TLDA*, *HLDA* and *MLDA* on a collection of documents and then predict the latent structure of new documents.
 
-We set the number of topics to $T=30$ and we consider symmetric Dirichlet prior distributions with parameter $50/T$ for the document-topic distribution ($\theta$) and user-topic distribution ($\theta^*$). Then, since this is a simple example, we set the number of iterations to 100 and the seed to 28.
+We set the number of topics to $T=30$ and we consider symmetric Dirichlet prior distributions with parameter $50/T$ for the user-topic distributions $\theta^*$ and the document-topic distributions $\theta$. Then, since this is a simple example, we set the number of iterations to 100 and the seed to 28.
 ```
 TOPICS <- 30
 alpha <- alphastar <- rep(1, TOPICS) * 50 / TOPICS
