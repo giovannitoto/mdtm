@@ -105,11 +105,12 @@ pred_HashtagLDA <- function(w, h, doc_users, betaV_new = NULL, betaH_new = NULL,
   # update counts
   update_counts_HashtagLDA(postproc$w, postproc$h, postproc$doc_users-1, postproc$alphastar,
                            postproc$bH, postproc$T, postproc$D, postproc$N, postproc$L,
-                           postproc$zstar, postproc$yH, WY1ZX, HY1ZX, Zstar, Yh1, HY0, FALSE);
-  # -------------------------------------------------------------------------- #
-  rm(list = setdiff(ls(), c("hyper", "result_folder", "WY1ZX", "HY1ZX", "Zstar", "Yh1", "HY0")))
-  # -------------------------------------------------------------------------- #
+                           postproc$zstar, postproc$yH, WY1ZX, HY1ZX, Zstar, Yh1, HY0, FALSE)
+  # other quantities
   L_sum <- sum(postproc$L) + sum(hyper$L)
+  # -------------------------------------------------------------------------- #
+  rm(list = setdiff(ls(), c("hyper", "L_sum", "WY1ZX", "HY1ZX", "Zstar", "Yh1", "HY0", "result_folder")))
+  # -------------------------------------------------------------------------- #
   if(hyper$single_doc) {
     # update one new document at a time
     pred_single_HashtagLDA(hyper$w, hyper$h, hyper$doc_users-1, hyper$alphastar,

@@ -54,7 +54,7 @@ pred_MicroblogLDA <- function(w, doc_users, beta_new = NULL, postproc_file,
   # Definisco alcune quantita' utili
   D <- length(doc_users)
   N <- matrix(0, nrow = D, ncol = postproc$K)
-  for (k in 1:K) {
+  for (k in 1:postproc$K) {
     N[, k] <- apply(w[[k]], 1, function(x) sum(x > 0))
   }
   # -------------------------------------------------------------------------- #
@@ -72,7 +72,7 @@ pred_MicroblogLDA <- function(w, doc_users, beta_new = NULL, postproc_file,
         stop(paste("'beta_new[[", k, "]]' not valid: must be a ", new_words, "-dimensional vector of positive numbers.", sep=""))
       } else {
         # update size of the vocabulary
-        hyper$beta[[k]] <- c(hyper$beta[[k]], betaV_new[[k]])
+        hyper$beta[[k]] <- c(hyper$beta[[k]], beta_new[[k]])
         hyper$V[k] <- hyper$V[k] + new_words
         # add empty columns to phi
         postproc$phi[[k]] <- cbind(postproc$phi[[k]], matrix(0, nrow = hyper$T, ncol = new_words))
@@ -106,13 +106,14 @@ pred_MicroblogLDA <- function(w, doc_users, beta_new = NULL, postproc_file,
                              postproc$bT, postproc$alpha0, postproc$T, postproc$K,
                              postproc$D, postproc$N, postproc$x, postproc$zstar,
                              postproc$lambda, postproc$y, postproc$z,
-                             X1, Zstar, LAMBDA1, Z, Yv1, WY1ZX, WY0, FALSE);
-  # -------------------------------------------------------------------------- #
-  rm(list = setdiff(ls(), c("hyper", "b", "result_folder", "WY1ZX", "HY1ZX", "Zstar", "Yh1", "HY0")))
-  # -------------------------------------------------------------------------- #
+                             X1, Zstar, LAMBDA1, Z, Yv1, WY1ZX, WY0, FALSE)
+  # other quantities
   N_sum <- apply(postproc$N, 2, sum) + apply(hyper$N, 2, sum)
   Dusers <- sapply(1:hyper$U, function(uu) sum(postproc$doc_users == uu))
   Dusers <- Dusers + sapply(1:hyper$U, function(uu) sum(hyper$doc_users == uu))
+  # -------------------------------------------------------------------------- #
+  rm(list = setdiff(ls(), c("hyper", "b", "N_sum", "Dusers", "X1", "Zstar", "LAMBDA1", "Yv1", "WY1ZX", "WY0", "result_folder")))
+  # -------------------------------------------------------------------------- #
   if(hyper$single_doc) {
     # update one new document at a time
     pred_single_MicroblogLDA(hyper$w, hyper$doc_users-1, hyper$alphastar, hyper$alpha,

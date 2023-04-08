@@ -51,7 +51,7 @@ void pred_single_LDA(IntegerMatrix w, NumericVector alpha, NumericVector betaV,
       // START DOCUMENT UPDATE
       WY1ZX_new.fill(0);
       for (n = 0; n < N(d); n++) {
-        WY1ZX_new(w(d,n)-1, zV(d,n)-1) = WY1ZX(w(d,n)-1, zV(d,n)-1) + 1;
+        WY1ZX_new(w(d,n)-1, zV(d,n)-1) = WY1ZX_new(w(d,n)-1, zV(d,n)-1) + 1;
       }
       for (n = 0; n < N(d); n++) {
         // ---------------------------------------------------------------------

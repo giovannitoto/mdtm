@@ -5,5 +5,5 @@
 \alias{mdtm}
 \title{mdtm : Multiple Descriptors Topic Modeling}
 \description{
-The mdtm package provides some topic models.
+The mdtm package provides function to estimate topic models.
 }
