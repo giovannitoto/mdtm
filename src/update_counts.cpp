@@ -160,3 +160,43 @@ void update_counts_MicroblogLDA(std::vector<NumericMatrix>& w,
 }
 
 // -----------------------------------------------------------------------------
+
+// [[Rcpp::export]]
+void update_counts_clickbaitLDA(IntegerMatrix w, IntegerVector& x,
+                                double alphastar, double betaV, NumericVector betaB,
+                                NumericVector b_doc, NumericMatrix b_back,
+                                int TOPICS, int D, int Dt, int V, IntegerVector N,
+                                IntegerVector&  zstar, IntegerMatrix& yV,
+                                NumericMatrix& WY1ZX, NumericVector& Zstar, double& X1,
+                                NumericVector& Yv1, NumericMatrix& WY0,
+                                bool update_state) {
+  // probability vectors
+  NumericVector alphastar_vector(TOPICS, alphastar);
+  for (int d = 0; d < D; d++) {
+    // sample
+    if (update_state) {
+      zstar(d) = sample(TOPICS, 1, true, alphastar_vector, true)(0);
+      if (d > Dt-1) {
+        x(d) = R::rbinom(1, b_doc(0) / sum(b_doc));
+      }
+    }
+    // update counts
+    Zstar(zstar(d)-1) = Zstar(zstar(d)-1) + 1;
+    X1 = X1 + x(d);
+    for (int n = 0; n < N(d); n++) {
+      // sample
+      if (update_state) {
+        yV(d, n) = R::rbinom(1, b_back(x(d),0) / sum(b_back(x(d),_)));
+      }
+      // update counts
+      if(yV(d, n) == 1) {
+        WY1ZX(zstar(d)-1, w(d,n)-1) = WY1ZX(zstar(d)-1, w(d,n)-1) + 1;
+        Yv1(x(d)) = Yv1(x(d)) + 1;
+      } else {
+        WY0(x(d), w(d,n)-1) = WY0(x(d), w(d,n)-1) + 1;
+      }
+    }
+  }
+}
+
+// -----------------------------------------------------------------------------

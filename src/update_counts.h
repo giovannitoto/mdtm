@@ -42,6 +42,15 @@ void update_counts_MicroblogLDA(std::vector<NumericMatrix>& w,
                                 std::vector<NumericMatrix>& WY1ZX,
                                 std::vector<NumericVector>& WY0, bool update_state);
 
+void update_counts_clickbaitLDA(IntegerMatrix w, IntegerVector& x,
+                                double alphastar, double betaV, NumericVector betaB,
+                                NumericVector b_doc, NumericMatrix b_back,
+                                int TOPICS, int D, int Dt, int V, IntegerVector N,
+                                IntegerVector&  zstar, IntegerMatrix& yV,
+                                NumericMatrix& WY1ZX, NumericVector& Zstar, double& X1,
+                                NumericVector& Yv1, NumericMatrix& WY0,
+                                bool update_state);
+
 // -----------------------------------------------------------------------------
 
 #endif

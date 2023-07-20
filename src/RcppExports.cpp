@@ -321,6 +321,29 @@ BEGIN_RCPP
     return R_NilValue;
 END_RCPP
 }
+// rcpp_CGS_clickbaitLDA
+void rcpp_CGS_clickbaitLDA(IntegerMatrix w, IntegerVector x, double alphastar, double betaV, NumericVector betaB, NumericVector b_doc, NumericMatrix b_back, int iterations, int TOPICS, int D, int Dt, int V, IntegerVector N, std::string result_folder);
+RcppExport SEXP _mdtm_rcpp_CGS_clickbaitLDA(SEXP wSEXP, SEXP xSEXP, SEXP alphastarSEXP, SEXP betaVSEXP, SEXP betaBSEXP, SEXP b_docSEXP, SEXP b_backSEXP, SEXP iterationsSEXP, SEXP TOPICSSEXP, SEXP DSEXP, SEXP DtSEXP, SEXP VSEXP, SEXP NSEXP, SEXP result_folderSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerMatrix >::type w(wSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< double >::type alphastar(alphastarSEXP);
+    Rcpp::traits::input_parameter< double >::type betaV(betaVSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type betaB(betaBSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type b_doc(b_docSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type b_back(b_backSEXP);
+    Rcpp::traits::input_parameter< int >::type iterations(iterationsSEXP);
+    Rcpp::traits::input_parameter< int >::type TOPICS(TOPICSSEXP);
+    Rcpp::traits::input_parameter< int >::type D(DSEXP);
+    Rcpp::traits::input_parameter< int >::type Dt(DtSEXP);
+    Rcpp::traits::input_parameter< int >::type V(VSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type N(NSEXP);
+    Rcpp::traits::input_parameter< std::string >::type result_folder(result_folderSEXP);
+    rcpp_CGS_clickbaitLDA(w, x, alphastar, betaV, betaB, b_doc, b_back, iterations, TOPICS, D, Dt, V, N, result_folder);
+    return R_NilValue;
+END_RCPP
+}
 // update_counts_LDA
 void update_counts_LDA(IntegerMatrix w, NumericVector alpha, int TOPICS, int D, IntegerVector N, IntegerMatrix& zV, NumericMatrix& WY1ZX, NumericMatrix& Z, bool update_state);
 RcppExport SEXP _mdtm_update_counts_LDA(SEXP wSEXP, SEXP alphaSEXP, SEXP TOPICSSEXP, SEXP DSEXP, SEXP NSEXP, SEXP zVSEXP, SEXP WY1ZXSEXP, SEXP ZSEXP, SEXP update_stateSEXP) {
@@ -423,6 +446,35 @@ BEGIN_RCPP
     return R_NilValue;
 END_RCPP
 }
+// update_counts_clickbaitLDA
+void update_counts_clickbaitLDA(IntegerMatrix w, IntegerVector& x, double alphastar, double betaV, NumericVector betaB, NumericVector b_doc, NumericMatrix b_back, int TOPICS, int D, int Dt, int V, IntegerVector N, IntegerVector& zstar, IntegerMatrix& yV, NumericMatrix& WY1ZX, NumericVector& Zstar, double& X1, NumericVector& Yv1, NumericMatrix& WY0, bool update_state);
+RcppExport SEXP _mdtm_update_counts_clickbaitLDA(SEXP wSEXP, SEXP xSEXP, SEXP alphastarSEXP, SEXP betaVSEXP, SEXP betaBSEXP, SEXP b_docSEXP, SEXP b_backSEXP, SEXP TOPICSSEXP, SEXP DSEXP, SEXP DtSEXP, SEXP VSEXP, SEXP NSEXP, SEXP zstarSEXP, SEXP yVSEXP, SEXP WY1ZXSEXP, SEXP ZstarSEXP, SEXP X1SEXP, SEXP Yv1SEXP, SEXP WY0SEXP, SEXP update_stateSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerMatrix >::type w(wSEXP);
+    Rcpp::traits::input_parameter< IntegerVector& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< double >::type alphastar(alphastarSEXP);
+    Rcpp::traits::input_parameter< double >::type betaV(betaVSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type betaB(betaBSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type b_doc(b_docSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type b_back(b_backSEXP);
+    Rcpp::traits::input_parameter< int >::type TOPICS(TOPICSSEXP);
+    Rcpp::traits::input_parameter< int >::type D(DSEXP);
+    Rcpp::traits::input_parameter< int >::type Dt(DtSEXP);
+    Rcpp::traits::input_parameter< int >::type V(VSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type N(NSEXP);
+    Rcpp::traits::input_parameter< IntegerVector& >::type zstar(zstarSEXP);
+    Rcpp::traits::input_parameter< IntegerMatrix& >::type yV(yVSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix& >::type WY1ZX(WY1ZXSEXP);
+    Rcpp::traits::input_parameter< NumericVector& >::type Zstar(ZstarSEXP);
+    Rcpp::traits::input_parameter< double& >::type X1(X1SEXP);
+    Rcpp::traits::input_parameter< NumericVector& >::type Yv1(Yv1SEXP);
+    Rcpp::traits::input_parameter< NumericMatrix& >::type WY0(WY0SEXP);
+    Rcpp::traits::input_parameter< bool >::type update_state(update_stateSEXP);
+    update_counts_clickbaitLDA(w, x, alphastar, betaV, betaB, b_doc, b_back, TOPICS, D, Dt, V, N, zstar, yV, WY1ZX, Zstar, X1, Yv1, WY0, update_state);
+    return R_NilValue;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_mdtm_rcpp_CGS_HashtagLDA", (DL_FUNC) &_mdtm_rcpp_CGS_HashtagLDA, 16},
@@ -437,10 +489,12 @@ static const R_CallMethodDef CallEntries[] = {
     {"_mdtm_rcpp_CGS_TwitterLDA", (DL_FUNC) &_mdtm_rcpp_CGS_TwitterLDA, 12},
     {"_mdtm_pred_single_TwitterLDA", (DL_FUNC) &_mdtm_pred_single_TwitterLDA, 17},
     {"_mdtm_pred_all_TwitterLDA", (DL_FUNC) &_mdtm_pred_all_TwitterLDA, 17},
+    {"_mdtm_rcpp_CGS_clickbaitLDA", (DL_FUNC) &_mdtm_rcpp_CGS_clickbaitLDA, 14},
     {"_mdtm_update_counts_LDA", (DL_FUNC) &_mdtm_update_counts_LDA, 9},
     {"_mdtm_update_counts_TwitterLDA", (DL_FUNC) &_mdtm_update_counts_TwitterLDA, 14},
     {"_mdtm_update_counts_HashtagLDA", (DL_FUNC) &_mdtm_update_counts_HashtagLDA, 17},
     {"_mdtm_update_counts_MicroblogLDA", (DL_FUNC) &_mdtm_update_counts_MicroblogLDA, 26},
+    {"_mdtm_update_counts_clickbaitLDA", (DL_FUNC) &_mdtm_update_counts_clickbaitLDA, 20},
     {NULL, NULL, 0}
 };
 
