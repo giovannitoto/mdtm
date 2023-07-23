@@ -4,7 +4,15 @@
 \alias{CGS_LDA}
 \title{Latent Dirichlet Allocation (CGS)}
 \usage{
-CGS_LDA(w, alpha, betaV, iterations = 300, seed = 28, result_folder)
+CGS_LDA(
+  w,
+  alpha,
+  betaV,
+  vocab = NULL,
+  iterations = 300,
+  seed = 28,
+  result_folder
+)
 }
 \arguments{
 \item{w}{A \eqn{D\times N_{\text{max}}} matrix \eqn{\mathbf{w}} of integers in \eqn{\{1,\ldots,V\}}.}
@@ -12,6 +20,8 @@ CGS_LDA(w, alpha, betaV, iterations = 300, seed = 28, result_folder)
 \item{alpha}{A \eqn{T}-dimensional vector \eqn{\bm{\alpha}} of positive numbers. The length of this vector specifies the number of topics \eqn{T}.}
 
 \item{betaV}{A \eqn{V}-dimensional vector \eqn{\bm{\beta}^V} of positive numbers.}
+
+\item{vocab}{A \eqn{V}-dimensional vector of vocabulary words.}
 
 \item{iterations}{An integer number of iterations. Default is 300.}
 

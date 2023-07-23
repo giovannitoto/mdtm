@@ -18,6 +18,7 @@
 #' @param b_ncb A \eqn{2}-dimensional vector \eqn{\bm{b}^{ncb}} of positive numbers.
 #' @param b_cb A \eqn{2}-dimensional vector \eqn{\bm{b}^{cb}} of positive numbers.
 #' @param TOPICS An integer number of topics \eqn{T}.
+#' @param vocab A \eqn{V}-dimensional vector of vocabulary words.
 #' @param iterations An integer number of iterations. Default is 300.
 #' @param seed Seed. Default is 28.
 #' @param result_folder A string specifying the folder in which the results will be saved.
@@ -28,7 +29,7 @@
 #'
 #' @export
 CGS_clickbaitLDA <- function(w, x, alphastar, betaV, beta_ncb, beta_cb,
-                             b_doc, b_ncb, b_cb, TOPICS,
+                             b_doc, b_ncb, b_cb, TOPICS, vocab = NULL,
                              iterations = 300, seed = 28, result_folder) {
   # -------------------------------------------------------------------------- #
   # Argomenti della funzione:
@@ -45,6 +46,11 @@ CGS_clickbaitLDA <- function(w, x, alphastar, betaV, beta_ncb, beta_cb,
   # iterations : intero             | numero di stati della catena da campionare
   #       seed : intero             | seme per rendere i risultati replicabili
   # -------------------------------------------------------------------------- #
+  if(!is.null(vocab)) {
+    if(length(betaV) != length(vocab)) {
+      stop("'vocab' not valid: it must be a ", length(betaV), "-dimensional vector.", sep="")
+    }
+  }
 
   # CHECK INPUTS HERE
 
@@ -82,7 +88,7 @@ CGS_clickbaitLDA <- function(w, x, alphastar, betaV, beta_ncb, beta_cb,
                 "betaV" = betaV, "betaB" = betaB,
                 "b_doc" = b_doc, "b_back" = b_back,
                 "iterations" = iterations, "seed" = seed,
-                "T" = TOPICS, "D" = D, "Dt" = Dt, "V" = V, "N" = N)
+                "T" = TOPICS, "D" = D, "Dt" = Dt, "V" = V, "N" = N, "vocab" = vocab)
   saveRDS(hyper, file.path(result_folder, "hyperparameters.RDS"))
   # -------------------------------------------------------------------------- #
   rm(list = setdiff(ls(), c("hyper", "result_folder")))

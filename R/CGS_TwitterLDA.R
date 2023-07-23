@@ -13,6 +13,7 @@
 #' @param alphastar A \eqn{T}-dimensional vector \eqn{\bm{\alpha}^*} of positive numbers. The length of this vector specifies the number of topics \eqn{T}.
 #' @param betaV A \eqn{V}-dimensional vector \eqn{\bm{\beta}^V} of positive numbers.
 #' @param bV A \eqn{2}-dimensional vector \eqn{\bm{b}^V} of positive numbers.
+#' @param vocab A \eqn{V}-dimensional vector of vocabulary words.
 #' @param iterations An integer number of iterations. Default is 300.
 #' @param seed Seed. Default is 28.
 #' @param result_folder A string specifying the folder in which the results will be saved.
@@ -22,7 +23,7 @@
 #' @note This function uses \code{Rcpp} for computational efficiency.
 #'
 #' @export
-CGS_TwitterLDA <- function(w, doc_users, alphastar, betaV, bV,
+CGS_TwitterLDA <- function(w, doc_users, alphastar, betaV, bV, vocab = NULL,
                            iterations = 300, seed = 28, result_folder) {
   # -------------------------------------------------------------------------- #
   # Argomenti della funzione:
@@ -34,6 +35,11 @@ CGS_TwitterLDA <- function(w, doc_users, alphastar, betaV, bV,
   # iterations : intero             | numero di stati della catena da campionare
   #       seed : intero             | seme per rendere i risultati replicabili
   # -------------------------------------------------------------------------- #
+  if(!is.null(vocab)) {
+    if(length(betaV) != length(vocab)) {
+      stop("'vocab' not valid: it must be a ", length(betaV), "-dimensional vector.", sep="")
+    }
+  }
 
   # CHECK INPUTS HERE
 
@@ -62,7 +68,7 @@ CGS_TwitterLDA <- function(w, doc_users, alphastar, betaV, bV,
   hyper <- list("w" = w, "doc_users" = doc_users,
                 "alphastar" = alpha, "betaV" = betaV, "bV" = bV,
                 "iterations" = iterations, "seed" = seed,
-                "T" = TOPICS, "U" = U, "D" = D, "V" = V, "N" = N)
+                "T" = TOPICS, "U" = U, "D" = D, "V" = V, "N" = N, "vocab" = vocab)
   saveRDS(hyper, file.path(result_folder, "hyperparameters.RDS"))
   # -------------------------------------------------------------------------- #
   rm(list = setdiff(ls(), c("hyper", "result_folder")))

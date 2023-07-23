@@ -60,9 +60,9 @@ postproc_clickbaitLDA <- function(result_folder, postproc_file, iterations = NUL
     WY0 <- matrix(0, nrow = 2, ncol = hyper$V)
     Yv1 <- c(0,0)
     # update counts
-    update_counts_clickbaitLDA(hyper$w, hyper$x, hyper$alphastar,
+    update_counts_clickbaitLDA(hyper$w, x, hyper$alphastar,
                                hyper$betaV, hyper$betaB, hyper$b_doc, hyper$b_back,
-                               hyper$TOPICS, hyper$D, hyper$Dt, hyper$V, hyper$N,
+                               hyper$T, hyper$D, hyper$Dt, hyper$V, hyper$N,
                                zstar, yV, WY1ZX, Zstar, X1, Yv1, WY0, FALSE);
     # define counts
     N_sum0 <- sum(hyper$N * (1-x))
@@ -84,10 +84,10 @@ postproc_clickbaitLDA <- function(result_folder, postproc_file, iterations = NUL
     phi_cb <- phi_cb / sum(phi_cb)
     if(m %in% iterations) phi_cb_est <- phi_cb_est + phi_cb
     # estimate pi_ncb
-    pi_ncb <- (hyper$b_back[2,1] + Yv1[2,]) / sum(hyper$b_back[2,], N_sum1)
+    pi_ncb <- (hyper$b_back[2,1] + Yv1[2]) / sum(hyper$b_back[2,], N_sum1)
     if(m %in% iterations) pi_ncb_est <- pi_ncb_est + pi_ncb
     # estimate pi_cb
-    pi_cb <- (hyper$b_back[1,1] + Yv1[1,]) / sum(hyper$b_back[1,], N_sum0)
+    pi_cb <- (hyper$b_back[1,1] + Yv1[1]) / sum(hyper$b_back[1,], N_sum0)
     if(m %in% iterations) pi_cb_est <- pi_cb_est + pi_cb
     # estimate pi
     pi_doc <- (hyper$b_doc[1] + X1) / sum(hyper$b_doc, Ntot)

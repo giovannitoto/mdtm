@@ -15,6 +15,7 @@
 #' @param betaV A \eqn{V}-dimensional vector \eqn{\bm{\beta}^V} of positive numbers.
 #' @param betaH A \eqn{H}-dimensional vector \eqn{\bm{\beta}^H} of positive numbers.
 #' @param bH A \eqn{2}-dimensional vector \eqn{\bm{b}^H} of positive numbers.
+#' @param vocab A list of two vectors containing the word and hashtag vocabularies, i.e., a \eqn{V}-dimensional vector and a \eqn{H}-dimensional vector.
 #' @param iterations An integer number of iterations. Default is 300.
 #' @param seed Seed. Default is 28.
 #' @param result_folder A string specifying the folder in which the results will be saved.
@@ -24,7 +25,7 @@
 #' @note This function uses \code{Rcpp} for computational efficiency.
 #'
 #' @export
-CGS_HashtagLDA <- function(w, h, doc_users, alphastar, betaV, betaH, bH,
+CGS_HashtagLDA <- function(w, h, doc_users, alphastar, betaV, betaH, bH, vocab = NULL,
                            iterations=300, seed=28, result_folder) {
   # -------------------------------------------------------------------------- #
   # Argomenti della funzione:
@@ -38,6 +39,14 @@ CGS_HashtagLDA <- function(w, h, doc_users, alphastar, betaV, betaH, bH,
   # iterations : intero             | numero di stati della catena da campionare
   #       seed : intero             | seme per rendere i risultati replicabili
   # -------------------------------------------------------------------------- #
+  if(!is.null(vocab)) {
+    if(length(betaV) != length(vocab[1])) {
+      stop("'vocab[1]' not valid: it must be a ", length(betaV), "-dimensional vector.", sep="")
+    }
+    if(length(betaH) != length(vocab[2])) {
+      stop("'vocab[1]' not valid: it must be a ", length(betaH), "-dimensional vector.", sep="")
+    }
+  }
 
   # CHECK INPUTS HERE
 
@@ -68,7 +77,7 @@ CGS_HashtagLDA <- function(w, h, doc_users, alphastar, betaV, betaH, bH,
   hyper <- list("w" = w, "h" = h, "doc_users" = doc_users,
                 "alphastar" = alphastar, "betaV" = betaV, "betaH" = betaH, "bH" = bH,
                 "iterations" = iterations, "seed" = seed,
-                "T" = TOPICS, "U" = U, "D" = D, "V" = V, "H" = H, "N" = N, "L" = L)
+                "T" = TOPICS, "U" = U, "D" = D, "V" = V, "H" = H, "N" = N, "L" = L, "vocab" = vocab)
   saveRDS(hyper, file.path(result_folder, "hyperparameters.RDS"))
   # -------------------------------------------------------------------------- #
   rm(list = setdiff(ls(), c("hyper", "result_folder")))

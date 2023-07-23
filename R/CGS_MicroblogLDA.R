@@ -17,6 +17,7 @@
 #' @param bdelta A \eqn{2}-dimensional vector \eqn{\bm{b}^\delta} of positive numbers.
 #' @param bT A \eqn{2}-dimensional vector \eqn{\bm{b}^T} of positive numbers.
 #' @param alpha0 A positive number \eqn{\alpha_0}. Default is \eqn{10^{-7}}.
+#' @param vocab A list of \eqn{V^{(k)}}-dimensional vectors of vocabulary words.
 #' @param iterations An integer number of iterations. Default is 300.
 #' @param seed Seed. Default is 28.
 #' @param result_folder A string specifying the folder in which the results will be saved.
@@ -26,8 +27,8 @@
 #' @note This function uses \code{Rcpp} for computational efficiency.
 #'
 #' @export
-CGS_MicroblogLDA <- function(w, doc_users, alphastar, alpha, beta, b, bdelta, bT,
-                             alpha0 = 10^-7, iterations = 300, seed = 28, result_folder) {
+CGS_MicroblogLDA <- function(w, doc_users, alphastar, alpha, beta, b, bdelta, bT, alpha0 = 10^-7,
+                             vocab = NULL, iterations = 300, seed = 28, result_folder) {
   # -------------------------------------------------------------------------- #
   # Argomenti della funzione:
   #          w : lista di matrici D x Nmax_k  | n-ma descrittore del k-mo vocabolario nel d-mo documento (1,...,V_k)
@@ -42,6 +43,13 @@ CGS_MicroblogLDA <- function(w, doc_users, alphastar, alpha, beta, b, bdelta, bT
   # iterations : intero                       | numero di stati della catena da campionare
   #       seed : intero                       | seme per rendere i risultati replicabili
   # -------------------------------------------------------------------------- #
+  if(!is.null(vocab)) {
+    for (k in 1:length(w)) {
+      if(length(beta[k]) != length(vocab[k])) {
+        stop("'vocab[", k, "]' not valid: it must be a ", length(beta[k]), "-dimensional vector.", sep="")
+      }
+    }
+  }
 
   # CHECK INPUTS HERE
 
@@ -74,7 +82,7 @@ CGS_MicroblogLDA <- function(w, doc_users, alphastar, alpha, beta, b, bdelta, bT
   hyper <- list("w" = w, "doc_users" = doc_users,
                 "alphastar" = alphastar, "alpha" = alpha, "beta" = beta, "b" = b, "bdelta" = bdelta,
                 "bT" = bT, "alpha0" = alpha0, "iterations" = iterations, "seed" = seed,
-                "T" = TOPICS, "K" = K, "U" = U, "D" = D, "V" = V, "N" = N)
+                "T" = TOPICS, "K" = K, "U" = U, "D" = D, "V" = V, "N" = N, "vocab" = vocab)
   saveRDS(hyper, file.path(result_folder, "hyperparameters.RDS"))
   # -------------------------------------------------------------------------- #
   rm(list = setdiff(ls(), c("hyper", "result_folder")))

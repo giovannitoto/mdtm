@@ -11,6 +11,7 @@
 #' @param w A \eqn{D\times N_{\text{max}}} matrix \eqn{\mathbf{w}} of integers in \eqn{\{1,\ldots,V\}}.
 #' @param alpha A \eqn{T}-dimensional vector \eqn{\bm{\alpha}} of positive numbers. The length of this vector specifies the number of topics \eqn{T}.
 #' @param betaV A \eqn{V}-dimensional vector \eqn{\bm{\beta}^V} of positive numbers.
+#' @param vocab A \eqn{V}-dimensional vector of vocabulary words.
 #' @param iterations An integer number of iterations. Default is 300.
 #' @param seed Seed. Default is 28.
 #' @param result_folder A string specifying the folder in which the results will be saved.
@@ -20,7 +21,7 @@
 #' @note This function uses \code{Rcpp} for computational efficiency.
 #'
 #' @export
-CGS_LDA <- function(w, alpha, betaV, iterations = 300, seed = 28, result_folder) {
+CGS_LDA <- function(w, alpha, betaV, vocab = NULL, iterations = 300, seed = 28, result_folder) {
   # -------------------------------------------------------------------------- #
   # Argomenti della funzione:
   #          w : matrice D x Nmax   | n-ma parola del d-mo documento (1,...,V)
@@ -29,6 +30,11 @@ CGS_LDA <- function(w, alpha, betaV, iterations = 300, seed = 28, result_folder)
   # iterations : intero             | numero di stati della catena da campionare
   #       seed : intero             | seme per rendere i risultati replicabili
   # -------------------------------------------------------------------------- #
+  if(!is.null(vocab)) {
+    if(length(betaV) != length(vocab)) {
+      stop("'vocab' not valid: it must be a ", length(betaV), "-dimensional vector.", sep="")
+    }
+  }
 
   # CHECK INPUTS HERE
 
@@ -55,7 +61,7 @@ CGS_LDA <- function(w, alpha, betaV, iterations = 300, seed = 28, result_folder)
   # -------------------------------------------------------------------------- #
   hyper <- list("w" = w, "alpha" = alpha, "betaV" = betaV,
                 "iterations" = iterations, "seed" = seed,
-                "T" = TOPICS, "D" = D, "V" = V, "N" = N)
+                "T" = TOPICS, "D" = D, "V" = V, "N" = N, "vocab" = vocab)
   saveRDS(hyper, file.path(result_folder, "hyperparameters.RDS"))
   # -------------------------------------------------------------------------- #
   rm(list = setdiff(ls(), c("hyper", "result_folder")))

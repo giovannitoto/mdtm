@@ -15,6 +15,7 @@ CGS_clickbaitLDA(
   b_ncb,
   b_cb,
   TOPICS,
+  vocab = NULL,
   iterations = 300,
   seed = 28,
   result_folder
@@ -38,6 +39,8 @@ CGS_clickbaitLDA(
 \item{b_cb}{A \eqn{2}-dimensional vector \eqn{\bm{b}^{cb}} of positive numbers.}
 
 \item{TOPICS}{An integer number of topics \eqn{T}.}
+
+\item{vocab}{A \eqn{V}-dimensional vector of vocabulary words.}
 
 \item{iterations}{An integer number of iterations. Default is 300.}
 

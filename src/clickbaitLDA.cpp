@@ -148,6 +148,8 @@ void rcpp_CGS_clickbaitLDA(IntegerMatrix w, IntegerVector x,
             num0_count++; den0_count++;
           }
         }
+        // sample new value
+        x(d) = R::rbinom(1, p_x1 / (p_x0+p_x1));
         // update counts
         for (n = 0; n < N(d); n++) {
           if (yV(d, n) == 1) {

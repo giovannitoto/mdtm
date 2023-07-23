@@ -344,6 +344,17 @@ BEGIN_RCPP
     return R_NilValue;
 END_RCPP
 }
+// dt_to_t
+IntegerMatrix dt_to_t(const IntegerMatrix dt);
+RcppExport SEXP _mdtm_dt_to_t(SEXP dtSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const IntegerMatrix >::type dt(dtSEXP);
+    rcpp_result_gen = Rcpp::wrap(dt_to_t(dt));
+    return rcpp_result_gen;
+END_RCPP
+}
 // update_counts_LDA
 void update_counts_LDA(IntegerMatrix w, NumericVector alpha, int TOPICS, int D, IntegerVector N, IntegerMatrix& zV, NumericMatrix& WY1ZX, NumericMatrix& Z, bool update_state);
 RcppExport SEXP _mdtm_update_counts_LDA(SEXP wSEXP, SEXP alphaSEXP, SEXP TOPICSSEXP, SEXP DSEXP, SEXP NSEXP, SEXP zVSEXP, SEXP WY1ZXSEXP, SEXP ZSEXP, SEXP update_stateSEXP) {
@@ -490,6 +501,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_mdtm_pred_single_TwitterLDA", (DL_FUNC) &_mdtm_pred_single_TwitterLDA, 17},
     {"_mdtm_pred_all_TwitterLDA", (DL_FUNC) &_mdtm_pred_all_TwitterLDA, 17},
     {"_mdtm_rcpp_CGS_clickbaitLDA", (DL_FUNC) &_mdtm_rcpp_CGS_clickbaitLDA, 14},
+    {"_mdtm_dt_to_t", (DL_FUNC) &_mdtm_dt_to_t, 1},
     {"_mdtm_update_counts_LDA", (DL_FUNC) &_mdtm_update_counts_LDA, 9},
     {"_mdtm_update_counts_TwitterLDA", (DL_FUNC) &_mdtm_update_counts_TwitterLDA, 14},
     {"_mdtm_update_counts_HashtagLDA", (DL_FUNC) &_mdtm_update_counts_HashtagLDA, 17},

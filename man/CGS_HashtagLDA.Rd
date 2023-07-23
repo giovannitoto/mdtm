@@ -12,6 +12,7 @@ CGS_HashtagLDA(
   betaV,
   betaH,
   bH,
+  vocab = NULL,
   iterations = 300,
   seed = 28,
   result_folder
@@ -31,6 +32,8 @@ CGS_HashtagLDA(
 \item{betaH}{A \eqn{H}-dimensional vector \eqn{\bm{\beta}^H} of positive numbers.}
 
 \item{bH}{A \eqn{2}-dimensional vector \eqn{\bm{b}^H} of positive numbers.}
+
+\item{vocab}{A list of two vectors containing the word and hashtag vocabularies, i.e., a \eqn{V}-dimensional vector and a \eqn{H}-dimensional vector.}
 
 \item{iterations}{An integer number of iterations. Default is 300.}
 

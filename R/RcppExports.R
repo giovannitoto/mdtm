@@ -53,6 +53,22 @@ rcpp_CGS_clickbaitLDA <- function(w, x, alphastar, betaV, betaB, b_doc, b_back, 
     invisible(.Call(`_mdtm_rcpp_CGS_clickbaitLDA`, w, x, alphastar, betaV, betaB, b_doc, b_back, iterations, TOPICS, D, Dt, V, N, result_folder))
 }
 
+#' Document-term matrix to term matrix
+#'
+#' @description
+#' Let \eqn{V} be the dimension of the vocabulary of the collection, this
+#' function convert a  \eqn{D\times V} document-term matrix into a
+#' \eqn{D\times N_{\text{max}}} matrix of integers in \eqn{\{1,\ldots,V\}}.
+#'
+#' @param dt A \eqn{D\times V} document-term matrix.
+#'
+#' @return A \eqn{D\times N_{\text{max}}} matrix of integers in \eqn{\{1,\ldots,V\}}.
+#'
+#' @export
+dt_to_t <- function(dt) {
+    .Call(`_mdtm_dt_to_t`, dt)
+}
+
 update_counts_LDA <- function(w, alpha, TOPICS, D, N, zV, WY1ZX, Z, update_state) {
     invisible(.Call(`_mdtm_update_counts_LDA`, w, alpha, TOPICS, D, N, zV, WY1ZX, Z, update_state))
 }

@@ -10,6 +10,7 @@ CGS_TwitterLDA(
   alphastar,
   betaV,
   bV,
+  vocab = NULL,
   iterations = 300,
   seed = 28,
   result_folder
@@ -25,6 +26,8 @@ CGS_TwitterLDA(
 \item{betaV}{A \eqn{V}-dimensional vector \eqn{\bm{\beta}^V} of positive numbers.}
 
 \item{bV}{A \eqn{2}-dimensional vector \eqn{\bm{b}^V} of positive numbers.}
+
+\item{vocab}{A \eqn{V}-dimensional vector of vocabulary words.}
 
 \item{iterations}{An integer number of iterations. Default is 300.}
 

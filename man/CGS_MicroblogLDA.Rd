@@ -14,6 +14,7 @@ CGS_MicroblogLDA(
   bdelta,
   bT,
   alpha0 = 10^-7,
+  vocab = NULL,
   iterations = 300,
   seed = 28,
   result_folder
@@ -37,6 +38,8 @@ CGS_MicroblogLDA(
 \item{bT}{A \eqn{2}-dimensional vector \eqn{\bm{b}^T} of positive numbers.}
 
 \item{alpha0}{A positive number \eqn{\alpha_0}. Default is \eqn{10^{-7}}.}
+
+\item{vocab}{A list of \eqn{V^{(k)}}-dimensional vectors of vocabulary words.}
 
 \item{iterations}{An integer number of iterations. Default is 300.}
 
