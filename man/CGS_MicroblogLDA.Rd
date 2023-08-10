@@ -21,7 +21,7 @@ CGS_MicroblogLDA(
 )
 }
 \arguments{
-\item{w}{A list of \eqn{K} \eqn{D\times N_{\text{max}}^{(k)}} matrices \eqn{\mathbf{w}^{(k)}} of integers in \eqn{\{1,\ldots,V^{(k)}\}}.}
+\item{w}{A list of \eqn{K} \eqn{D\times N_{\text{max}}^{(k)}} matrices \eqn{\mathbf{w}^{(k)}} of integers in \eqn{\{1,\ldots,V^{(k)}\}} specifying the descriptors in each document.}
 
 \item{doc_users}{A \eqn{D}-dimensional vector of integers specifying the single author of each document. The number of authors is set to \code{U = max(doc_users)}.}
 

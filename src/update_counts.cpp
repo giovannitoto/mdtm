@@ -133,12 +133,13 @@ void update_counts_MicroblogLDA(std::vector<NumericMatrix>& w,
       }
       LAMBDA1 += lambda(d, t);
     }
+    NumericVector alpha_doc = alpha0 + alpha * lambda(d, _);
     for (int k = 0; k < K; k++) {
       for (int n = 0; n < N(d, k); n++) {
         // sample values
         if (update_state) {
           y[k](d, n) = R::rbinom(1, b(0,k) / sum(b(_,k)));
-          z[k](d, n) = sample(TOPICS, 1, true, alpha, true)(0);
+          z[k](d, n) = sample(TOPICS, 1, true, alpha_doc, true)(0);
         }
         // update counts
         Z(d, z[k](d,n)-1) = Z(d, z[k](d,n)-1) + 1;

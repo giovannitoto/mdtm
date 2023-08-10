@@ -38,7 +38,7 @@ postproc_LDA <- function(result_folder, postproc_file, iterations = NULL, verbos
   phi_est <- matrix(0, nrow = hyper$T, ncol = hyper$V)
   # -------------------------------------------------------------------------- #
   if(verbose) cat(as.character(Sys.time()), " Log-likelihood:\n", sep="")
-  for (m in iterations) {
+  for (m in hyper$iterations) {
     # import m-th state of the chain
     zV <- readRDS(file.path(result_folder, m, "zV.RDS"))
     if(m %in% iterations) zV_est[cbind(1:nrow(zV_est), c(zV))] <- zV_est[cbind(1:nrow(zV_est), c(zV))] + 1

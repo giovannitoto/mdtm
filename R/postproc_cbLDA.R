@@ -45,7 +45,7 @@ postproc_clickbaitLDA <- function(result_folder, postproc_file, iterations = NUL
   pi_doc_est <- 0
   # -------------------------------------------------------------------------- #
   if(verbose) cat(as.character(Sys.time()), " Log-likelihood:\n", sep="")
-  for (m in iterations) {
+  for (m in hyper$iterations) {
     # import m-th state of the chain
     x <- readRDS(file.path(result_folder, m, "x.RDS"))
     zstar <- readRDS(file.path(result_folder, m, "zstar.RDS"))

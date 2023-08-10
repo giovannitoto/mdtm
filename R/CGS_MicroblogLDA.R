@@ -8,7 +8,7 @@
 #' @details
 #' Implementation in R and C++.
 #'
-#' @param w A list of \eqn{K} \eqn{D\times N_{\text{max}}^{(k)}} matrices \eqn{\mathbf{w}^{(k)}} of integers in \eqn{\{1,\ldots,V^{(k)}\}}.
+#' @param w A list of \eqn{K} \eqn{D\times N_{\text{max}}^{(k)}} matrices \eqn{\mathbf{w}^{(k)}} of integers in \eqn{\{1,\ldots,V^{(k)}\}} specifying the descriptors in each document.
 #' @param doc_users A \eqn{D}-dimensional vector of integers specifying the single author of each document. The number of authors is set to \code{U = max(doc_users)}.
 #' @param alphastar A \eqn{T}-dimensional vector \eqn{\bm{\alpha}^*} of positive numbers. The length of this vector specifies the number of topics \eqn{T}.
 #' @param alpha A \eqn{T}-dimensional vector \eqn{\bm{\alpha}} of positive numbers. The length of this vector specifies the number of topics \eqn{T}.
@@ -30,18 +30,18 @@
 CGS_MicroblogLDA <- function(w, doc_users, alphastar, alpha, beta, b, bdelta, bT, alpha0 = 10^-7,
                              vocab = NULL, iterations = 300, seed = 28, result_folder) {
   # -------------------------------------------------------------------------- #
-  # Argomenti della funzione:
-  #          w : lista di matrici D x Nmax_k  | n-ma descrittore del k-mo vocabolario nel d-mo documento (1,...,V_k)
-  #  doc_users : vettore D x 1                | autore del d-mo topic (1,...,U)
-  #  alphastar : vettore TOPICS x 1           | parametro Dirichlet sul simplesso dei topic
-  #      alpha : vettore TOPICS x 1           | parametro Dirichlet sul simplesso dei topic (smoothing prior)
-  #       beta : lista di vettori V_k x 1     | parametro Dirichlet sul simplesso delle parole del k-mo vocabolario
-  #          b : lista di vettore 2x1         | parametro Beta (uno per vocabolario)
-  #     bdelta : vettore 2x1                  | parametro Beta
-  #         bT : vettore 2x1                  | parametro Beta
-  #     alpha0 : reale positivo               | weak smoothing prior (10^-7)
-  # iterations : intero                       | numero di stati della catena da campionare
-  #       seed : intero                       | seme per rendere i risultati replicabili
+  # Arguments:
+  #          w : list of matrices D x Nmax_k  | n-th descriptor of the k-th vocabulary in the d-th document (1,...,V_k)
+  #  doc_users : vector D x 1                 | author of d-th document (1,...,U)
+  #  alphastar : vector TOPICS x 1            | Dirichlet prior parameter vector
+  #      alpha : vector TOPICS x 1            | Dirichlet prior parameter vector (smoothing prior)
+  #       beta : list of vectors V_k x 1      | Dirichlet prior parameter vector (one per vocabulary)
+  #          b : list of vectors 2x1          | Beta prior parameters (one per vocabulary)
+  #     bdelta : vector 2x1                   | Beta prior parameters
+  #         bT : vector 2x1                   | Beta prior parameters
+  #     alpha0 : positive real number         | weak smoothing prior (10^-7)
+  # iterations : integer                      | number of samples from the posterior dist.
+  #       seed : integer                      | seed to make results replicable
   # -------------------------------------------------------------------------- #
   if(!is.null(vocab)) {
     for (k in 1:length(w)) {
@@ -55,9 +55,9 @@ CGS_MicroblogLDA <- function(w, doc_users, alphastar, alpha, beta, b, bdelta, bT
 
   # -------------------------------------------------------------------------- #
   cat(as.character(Sys.time()), " START\n\n", sep="")
-  # Fisso il seme
+  # setting seed
   set.seed(seed)
-  # Definisco alcune quantita' utili
+  # defining useful quantities
   TOPICS <- length(alphastar)
   K <- length(w)
   U <- max(doc_users)
@@ -68,7 +68,7 @@ CGS_MicroblogLDA <- function(w, doc_users, alphastar, alpha, beta, b, bdelta, bT
     N[, k] <- apply(w[[k]], 1, function(x) sum(x > 0))
   }
   # -------------------------------------------------------------------------- #
-  # Creo cartella in cui salvare gli stati della catena
+  # creating folder in which to save the states of the chain
   result_folder <- file.path(getwd(), result_folder)
   if(!dir.exists(result_folder)) {
     dir.create(result_folder)
@@ -91,7 +91,7 @@ CGS_MicroblogLDA <- function(w, doc_users, alphastar, alpha, beta, b, bdelta, bT
   b <- simplify2array(hyper$b)
   rcpp_CGS_MicroblogLDA(hyper$w, hyper$doc_users-1, hyper$alphastar, hyper$alpha,
                         hyper$beta, b, hyper$bdelta, hyper$bT, hyper$alpha0,
-                        hyper$iterations,hyper$T, hyper$K, hyper$U, hyper$D, hyper$V,
+                        hyper$iterations, hyper$T, hyper$K, hyper$U, hyper$D, hyper$V,
                         hyper$N, Dusers, result_folder)
   # -------------------------------------------------------------------------- #
   cat("\n", as.character(Sys.time()), " END", sep="")

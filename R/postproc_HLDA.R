@@ -43,7 +43,7 @@ postproc_HashtagLDA <- function(result_folder, postproc_file, iterations = NULL,
   piH_est <- 0
   # -------------------------------------------------------------------------- #
   if(verbose) cat(as.character(Sys.time()), " Log-likelihood:\n", sep="")
-  for (m in iterations) {
+  for (m in hyper$iterations) {
     # import m-th state of the chain
     zstar <- readRDS(file.path(result_folder, m, "zstar.RDS"))
     yH <- readRDS(file.path(result_folder, m, "yH.RDS"))
